@@ -6,7 +6,8 @@
         <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>
         <KeyFram v-if="animationEditor"></KeyFram>
         <DigitalCityLittleWindow v-if="showLittleWindow" :app3D='app3D'></DigitalCityLittleWindow>
-        <el-dialog :visible.sync="dialogVisible" height="80%" title="3D资源列表" width="90%">
+        <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="3D资源列表"
+                   width="100%">
             <ModelList></ModelList>
         </el-dialog>
     </div>
