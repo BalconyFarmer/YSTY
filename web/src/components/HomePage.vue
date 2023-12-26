@@ -6,7 +6,7 @@
 
                     <a-menu-item key="mail3" @click="goExperimentArea">
                         <a-icon type="appstore"/>
-                        ExperimentArea
+                        云视图研
                     </a-menu-item>
 
                     <a-menu-item key="mail5" @click="goDigitalCity">
@@ -14,19 +14,19 @@
                         DigitalCity
                     </a-menu-item>
 
-                    <a-menu-item key="mail6" @click="go3dMenu">
-                        <a-icon type="appstore"/>
-                        3dMenu
-                    </a-menu-item>
+<!--                    <a-menu-item key="mail6" @click="go3dMenu">-->
+<!--                        <a-icon type="appstore"/>-->
+<!--                        3dMenu-->
+<!--                    </a-menu-item>-->
 
-                    <a-menu-item key="mail7" @click="go3dMenu1">
-                        <a-icon type="appstore"/>
-                        3dMenu1
-                    </a-menu-item>
-                    <a-menu-item key="mail8" @click="goRotateImg">
-                        <a-icon type="appstore"/>
-                        RotateImg
-                    </a-menu-item>
+<!--                    <a-menu-item key="mail7" @click="go3dMenu1">-->
+<!--                        <a-icon type="appstore"/>-->
+<!--                        3dMenu1-->
+<!--                    </a-menu-item>-->
+<!--                    <a-menu-item key="mail8" @click="goRotateImg">-->
+<!--                        <a-icon type="appstore"/>-->
+<!--                        RotateImg-->
+<!--                    </a-menu-item>-->
                 </a-menu>
             </div>
         </div>

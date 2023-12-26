@@ -38,15 +38,10 @@
                     <a-icon type="down"/>
                 </a>
                 <a-menu slot="overlay">
-                    <a-menu-item>保存</a-menu-item>
-                    <a-menu-item>新建场景</a-menu-item>
                     <a-menu-item @click="exportScene">导出场景</a-menu-item>
                     <a-menu-item @click="importScene">导入场景</a-menu-item>
-                    <a-menu-item>新建Mesh</a-menu-item>
                     <a-menu-item @click="exportMesh">导出Mesh</a-menu-item>
                     <a-menu-item @click="importMesh">导入Mesh</a-menu-item>
-                    <a-menu-item>下载</a-menu-item>
-                    <a-menu-item>另存为</a-menu-item>
                 </a-menu>
             </a-dropdown>
         </div>
