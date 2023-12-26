@@ -46,20 +46,6 @@
             </a-dropdown>
         </div>
 
-        <div id="drawTools">
-            <img :src="icon5" class="icon5" @click="" style="width: 20px">
-            <img :src="icon0" class="icon5" @click="" style="width: 20px">
-            <img :src="icon1" class="icon5" @click="" style="width: 20px">
-            <img :src="icon2" class="icon5" @click="" style="width: 20px">
-            <img :src="icon3" class="icon5" @click="" style="width: 20px">
-            <img :src="icon4" class="icon5" @click="" style="width: 20px">
-            <img :src="icon6" class="icon5" @click="" style="width: 20px">
-            <img :src="icon7" class="icon5" @click="" style="width: 20px">
-            <img :src="icon8" class="icon5" @click="" style="width: 20px">
-            <img :src="icon9" class="icon5" @click="" style="width: 20px">
-            <img :src="icon10" class="icon5" @click="" style="width: 20px">
-            <img :src="icon11" class="icon5" @click="" style="width: 20px">
-        </div>
     </div>
 
 </template>
@@ -337,19 +323,6 @@ export default {
         }
     }
 
-    #drawTools {
-        position: absolute;
-        width: 22px;
-        height: auto;
-        top: 147px;
-        left: calc(300px);
-        border: solid #99A1A9 1px;
-
-        img {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-    }
 }
 
 </style>

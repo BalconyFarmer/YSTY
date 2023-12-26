@@ -28,6 +28,7 @@
 <!--                        RotateImg-->
 <!--                    </a-menu-item>-->
                 </a-menu>
+
             </div>
         </div>
         <router-view/>
@@ -91,19 +92,6 @@ export default {
             }
 
         },
-
-        loadHeadIcon() {
-            if (this.userInf) {
-                const params = {
-                    userInf: this.userInf
-                }
-                loadHeadIconApi(params).then((response) => {
-                    this.userIconBS64 = response.data
-                }).catch(error => console.log(error, "error"));
-            } else {
-                this.userIconBS64 = null
-            }
-        },
         goHome() {
             this.$router.push({path: '/homeDisplay'}).catch(error => error)
         },
@@ -142,7 +130,6 @@ export default {
     created() {
     },
     mounted() {
-        this.loadHeadIcon()
         this.goExperimentArea()
 
     },
