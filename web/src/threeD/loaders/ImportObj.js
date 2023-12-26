@@ -1,5 +1,6 @@
 import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader";
+import $hub from 'hub-js';
 
 /**
  * 加载obj文件类
@@ -61,6 +62,7 @@ export class ImportObj {
 
         // 加载进度回调
         function progress(xhr) {
+            $hub.emit("loadSchedule", (xhr.loaded / xhr.total * 100) + '% loaded' + '加载!')
             console.log((xhr.loaded / xhr.total * 100) + '% loaded' + 'OBJ加载完成!');
         }
 

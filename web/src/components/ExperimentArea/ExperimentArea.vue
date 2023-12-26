@@ -6,9 +6,9 @@
         <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>
         <KeyFram v-if="animationEditor"></KeyFram>
         <DigitalCityLittleWindow v-if="showLittleWindow" :app3D='app3D'></DigitalCityLittleWindow>
-        <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="3D资源列表"
+        <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="模拟-3D资源列表"
                    width="100%">
-            <ModelList></ModelList>
+            <ExperimentAreaRightStaticsModels :app3D='app3D'></ExperimentAreaRightStaticsModels>
         </el-dialog>
     </div>
 </template>
@@ -28,6 +28,8 @@ import KeyFram from './keyFram/KeyFram.vue'
 import ExperimentAreaCenter from './ExperimentAreaCenter'
 import DigitalCityLittleWindow from './DigitalCityLittleWindow'
 import ModelList from "./ModelList";
+import ExperimentAreaRightStaticsModels from "./ExperimentAreaRightStaticsModels";
+import $hub from 'hub-js';
 
 export default {
     components: {
@@ -36,7 +38,8 @@ export default {
         ExperimentAreaRight,
         KeyFram,
         DigitalCityLittleWindow,
-        ModelList
+        ModelList,
+        ExperimentAreaRightStaticsModels
     },
     data() {
         return {
@@ -207,6 +210,10 @@ export default {
 
         this.promiseTest()
         this.asyncAwaitTest()
+
+        $hub.on("loadSchedule",(data) => {
+            this.dialogVisible = false
+        })
     },
     beforeDestroy() {
         this.app3D.destroy()

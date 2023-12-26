@@ -1,9 +1,14 @@
 <template>
     <div class="hello">
         <div class="homeHeader">
-            <div class="compName">
+            <div class="compName row1">
                 3D编辑器
+                <div class="row1">
+                    <div>{{scheduleData}}</div>
+                    <div v-if="scheduleData" @click="scheduleData = null">x</div>
+                </div>
             </div>
+
             <!--                <a-menu v-model="current" mode="horizontal" theme="dark">-->
 
             <!--                    <a-menu-item key="mail3" @click="goExperimentArea">-->
@@ -37,7 +42,7 @@
 </template>
 
 <script>
-
+import $hub from 'hub-js';
 export default {
     name: 'HomePage',
     components: {},
@@ -48,6 +53,7 @@ export default {
             showUserDetailFlag: false,
             keepUserDetailFlag: false,
             current: ['mail'],
+            scheduleData: null
         }
     },
     computed: {},
@@ -74,6 +80,9 @@ export default {
         setTimeout(function () {
             self.goExperimentArea()
         }, 100)
+        $hub.on("loadSchedule",(data) => {
+            this.scheduleData = data
+        })
     }
 }
 </script>

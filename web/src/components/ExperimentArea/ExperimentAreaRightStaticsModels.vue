@@ -1,11 +1,14 @@
 <template>
     <div id='rightToolClassSub'>
         <div id='models'>
-            <div draggable="true" v-for="item in listData" v-on:dragstart="dragstart(item,$event)"
-                 v-on:dragend="dragend(item,$event)">
-                <img :src=item.imgSrc>
-                <div class="titleContainer">{{ item.name }}</div>
-                <a-divider type="horizontal" dashed/>
+            <div v-for="item in listData" draggable="true" v-on:dragend="dragend(item,$event)"
+                 v-on:dragstart="dragstart(item,$event)">
+                <div>
+                    <img :src=item.imgSrc>
+                    <div class="titleContainer">{{ item.name }}</div>
+                </div>
+                <el-link size="mini" type="success" @click="addTo000(item)">添加热点</el-link>
+                <a-divider dashed type="horizontal"/>
             </div>
         </div>
     </div>
@@ -26,14 +29,14 @@ export default {
         return {
             listData: [
                 {
-                    name: 'varytest',
-                    index: serverAdress + '/3Dstatic/model3D/飞机/varytest/无标题.obj',
-                    imgSrc: serverAdress + '/3Dstatic/model3D/飞机/varytest/Screenshot.png'
-                },
-                {
                     name: '0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
                     index: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
                     imgSrc: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/Screenshot.png'
+                },
+                {
+                    name: 'varytest',
+                    index: serverAdress + '/3Dstatic/model3D/飞机/varytest/无标题.obj',
+                    imgSrc: serverAdress + '/3Dstatic/model3D/飞机/varytest/Screenshot.png'
                 },
                 {
                     name: 'Plane-Engine.obj',
@@ -90,11 +93,14 @@ export default {
             if (intersects[0]) {
                 if (intersects[0].point) {
                     const vec3 = intersects[0].point
-                    console.warn('intersects[0].point', intersects[0].point)
                     this.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
                 }
             }
 
+        },
+        addTo000(item) {
+            const vec3 = new THREE.Vector3(0, 0, 0)
+            this.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
         },
         getMyOBJResource() {
             getOBJList().then(response => {
@@ -139,7 +145,7 @@ export default {
     color: #7DD3CA;
 
     #models {
-        height: 500px;
+        height: 100%;
         overflow: auto;
 
         img {
