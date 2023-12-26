@@ -8,30 +8,6 @@
                 <a-divider type="horizontal" dashed/>
             </div>
         </div>
-
-        <div id="videoUploadContainer">
-            <div class="clearfix">
-                <a-input placeholder="OBJ Name" v-model="videoIntroduce" size="small"/>
-
-                <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
-                    <a-button size="small" type="primary">
-                        <a-icon type="upload"/>
-                        Select File
-                    </a-button>
-                </a-upload>
-
-                <a-button
-                    type="primary"
-                    :disabled="fileList.length === 0"
-                    :loading="uploading"
-                    style="margin-top: 16px"
-                    size="small"
-                    @click="handleUpload"
-                >
-                    {{ uploading ? 'Uploading' : 'Start Upload' }}
-                </a-button>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -50,6 +26,16 @@ export default {
         return {
             listData: [
                 {
+                    name: 'varytest',
+                    index: serverAdress + '/3Dstatic/model3D/飞机/varytest/无标题.obj',
+                    imgSrc: serverAdress + '/3Dstatic/model3D/飞机/varytest/Screenshot.png'
+                },
+                {
+                    name: '0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
+                    index: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
+                    imgSrc: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/Screenshot.png'
+                },
+                {
                     name: 'Plane-Engine.obj',
                     index: serverAdress + '/3Dstatic/model3D/飞机/飞机引擎/Plane-Engine.obj',
                     imgSrc: serverAdress + '/3Dstatic/model3D/飞机/飞机引擎/Screenshot.png'
@@ -58,16 +44,6 @@ export default {
                     name: 'F-35 ',
                     index: serverAdress + '/3Dstatic/model3D/飞机/f-35/F-35 A Lightning II Nete.obj',
                     imgSrc: serverAdress + '/3Dstatic/model3D/飞机/f-35/Screenshot.png'
-                },
-                {
-                    name: '0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
-                    index: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
-                    imgSrc: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/Screenshot.png'
-                },
-                {
-                    name: 'varytest',
-                    index: serverAdress + '/3Dstatic/model3D/飞机/varytest/无标题.obj',
-                    imgSrc: serverAdress + '/3Dstatic/model3D/飞机/varytest/Screenshot.png'
                 },
                 {
                     name: 'ENSCAPE+MATERIALS.obj',
@@ -80,8 +56,6 @@ export default {
                     imgSrc: ''
                 }
             ],
-
-
             name3D: null,
             fileList: [],
             uploading: false,
@@ -147,29 +121,6 @@ export default {
             newFileList.splice(index, 1);
             this.fileList = newFileList;
         },
-
-        // 上传服务器
-        handleUpload() {
-            const {fileList} = this;
-            const formData = new FormData();
-            fileList.forEach(file => {
-                formData.append('files[]', file);
-            });
-            formData.append('videoIntroduce', this.videoIntroduce);
-            this.uploading = true;
-
-            const self = this
-            save3DModelApi(formData).then(response => {
-                if (response.status === 200) {
-                    this.$message.success(response.data);
-                    self.getMyOBJResource()
-                } else {
-                    this.$message.success('status', response.status);
-                }
-                this.uploading = false;
-                this.fileList = []
-            })
-        }
     },
     mounted() {
         this.getMyOBJResource()

@@ -2,7 +2,7 @@
     <div class="hello">
         <div class="homeHeader">
             <div class="compName">
-                云视图研
+                3D编辑器
             </div>
             <!--                <a-menu v-model="current" mode="horizontal" theme="dark">-->
 
