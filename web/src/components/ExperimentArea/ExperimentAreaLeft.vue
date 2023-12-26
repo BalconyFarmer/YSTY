@@ -2,33 +2,33 @@
     <div id="leftContainer" @click="getMeshByUUIDDispose">
         <div id='leftToolClass'>
             <div class="rightToolClassSub">
-                <a-icon type="api" style="color: #ffffff"/>
+                <a-icon style="color: #ffffff" type="api"/>
             </div>
             <div class="rightToolClassSub">
-                <a-icon type="environment" style="color: #ffffff"/>
+                <a-icon style="color: #ffffff" type="environment"/>
             </div>
             <div class="rightToolClassSub">
-                <a-icon type="eye-invisible" style="color: #ffffff"/>
+                <a-icon style="color: #ffffff" type="eye-invisible"/>
             </div>
         </div>
 
         <div id="leftToolClassSub">
             <a-tree
-                show-line
                 v-model="checkedKeys"
-                checkable
-                :expanded-keys="expandedKeys"
                 :auto-expand-parent="autoExpandParent"
+                :expanded-keys="expandedKeys"
                 :selected-keys="selectedKeys"
                 :tree-data="treeData"
-                @expand="onExpand"
-                @select="onSelect"
+                checkable
+                show-line
                 @click="clickTree"
+                @expand="onExpand"
                 @rightClick="onRightClick"
+                @select="onSelect"
             />
 
-            <div id="leftSubMenu" v-if="leftSubMenu">
-                <a-button type="primary" size="small" @click="addAnimationv">
+            <div v-if="leftSubMenu" id="leftSubMenu">
+                <a-button size="small" type="primary" @click="addAnimationv">
                     添加动画
                 </a-button>
             </div>
@@ -105,10 +105,12 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(function () {
-            this.treeData = this.app3D.getSceneChildren()
-            this.app3D.eventBus.addEventListener('updateLeftTreeData', this.updateTreeData.bind(this))
-        })
+        const self = this
+        setTimeout(function () {
+            self.treeData = self.app3D.getSceneChildren()
+            self.app3D.eventBus.addEventListener('updateLeftTreeData', self.updateTreeData.bind(self))
+        }, 1000)
+
     }
 };
 </script>
@@ -120,7 +122,7 @@ export default {
     position: absolute;
     left: 0px;
     top: 46px;
-    background-color: rgba(33,37,43,0.8);
+    background-color: rgba(33, 37, 43, 0.8);
     overflow: auto;
     width: 300px;
     height: calc(100vh);

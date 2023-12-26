@@ -1,15 +1,15 @@
 <template>
     <div id="experimentAreaAll">
-        <canvas id="3dCanvas" height="800px" width="800px"></canvas>
+        <canvas id="3dCanvas" height="800px" width="911px"></canvas>
         <ExperimentAreaLeft :app3D='app3D'></ExperimentAreaLeft>
         <ExperimentAreaCenter :app3D='app3D'></ExperimentAreaCenter>
         <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>
         <KeyFram v-if="animationEditor"></KeyFram>
         <DigitalCityLittleWindow v-if="showLittleWindow" :app3D='app3D'></DigitalCityLittleWindow>
-<!--        <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="3D资源列表"-->
-<!--                   width="100%">-->
-<!--            <ModelList></ModelList>-->
-<!--        </el-dialog>-->
+        <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="3D资源列表"
+                   width="100%">
+            <ModelList></ModelList>
+        </el-dialog>
     </div>
 </template>
 
@@ -198,7 +198,7 @@ export default {
 
         const dom = document.getElementById('3dCanvas')
         dom.width = window.innerWidth
-        dom.height = window.innerHeight - 45
+        dom.height = window.innerHeight
         this.app3D = new App3D(dom)
         this.app3D.init()
         this.app3D.eventBus.addEventListener('changeMesh', this.onChangeMesh.bind(this))
