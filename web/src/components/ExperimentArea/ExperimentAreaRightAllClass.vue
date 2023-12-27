@@ -33,6 +33,8 @@
         <a @click="stopAnimationEditor">关闭动画编辑器</a>
         <a @click="addFlowPipe">流动管道flowPipe</a>
         <a @click="addFBX">addFBX</a>
+        <a @click="addSTL">addSTL</a>
+        <a @click="addGLB">addGlb</a>
         <a @click="startAutoRunCamera">相机自动旋转</a>
         <a @click="addSound">声音</a>
         <a @click="addWater">水纹效果</a>
@@ -68,7 +70,7 @@
 
         <strong>其他</strong>
         <a @click="dialogVisible = true">canvas</a>
-        <el-dialog title="canvas绘图" :visible.sync="dialogVisible" width="90%" height="80%">
+        <el-dialog :visible.sync="dialogVisible" height="80%" title="canvas绘图" width="90%">
             <Canvas class="canvasComponents"></Canvas>
         </el-dialog>
 
@@ -79,6 +81,8 @@
 import * as THREE from "three";
 import {serverAdress} from '@/config';
 import Canvas from "./Canvas/Canvas";
+import {STLLoader} from 'three/examples/jsm/loaders/STLLoader.js';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export default {
     components: {
@@ -112,7 +116,7 @@ export default {
         },
         addSkimmer() {
             const mesh = serverAdress + '/3Dstatic/model3D/蛋分/SimLab_2022-10-20-15-40-52.obj'
-            this.app3D.objLoaders.loadOBJ(mesh,"蛋分")
+            this.app3D.objLoaders.loadOBJ(mesh, "蛋分")
         },
         addGUITest() {
             this.app3D.GUI3D.start()
@@ -146,7 +150,26 @@ export default {
 
         },
         addFBX() {
-            this.app3D.FBXLoader.loadFBX(`${serverAdress}/3Dstatic/model3D/SambaDancing.fbx`)
+            // this.app3D.FBXLoader.loadFBX(`${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/Alpinestars越野摩托车头盔.fbx`)
+            // this.app3D.FBXLoader.loadFBX(`${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/手动电转.fbx`)
+            this.app3D.FBXLoader.loadFBX(`${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/80年代CRT彩色电视机.fbx`)
+        },
+        addSTL() {
+            const scene = this.app3D.scene
+            const loader = new STLLoader();
+            loader.load(`${serverAdress}/3Dstatic/Yunshituyan3DFile/STL/动画-飞机引擎.stl`, (geometry) => {
+                const material = new THREE.MeshStandardMaterial({color: 0x606060});
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+            });
+        },
+        addGLB() {
+            const scene = this.app3D.scene
+            const loader = new GLTFLoader();
+            loader.load(`${serverAdress}/3Dstatic/Yunshituyan3DFile/GLB/动画-V8发动机装配.glb`, (gltf) => {
+                gltf.scene.position.set(0, 0, 0);
+                scene.add(gltf.scene);
+            });
         },
         makeMeshPoint() {
             this.app3D.makeMeshPoint.start()
