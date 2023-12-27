@@ -29,6 +29,11 @@ export default {
         return {
             listData: [
                 {
+                    name: '动画-剑射鱼游动.obj *** 缺少mtl材质文件,请勿点击',
+                    index: serverAdress + '/3Dstatic/Yunshituyan3DFile/OBJ/机械狗.obj',
+                    imgSrc: null
+                },
+                {
                     name: '0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
                     index: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/0ni_Tak1mlar1.obj',
                     imgSrc: serverAdress + '/3Dstatic/model3D/飞机/0ni_Tak1mlar1/Screenshot.png'

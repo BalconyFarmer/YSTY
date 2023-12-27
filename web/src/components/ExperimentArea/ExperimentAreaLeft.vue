@@ -137,7 +137,7 @@ export default {
     position: absolute;
     left: 0px;
     top: 46px;
-    background-color: rgba(33, 37, 43, 0.8);
+    background-color: rgba(47, 49, 54, 0.9);
     overflow: hidden;
     width: 300px;
     height: calc(100vh);
