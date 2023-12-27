@@ -7,7 +7,9 @@
 
             <div class="row1">
                 <div>{{ scheduleData }}</div>
-                <div v-if="scheduleData" @click="scheduleData = null">x</div>
+                <div v-if="scheduleData" @click="scheduleData = null">
+                    -- 点击清除
+                </div>
             </div>
 
             <!--                <a-menu v-model="current" mode="horizontal" theme="dark">-->

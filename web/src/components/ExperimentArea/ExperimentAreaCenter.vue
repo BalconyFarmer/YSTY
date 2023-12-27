@@ -2,49 +2,48 @@
     <div id="centerContainer">
         <div id="centerTool">
             <div id="toolList">
-            <span :class="axesFlag?'backDiv': ''">
-                <img :src="axesSvg" class="icon0" @click="axesToggle">
-            </span>
+                <span :class="axesFlag?'backDiv': ''">
+                    <img :src="axesSvg" class="icon0" @click="axesToggle">
+                </span>
                 <span :class="statsFlag?'backDiv': ''">
-                <img :src="statsSvg" class="icon1" @click="statsToggle" style="width: 20px">
-            </span>
+                    <img :src="statsSvg" class="icon1" style="width: 20px" @click="statsToggle">
+                </span>
                 <span :class="grideLineFlag?'backDiv': ''">
-                <img :src="grideLineSvg" class="icon1" @click="startGrideLine">
-            </span>
+                    <img :src="grideLineSvg" class="icon1" @click="startGrideLine">
+                 </span>
                 <span :class="cameraLookBottomFlag?'backDiv': ''">
-                <img :src="bottomSee" class="icon1" @click="cameraLookBottom" style="width: 17px">
-            </span>
+                    <img :src="bottomSee" class="icon1" style="width: 17px" @click="cameraLookBottom">
+                </span>
                 <span :class="cameraLookRightFlag?'backDiv': ''">
-                <img :src="leftSee" class="icon1" @click="cameraLookRight" style="width: 15px">
-            </span>
+                    <img :src="leftSee" class="icon1" style="width: 15px" @click="cameraLookRight">
+                </span>
                 <span :class="transformFlag?'backDiv': ''">
-                <img :src="transformMesh" class="icon1" @click="startTransform" style="width: 15px">
-            </span>
+                    <img :src="transformMesh" class="icon1" style="width: 15px" @click="startTransform">
+                </span>
                 <span :class="startLightHelperFlag?'backDiv': ''">
-                <img :src="lightIcon" class="icon1" @click="startLightHelper" style="width: 15px">
-            </span>
+                    <img :src="lightIcon" class="icon1" style="width: 15px" @click="startLightHelper">
+                </span>
                 <span :class="startTakePointFlag?'backDiv': ''">
-                <img :src="takePointIcon" class="icon1" @click="startTakePoint" style="width: 15px">
-            </span>
-
-                <a-switch size="small" default-checked:false @change="casterMeshChange"/>
+                    <img :src="takePointIcon" class="icon1" style="width: 15px" @click="startTakePoint">
+                </span>
+                <a-switch default-checked:false size="small" @change="casterMeshChange"/>
             </div>
         </div>
 
-        <div id="file">
-            <a-dropdown>
-                <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                    文件管理
-                    <a-icon type="down"/>
-                </a>
-                <a-menu slot="overlay">
-                    <a-menu-item @click="exportScene">导出场景</a-menu-item>
-                    <a-menu-item @click="importScene">导入场景</a-menu-item>
-                    <a-menu-item @click="exportMesh">导出Mesh</a-menu-item>
-                    <a-menu-item @click="importMesh">导入Mesh</a-menu-item>
-                </a-menu>
-            </a-dropdown>
-        </div>
+        <!--        <div id="file">-->
+        <!--            <a-dropdown>-->
+        <!--                <a class="ant-dropdown-link" @click="e => e.preventDefault()">-->
+        <!--                    文件管理-->
+        <!--                    <a-icon type="down"/>-->
+        <!--                </a>-->
+        <!--                <a-menu slot="overlay">-->
+        <!--                    <a-menu-item @click="exportScene">导出场景</a-menu-item>-->
+        <!--                    <a-menu-item @click="importScene">导入场景</a-menu-item>-->
+        <!--                    <a-menu-item @click="exportMesh">导出Mesh</a-menu-item>-->
+        <!--                    <a-menu-item @click="importMesh">导入Mesh</a-menu-item>-->
+        <!--                </a-menu>-->
+        <!--            </a-dropdown>-->
+        <!--        </div>-->
 
     </div>
 
@@ -292,12 +291,12 @@ export default {
         height: auto;
         top: 60px;
         left: calc(100vw / 2 - 150px);
-        border: solid #99A1A9 1px;
 
         #toolList {
 
-            background-color: #001529;
-            display: inline;
+            span {
+                margin-right: 5px;
+            }
 
             .backDiv {
                 background-color: #1890FF;
@@ -306,7 +305,6 @@ export default {
             img {
                 width: 20px;
                 height: 20px;
-                //filter: brightness(10%);
             }
         }
     }
