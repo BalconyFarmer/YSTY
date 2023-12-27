@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import $hub from 'hub-js';
 
 import {SceneCamera} from './sceneBasic/SceneCamera'
 import {RaycasterHelper} from "@/threeD/interaction/RaycasterHelper";
@@ -356,6 +357,11 @@ export default class App3D {
     destroy() {
         this.loopFlag = false
         this.transformMesh.removeEvent()
+    }
+
+    // 加载进度回调
+    progress(xhr) {
+        $hub.emit("loadSchedule", (xhr.loaded / xhr.total * 100) + '% loaded' + '加载!')
     }
 
 }

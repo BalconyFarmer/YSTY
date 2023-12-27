@@ -150,8 +150,6 @@ export default {
 
         },
         addFBX() {
-            // this.app3D.FBXLoader.loadFBX(`${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/Alpinestars越野摩托车头盔.fbx`)
-            // this.app3D.FBXLoader.loadFBX(`${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/手动电转.fbx`)
             this.app3D.FBXLoader.loadFBX(`${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/80年代CRT彩色电视机.fbx`)
         },
         addSTL() {
