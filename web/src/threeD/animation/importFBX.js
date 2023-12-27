@@ -36,20 +36,18 @@ export class ImportFBX {
                 // AnimationAction.clampWhenFinished=true;//暂停在最后一帧播放的状态
                 AnimationAction.play();//播放动画
                 self.addLoopQuene.bind(self)()
-            })
+            }, this.app.progress)
         }
 
     }
 
     addLoopQuene() {
         const self = this
-        this.app.renderQueue.push(
-            function updateFBX() {
-                if (self.mixer) {
-                    // 更新混合器相关的时间
-                    self.mixer.update(self.app.clock.getDelta()); // 两帧的时间间隔
-                }
+        this.app.renderQueue.push(function updateFBX() {
+            if (self.mixer) {
+                // 更新混合器相关的时间
+                self.mixer.update(self.app.clock.getDelta()); // 两帧的时间间隔
             }
-        )
+        })
     }
 }

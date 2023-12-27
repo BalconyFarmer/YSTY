@@ -19,6 +19,8 @@ import * as THREE from "three";
 import {save3DModelApi} from '@/api/api'
 import {getOBJList} from '@/api/api'
 import {serverAdress} from '@/config';
+import {STLLoader} from 'three/examples/jsm/loaders/STLLoader.js';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export default {
     props: {
@@ -29,8 +31,28 @@ export default {
         return {
             listData: [
                 {
-                    name: '动画-剑射鱼游动.obj *** 缺少mtl材质文件,请勿点击',
-                    index: serverAdress + '/3Dstatic/Yunshituyan3DFile/OBJ/机械狗.obj',
+                    name: '动画-V8发动机装配.glb',
+                    index: `${serverAdress}/3Dstatic/Yunshituyan3DFile/GLB/动画-V8发动机装配.glb`,
+                    imgSrc: null
+                },
+                {
+                    name: '80年代CRT彩色电视机.fbx',
+                    index: `${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/80年代CRT彩色电视机.fbx`,
+                    imgSrc: null
+                },
+                {
+                    name: 'Alpinestars越野摩托车头盔.fbx',
+                    index: `${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/Alpinestars越野摩托车头盔.fbx`,
+                    imgSrc: null
+                },
+                {
+                    name: '手动电转.fbx',
+                    index: `${serverAdress}/3Dstatic/Yunshituyan3DFile/FBX/手动电转.fbx`,
+                    imgSrc: null
+                },
+                {
+                    name: '动画-飞机引擎.stl',
+                    index: `${serverAdress}/3Dstatic/Yunshituyan3DFile/STL/动画-飞机引擎.stl`,
                     imgSrc: null
                 },
                 {
@@ -104,8 +126,33 @@ export default {
 
         },
         addTo000(item) {
-            const vec3 = new THREE.Vector3(0, 0, 0)
-            this.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
+            const scene = this.app3D.scene
+            const fileType = item.index.split('.').pop();
+            switch (fileType) {
+                case 'obj':
+                    const vec3 = new THREE.Vector3(0, 0, 0)
+                    this.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
+                    break
+                case 'fbx':
+                    this.app3D.FBXLoader.loadFBX(item.index)
+                    break
+                case 'stl':
+                    const loader1 = new STLLoader();
+                    loader1.load(item.index, (geometry) => {
+                        const material = new THREE.MeshStandardMaterial({color: 0x606060});
+                        const mesh = new THREE.Mesh(geometry, material);
+                        scene.add(mesh);
+                    }, this.app3D.progress);
+                    break
+                case 'glb':
+                    const loader = new GLTFLoader();
+                    loader.load(item.index, (gltf) => {
+                        gltf.scene.position.set(0, 0, 0);
+                        scene.add(gltf.scene);
+                    }, this.app3D.progress);
+                    break
+            }
+
         },
         getMyOBJResource() {
             getOBJList().then(response => {

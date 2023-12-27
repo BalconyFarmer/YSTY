@@ -60,14 +60,9 @@ export class ImportObj {
             console.log('An error happened', error);
         }
 
-        // 加载进度回调
-        function progress(xhr) {
-            $hub.emit("loadSchedule", (xhr.loaded / xhr.total * 100) + '% loaded' + '加载!')
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded' + 'OBJ加载完成!');
-        }
 
         if (this.OBJurl) {
-            this.OBJLoaderer.load(this.OBJurl, callbackOnLoad.bind(this), progress, errorHandler);
+            this.OBJLoaderer.load(this.OBJurl, callbackOnLoad.bind(this), this.app.progress, errorHandler);
         } else {
             console.log('请输入正确的url')
         }
