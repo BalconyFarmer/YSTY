@@ -27,7 +27,6 @@ import ExperimentAreaRight from './ExperimentAreaRight'
 import KeyFram from './keyFram/KeyFram.vue'
 import ExperimentAreaCenter from './ExperimentAreaCenter'
 import DigitalCityLittleWindow from './DigitalCityLittleWindow'
-import ModelList from "./ModelList";
 import ExperimentAreaRightStaticsModels from "./ExperimentAreaRightStaticsModels";
 import $hub from 'hub-js';
 
@@ -38,7 +37,6 @@ export default {
         ExperimentAreaRight,
         KeyFram,
         DigitalCityLittleWindow,
-        ModelList,
         ExperimentAreaRightStaticsModels
     },
     data() {

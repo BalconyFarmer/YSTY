@@ -24,8 +24,8 @@ const router = new Router({
             ]
         }
     ],
-    mode: "history", // hash
-    base: process.env.NODE_ENV === "development" ? "/test" : "/Three3D",
+    // mode: "history", // hash
+    // base: process.env.NODE_ENV === "development" ? "/test" : "/YSTY",
 })
 
 export default router
