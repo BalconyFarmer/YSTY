@@ -1,22 +1,27 @@
 <template>
-    <div id="leftContainer" @click="getMeshByUUIDDispose" class="finger">
+    <div id="leftContainer" class="finger" @click="getMeshByUUIDDispose">
         <div id='leftToolClass' class="colum1">
-            <div class="rightToolClassSub columAround">
+            <div :class="activeIndex == 1 ? 'active' : ''" class="rightToolClassSub columAround"
+                 @click="activeIndex = 1">
                 <i class="el-icon-edit" style="font-size: 20px;"></i>
                 <div>模型图层</div>
             </div>
-            <div class="rightToolClassSub columAround">
+            <div :class="activeIndex == 2 ? 'active' : ''" class="rightToolClassSub columAround"
+                 @click="activeIndex = 2">
                 <i class="el-icon-share" style="font-size: 20px;"></i>
                 <div>热点编辑</div>
             </div>
-            <div class="rightToolClassSub columAround">
+            <div :class="activeIndex == 3 ? 'active' : ''" class="rightToolClassSub columAround"
+                 @click="activeIndex = 3">
                 <i class="el-icon-delete" style="font-size: 20px;"></i>
                 <div>文件管理</div>
             </div>
+
         </div>
 
         <div id="leftToolClassSub">
             <a-tree
+                v-if="activeIndex == 1"
                 v-model="checkedKeys"
                 :auto-expand-parent="autoExpandParent"
                 :expanded-keys="expandedKeys"
@@ -30,6 +35,12 @@
                 @select="onSelect"
             />
 
+            <div v-if="activeIndex == 2">
+                热点编辑
+            </div>
+            <div v-if="activeIndex == 3">
+                文件管理
+            </div>
             <div v-if="leftSubMenu" id="leftSubMenu">
                 <a-button size="small" type="primary" @click="addAnimationv">
                     添加动画
@@ -53,7 +64,8 @@ export default {
             selectedKeys: [],
             treeData: [],
             leftSubMenu: false,
-            rightSelectMeshUUID: null
+            rightSelectMeshUUID: null,
+            activeIndex: 1
         }
     },
     watch: {
@@ -129,7 +141,6 @@ export default {
     overflow: hidden;
     width: 300px;
     height: calc(100vh);
-    border: solid #99A1A9 1px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -137,17 +148,19 @@ export default {
     color: white;
 
     #leftToolClass {
-        background-color: @outer;
-        width: 60px;
+        background-color: rgba(32, 34, 38, 0.9);
+        width: 90px;
         height: calc(100vh);
-        box-shadow: 1px 1px 1px #7BA4B4;
 
         .rightToolClassSub {
             width: 100%;
-            height: 50px;
+            height: 60px;
             font-size: 12px;
             margin-bottom: 1px;
-            background: #1890FF;
+        }
+
+        .active {
+            background-color: #2F3136;
         }
     }
 
