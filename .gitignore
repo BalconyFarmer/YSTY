@@ -16,3 +16,4 @@ transferFolder
 # 用户上传图片
 # projects
 /serverReal/static/
+/koa-api/static/
