@@ -3,7 +3,7 @@
         <canvas id="3dCanvas" height="800px" width="911px"></canvas>
         <ExperimentAreaLeft :app3D='app3D'></ExperimentAreaLeft>
         <ExperimentAreaCenter :app3D='app3D'></ExperimentAreaCenter>
-<!--        <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>-->
+        <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>
         <KeyFram v-if="animationEditor"></KeyFram>
         <DigitalCityLittleWindow v-if="showLittleWindow" :app3D='app3D'></DigitalCityLittleWindow>
         <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="模拟-3D资源列表"

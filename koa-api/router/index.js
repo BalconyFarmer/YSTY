@@ -3,6 +3,8 @@ const router = new Router()
 
 const {NormalUsers} = require("../controllers/sub/NormalUsers")
 const {UploadFile} = require("../controllers/sub/UploadFile")
+const {HotPointController} = require("../controllers/yunshituyan/HotPointController")
+
 
 const routeList = [
 
@@ -86,6 +88,13 @@ const routeList = [
         controller: UploadFile.updateMyProfile
     },
 
+    // yunshituyan
+
+    {
+        method: 'post',
+        path: '/getHotById',
+        controller: HotPointController.getHotById
+    },
 ];
 
 routeList.forEach(item => {
