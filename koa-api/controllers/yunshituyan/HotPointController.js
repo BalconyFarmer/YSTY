@@ -10,7 +10,6 @@ const config = {
 
 const HotPointController = {
 
-
     getHotById: async ctx => {
         let postData = ctx.request.body
         const result = await initSequelize.hotPointModel.getHotById(postData)
