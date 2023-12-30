@@ -68,7 +68,8 @@ class NormalUsersM {
             },
             {
                 'where': {'id': params.userid}
-            })
+            }
+            )
         return result
     }
 }

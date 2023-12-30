@@ -7,7 +7,7 @@ import {serverAdress} from '@/config';
 
 export function saveScene(content) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/saveScene',
         data: {
             name: '测试scene数据',
@@ -19,7 +19,7 @@ export function saveScene(content) {
 
 export function readScene() {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/readScene',
         data: {
             name: '测试scene数据',
@@ -33,7 +33,7 @@ export function readScene() {
  */
 export function signUpApi(params) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/regist',
         data: {
             name: params.name,
@@ -48,7 +48,7 @@ export function signUpApi(params) {
  */
 export function loginApi(params) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/login',
         data: {
             name: params.name,
@@ -60,7 +60,7 @@ export function loginApi(params) {
 
 export function saveVideo(formData) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/saveVideo',
         data: formData,
         withCredentials: true
@@ -72,7 +72,7 @@ export function saveVideo(formData) {
  */
 export function getPicList() {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/getAllWeibo',
         data: {},
         withCredentials: true
@@ -86,7 +86,7 @@ export function getPicList() {
  */
 export function savePicListApi(params) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/savePicText',
         data: {
             msg: params.msg,
@@ -103,7 +103,7 @@ export function savePicListApi(params) {
  */
 export function loadHeadIconApi(params) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/userIcon',
         data: {
             userInf: params.userInf
@@ -117,7 +117,7 @@ export function loadHeadIconApi(params) {
  */
 export function save3DModelApi(formData) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/saveOBJ',
         data: formData,
         withCredentials: true
@@ -129,7 +129,7 @@ export function save3DModelApi(formData) {
  */
 export function getOBJList(formData) {
     return axios({
-        method: "post",
+        method: 'post',
         url: serverAdress + '/getOBJList',
         data: formData,
         withCredentials: true

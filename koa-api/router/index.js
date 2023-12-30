@@ -95,6 +95,27 @@ const routeList = [
         path: '/getHotById',
         controller: HotPointController.getHotById
     },
+    {
+        method: 'post',
+        path: '/uploadHeadMinio',
+        before: HotPointController.uploadHeadMinioBefore,
+        controller: HotPointController.uploadHeadMinio
+    },
+    {
+        method: 'post',
+        path: '/addHot',
+        controller: HotPointController.addHot
+    },
+    {
+        method: 'post',
+        path: '/updateHot',
+        controller: HotPointController.updateHot
+    },
+    {
+        method: 'post',
+        path: '/deleteHot',
+        controller: HotPointController.deleteHot
+    },
 ];
 
 routeList.forEach(item => {

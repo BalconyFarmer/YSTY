@@ -26,6 +26,38 @@ class HotPointModel {
         }
     }
 
+    async addHot(postData) {
+        const result = await this.HotModel.create({
+            d3ModelId: postData.d3ModelId,
+            hotData: postData.hotData,
+            files: ''
+        })
+        return result
+    }
+
+    async updateHot(postData) {
+        const result = await this.HotModel.update(
+            {
+                'hotData': postData.hotData
+            },
+            {
+                'where': {d3ModelId: postData.d3ModelId}
+            }
+        )
+        return result
+    }
+
+    async deleteHot(postData) {
+        const result = await this.HotModel.destroy(
+            {
+                where: {
+                    d3ModelId: postData.d3ModelId
+                }
+            },
+        )
+        return result
+    }
+
 }
 
 module.exports = {

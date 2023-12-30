@@ -1,4 +1,4 @@
-import App3D from "../../threeD/App3D";
+import App3D from '../../threeD/App3D';
 import * as THREE from 'three'
 import {serverAdress} from '@/config';
 
@@ -6,7 +6,7 @@ export class DigitalCity3D {
     constructor(dom) {
         this.dom = dom
         this.app3D = null
-        this.url = "http://101.34.131.94:8081/0staticFixed/"
+        this.url = 'http://101.34.131.94:8081/0staticFixed/'
     }
 
     run() {

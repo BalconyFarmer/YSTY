@@ -3,7 +3,7 @@ const {config} = require('../common/config')
 const koaBody = require('koa-body')
 const static = require('koa-static')
 const path = require('path')
-const jwt = require("koa-jwt");
+const jwt = require('koa-jwt');
 
 
 const CORS = cors({
@@ -28,7 +28,7 @@ const _static = static(
     path.join(__dirname, '../static')
 )
 
-const initJWT = jwt({secret: config.JWTSecret, passthrough: true,debug: true}).unless({path: ["/gettoken"]})
+const initJWT = jwt({secret: config.JWTSecret, passthrough: true,debug: true}).unless({path: ['/gettoken']})
 
 module.exports = [
     CORS,
