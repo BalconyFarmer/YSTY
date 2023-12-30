@@ -7,8 +7,8 @@
                     <img :src=item.imgSrc>
                     <div class="titleContainer">{{ item.name }}</div>
                 </div>
-                <el-link v-if="item.hotData" size="mini" @click="addTo000(item)">编辑热点</el-link>
-                <el-link v-else size="mini" type="success" @click="addTo000(item)">添加热点</el-link>
+                <el-button v-if="item.hotData" size="mini" type="primary" @click="addTo000(item)">编辑热点</el-button>
+                <el-button v-else size="mini" type="warning" @click="addTo000(item)">添加热点</el-button>
                 <a-divider dashed type="horizontal"/>
             </div>
         </div>
@@ -23,6 +23,7 @@ import {serverAdress} from '@/config';
 import {STLLoader} from 'three/examples/jsm/loaders/STLLoader.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {getHotById} from "../../api/HotApi";
+import $hub from 'hub-js';
 
 export default {
     props: {
@@ -154,7 +155,11 @@ export default {
                     }, this.app3D.progress);
                     break
             }
-
+            if (item.hotData) {
+                $hub.emit("getHotData", item.hotData)
+            } else {
+                $hub.emit("getHotData", null)
+            }
         },
         getMyOBJResource() {
             getOBJList().then(response => {
@@ -190,8 +195,6 @@ export default {
                 }
             }
             this.$forceUpdate()
-            console.log(this.listData, 666666666)
-            debugger
         }
     },
     mounted() {

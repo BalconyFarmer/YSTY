@@ -212,6 +212,9 @@ export default {
         $hub.on("loadSchedule", (data) => {
             this.dialogVisible = false
         })
+        $hub.on("quit", (data) => {
+            this.dialogVisible = true
+        })
     },
     beforeDestroy() {
         this.app3D.destroy()

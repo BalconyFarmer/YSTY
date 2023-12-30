@@ -14,7 +14,7 @@
             <div :class="activeIndex == 3 ? 'active' : ''" class="rightToolClassSub columAround"
                  @click="activeIndex = 3">
                 <i class="el-icon-delete" style="font-size: 20px;"></i>
-                <div>文件管理</div>
+                <div>其他</div>
             </div>
 
         </div>
@@ -37,9 +37,11 @@
 
             <div v-if="activeIndex == 2">
                 热点编辑
+                {{ hotData }}
             </div>
             <div v-if="activeIndex == 3">
-                文件管理
+                <el-button v-if="hotData" size="mini" @click="deleteHot">删除热点</el-button>
+                <el-button size="mini" @click="quit">退出</el-button>
             </div>
             <div v-if="leftSubMenu" id="leftSubMenu">
                 <a-button size="small" type="primary" @click="addAnimationv">
@@ -51,6 +53,9 @@
 </template>
 
 <script>
+import $hub from 'hub-js';
+import {deleteHot} from "../../api/HotApi";
+
 export default {
     props: {
         app3D: Object,
@@ -65,7 +70,8 @@ export default {
             treeData: [],
             leftSubMenu: false,
             rightSelectMeshUUID: null,
-            activeIndex: 1
+            activeIndex: 1,
+            hotData: null
         }
     },
     watch: {
@@ -74,6 +80,14 @@ export default {
         },
     },
     methods: {
+        quit() {
+            $hub.emit("quit", "")
+        },
+        async deleteHot() {
+            let res = await deleteHot({d3ModelId: this.hotData.d3ModelId})
+            console.log(res, 6666)
+            debugger
+        },
         addAnimationv() {
             this.leftSubMenu = false
             const see = this.rightSelectMeshUUID
@@ -125,6 +139,10 @@ export default {
             self.treeData = self.app3D.getSceneChildren()
             self.app3D.eventBus.addEventListener('updateLeftTreeData', self.updateTreeData.bind(self))
         }, 1000)
+
+        $hub.on("getHotData", (hotData) => {
+            this.hotData = hotData
+        })
 
     }
 };
