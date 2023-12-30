@@ -7,7 +7,8 @@
                     <img :src=item.imgSrc>
                     <div class="titleContainer">{{ item.name }}</div>
                 </div>
-                <el-link size="mini" type="success" @click="addTo000(item)">添加热点</el-link>
+                <el-link v-if="item.hotData" size="mini" @click="addTo000(item)">编辑热点</el-link>
+                <el-link v-else size="mini" type="success" @click="addTo000(item)">添加热点</el-link>
                 <a-divider dashed type="horizontal"/>
             </div>
         </div>
@@ -21,6 +22,7 @@ import {getOBJList} from '@/api/api'
 import {serverAdress} from '@/config';
 import {STLLoader} from 'three/examples/jsm/loaders/STLLoader.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {getHotById} from "../../api/HotApi";
 
 export default {
     props: {
@@ -179,10 +181,23 @@ export default {
             newFileList.splice(index, 1);
             this.fileList = newFileList;
         },
+
+        async getHotData() {
+            for (let item of this.listData) {
+                let res = await getHotById(item.index);
+                if (res.data && res.data.id) {
+                    item.hotData = res.data
+                }
+            }
+            this.$forceUpdate()
+            console.log(this.listData, 666666666)
+            debugger
+        }
     },
     mounted() {
         this.getMyOBJResource()
-        console.log('清除3D内存!')
+        this.getHotData()
+
     }
 }
 </script>

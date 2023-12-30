@@ -1,9 +1,10 @@
 import axios from 'axios';
+import {apiAdress} from "../config";
 
 export function getHotById(d3ModelId) {
     return axios({
         method: 'post',
-        url: serverAdress + '/getHotById',
+        url: apiAdress + '/getHotById',
         data: {
             d3ModelId: d3ModelId,
         },
@@ -13,7 +14,7 @@ export function getHotById(d3ModelId) {
 export function uploadHeadMinio(data) {
     return axios({
         method: 'post',
-        url: serverAdress + '/uploadHeadMinio',
+        url: apiAdress + '/uploadHeadMinio',
         data: data,
     })
 }
@@ -21,7 +22,7 @@ export function uploadHeadMinio(data) {
 export function addHot(data) {
     return axios({
         method: 'post',
-        url: serverAdress + '/addHot',
+        url: apiAdress + '/addHot',
         data: data,
     })
 }
@@ -29,7 +30,7 @@ export function addHot(data) {
 export function updateHot(data) {
     return axios({
         method: 'post',
-        url: serverAdress + '/updateHot',
+        url: apiAdress + '/updateHot',
         data: data,
     })
 }
@@ -37,7 +38,7 @@ export function updateHot(data) {
 export function deleteHot(data) {
     return axios({
         method: 'post',
-        url: serverAdress + '/deleteHot',
+        url: apiAdress + '/deleteHot',
         data: data,
     })
 }
