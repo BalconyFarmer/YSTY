@@ -1,5 +1,5 @@
 <template>
-    <div id="leftContainer" class="finger" @click="getMeshByUUIDDispose">
+    <div id="leftContainer" v-loading="loading" class="finger" @click="getMeshByUUIDDispose">
         <div id='leftToolClass' class="colum1">
             <div :class="activeIndex == 1 ? 'active' : ''" class="rightToolClassSub columAround"
                  @click="activeIndex = 1">
@@ -10,6 +10,7 @@
                  @click="activeIndex = 2">
                 <i class="el-icon-share" style="font-size: 20px;"></i>
                 <div>热点编辑</div>
+
             </div>
             <div :class="activeIndex == 3 ? 'active' : ''" class="rightToolClassSub columAround"
                  @click="activeIndex = 3">
@@ -20,24 +21,53 @@
         </div>
 
         <div id="leftToolClassSub">
-            <a-tree
-                v-if="activeIndex == 1"
-                v-model="checkedKeys"
-                :auto-expand-parent="autoExpandParent"
-                :expanded-keys="expandedKeys"
-                :selected-keys="selectedKeys"
-                :tree-data="treeData"
-                checkable
-                show-line
-                @click="clickTree"
-                @expand="onExpand"
-                @rightClick="onRightClick"
-                @select="onSelect"
-            />
+            <div v-if="activeIndex == 1">
+                <a-tree
+                    v-model="checkedKeys"
+                    :auto-expand-parent="autoExpandParent"
+                    :expanded-keys="expandedKeys"
+                    :selected-keys="selectedKeys"
+                    :tree-data="treeData"
+                    checkable
+                    show-line
+                    @click="clickTree"
+                    @expand="onExpand"
+                    @rightClick="onRightClick"
+                    @select="onSelect"
+                />
+            </div>
+
 
             <div v-if="activeIndex == 2">
-                热点编辑
-                {{ hotData }}
+                <div>
+                    热点编辑123
+                </div>
+                <el-divider></el-divider>
+                <div>
+                    {{ hotData }}
+                </div>
+                <el-divider></el-divider>
+
+                <div v-if="newFileData">
+                    <div>
+                        {{ newFileData }}
+                    </div>
+                    <el-button circle icon="el-icon-plus" size="mini"></el-button>
+                </div>
+                <el-divider></el-divider>
+
+                <div class="rowBetween">
+                    <el-select v-model="hotTypesIndex" placeholder="请选择" size="mini">
+                        <el-option
+                            v-for="item in hotTypes"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <FileUpload></FileUpload>
+                </div>
+
             </div>
             <div v-if="activeIndex == 3">
                 <el-button v-if="hotData" size="mini" @click="deleteHot">删除热点</el-button>
@@ -54,15 +84,21 @@
 
 <script>
 import $hub from 'hub-js';
-import {deleteHot} from "../../api/HotApi";
+import {deleteHot, uploadHeadMinio} from "../../api/HotApi";
+import FileUpload from "../common/FileUpload";
 
 export default {
     props: {
         app3D: Object,
         required: true
     },
+    components: {
+        FileUpload
+    },
     data() {
         return {
+            newFileData: null,
+            loading: false,
             expandedKeys: [],
             autoExpandParent: true,
             checkedKeys: [],
@@ -71,7 +107,26 @@ export default {
             leftSubMenu: false,
             rightSelectMeshUUID: null,
             activeIndex: 1,
-            hotData: null
+            hotData: null,
+            hotTypesIndex: "视频",
+            hotTypes: [
+                {
+                    value: '视频',
+                    label: '视频'
+                },
+                {
+                    value: '图片',
+                    label: '图片'
+                },
+                {
+                    value: '声音',
+                    label: '声音'
+                },
+                {
+                    value: '文本',
+                    label: '文本'
+                },
+            ]
         }
     },
     watch: {
@@ -131,6 +186,20 @@ export default {
         getMeshByUUIDDispose() {
             this.app3D.getMeshByUUIDDispose()
             this.selectedKeys = []
+        },
+        async uploadFile(data) {
+            this.loading = true
+            let formData = new FormData()
+            formData.append('file', data[data.length - 1])
+            let res = await uploadHeadMinio(formData)
+            console.log(res, 666666)
+            if (res.data && res.data.filename) {
+                this.$message('上传成功');
+                this.newFileData = res.data.filename
+            } else {
+                this.$message('上传失败');
+            }
+            this.loading = false
         }
     },
     mounted() {
@@ -144,6 +213,14 @@ export default {
             this.hotData = hotData
         })
 
+        this.hub1 = $hub.on("updateUploadFiles", (data) => {
+            this.uploadFile(data)
+        })
+
+
+    },
+    beforeDestroy() {
+        this.hub1.off()
     }
 };
 </script>
