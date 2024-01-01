@@ -29,15 +29,32 @@
                 <div>
                     热点编辑
                 </div>
+                <br/>
                 <el-divider></el-divider>
                 <div v-if="hotData.hotData" class="colum1">
                     <div v-for="item in hotData.hotData.data">
                         <div>
                             <div>
-                                访问地址:
+                                资源预览:
                             </div>
+                            <br/>
                             <div>
-                                {{ item.src }}
+                                <el-image
+                                    v-if="item.type == '图片'"
+                                    :src="item.src"
+                                    fit="contain"
+                                    style="width: 100px; height: 100px"></el-image>
+
+                                <video v-if="item.type == '视频'" controls height="150" width="200">
+                                    <source :src="item.src" type="video/mp4">
+                                    <source :src="item.src" type="video/ogg">
+                                    您的浏览器不支持 video 标签。
+                                </video>
+
+                                <audio v-if="item.type == '声音'" controls style="width: 210px;height: 20px">
+                                    <source :src="item.src" type="audio/mpeg">
+                                    您的浏览器不支持 audio 标签。
+                                </audio>
                             </div>
                         </div>
                         <div>
@@ -210,6 +227,10 @@ export default {
             if (res1.data && res1.data.id) {
                 this.hotData.hotData = JSON.parse(res1.data.hotData)
                 this.$forceUpdate()
+                this.app3D.hotPoint.clearAll()
+                this.hotData.hotData.data.forEach(itemInner => {
+                    this.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
+                })
             }
         },
         async updateHot() {
@@ -298,10 +319,8 @@ export default {
                     case 'video/avi':
                     case 'video/mov':
                         return '视频';
-                    case 'mp4':
-                    case 'avi':
-                    case 'mov':
-                        return '视频';
+                    case 'audio/mpeg':
+                        return '声音';
                 }
             }
 
@@ -327,6 +346,9 @@ export default {
                 item.hotData = hot
             }
             this.hotData = item
+            this.hotData.hotData.data.forEach(itemInner => {
+                this.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
+            })
         })
 
         this.hub1 = $hub.on("updateUploadFiles", (data) => {
@@ -341,6 +363,7 @@ export default {
     }
 };
 </script>
+
 
 <style lang="less">
 @import '../0main.less';
@@ -388,5 +411,62 @@ export default {
             height: 100px;
         }
     }
+}
+
+
+</style>
+
+<style>
+.status {
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+
+.solid {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    background: #fff;
+    border-radius: 100%;
+}
+
+.status .animate1,
+.status .animate2 {
+    background: #fff;
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+@keyframes circle {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: scale(1.8);
+        transform: scale(1.8);
+        opacity: 0.1;
+    }
+}
+
+.status .animate1 {
+    -webkit-animation: circle 2s 0s ease-out infinite running;
+    animation: circle 2s 0s ease-out infinite running;
+}
+
+.status .animate2 {
+    -webkit-animation: circle 2s 1s ease-out infinite running;
+    animation: circle 2s 1s ease-out infinite running;
 }
 </style>

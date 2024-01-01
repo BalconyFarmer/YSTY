@@ -43,6 +43,7 @@ import {BloomOnly} from "./Bloom/BloomOnly";
 import {UnrealBloomPassMy} from "./Bloom/UnrealBloomPass";
 import {Grass} from "./Grass";
 import {Cloud} from "./Cloud";
+import {HotPoint} from "./HotPoint";
 
 export default class App3D {
 
@@ -97,6 +98,7 @@ export default class App3D {
         this.advancedMaterial = null
         this.skyBox = null
         this.waterPlane = null
+        this.hotPoint = null
 
         this.loopFlag = true
     }
@@ -152,6 +154,7 @@ export default class App3D {
         this.bloomOnly = new BloomOnly(this)
         this.cloud = new Cloud(this)
         this.grass = new Grass(this)
+        this.hotPoint = new HotPoint(this)
         this.startLoop()
 
     }

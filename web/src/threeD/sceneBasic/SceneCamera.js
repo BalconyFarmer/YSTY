@@ -18,7 +18,7 @@ export class SceneCamera {
         this.camera = new THREE.PerspectiveCamera(30, k, 1, 10000);
 
         //设置相机位置
-        this.camera.position.set(300, 300, 300);
+        this.camera.position.set(5, 5, 5);
         //设置相机方向(指向的场景对象)
         this.camera.lookAt(this.app.scene.position);
     }
