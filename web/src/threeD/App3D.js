@@ -316,8 +316,6 @@ export default class App3D {
                         item()
                     })
                 }
-                self.eventBus.dispatchEvent({type: 'updateLeftTreeData', message: 'message!'})
-
             }
         }
 

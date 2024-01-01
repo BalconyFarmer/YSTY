@@ -123,12 +123,12 @@ export default {
     methods: {
         axesToggle() {
             if (this.axesFlag) {
-                if (this.app3D.helper) {
+                if (this.app3D && this.app3D.helper) {
                     this.app3D.helper.removeAxes()
                 }
                 this.axesFlag = false
             } else {
-                if (this.app3D.helper) {
+                if (this.app3D && this.app3D.helper) {
                     this.app3D.helper.addAxes()
                 }
                 this.axesFlag = true
@@ -144,10 +144,10 @@ export default {
             }
         },
         startGrideLine() {
-            if (this.grideLineFlag) {
+            if (this.grideLineFlag && this.app3D) {
                 this.app3D.helper.removeGridhelper()
                 this.grideLineFlag = false
-            } else {
+            } else if (this.app3D) {
                 this.app3D.helper.addGridhelper()
                 this.grideLineFlag = true
             }

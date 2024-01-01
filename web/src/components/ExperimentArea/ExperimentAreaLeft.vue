@@ -22,19 +22,21 @@
 
         <div id="leftToolClassSub">
             <div v-if="activeIndex == 1">
-                <a-tree
-                    v-model="checkedKeys"
-                    :auto-expand-parent="autoExpandParent"
-                    :expanded-keys="expandedKeys"
-                    :selected-keys="selectedKeys"
-                    :tree-data="treeData"
-                    checkable
-                    show-line
-                    @click="clickTree"
-                    @expand="onExpand"
-                    @rightClick="onRightClick"
-                    @select="onSelect"
-                />
+                <!--                <a-tree-->
+                <!--                    v-model="checkedKeys"-->
+                <!--                    :auto-expand-parent="autoExpandParent"-->
+                <!--                    :expanded-keys="expandedKeys"-->
+                <!--                    :selected-keys="selectedKeys"-->
+                <!--                    :tree-data="treeData"-->
+                <!--                    checkable-->
+                <!--                    show-line-->
+                <!--                    @click="clickTree"-->
+                <!--                    @expand="onExpand"-->
+                <!--                    @rightClick="onRightClick"-->
+                <!--                    @select="onSelect"-->
+                <!--                />-->
+
+                <el-tree :data="treeData" :props="defaultProps" @node-click="treeNodeClick"></el-tree>
             </div>
 
 
@@ -43,8 +45,34 @@
                     热点编辑
                 </div>
                 <el-divider></el-divider>
-                <div>
-                    {{ hotData }}
+                <div v-if="hotData.hotData" class="colum1">
+                    <div v-for="item in hotData.hotData.data">
+                        <div>
+                            <div>
+                                访问地址:
+                            </div>
+                            <div>
+                                {{ item.src }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                类型:
+                            </div>
+                            <div>
+                                {{ item.type }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                位置:
+                            </div>
+                            <div>
+                                {{ item.position }}
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <el-divider></el-divider>
 
@@ -97,6 +125,10 @@ export default {
     },
     data() {
         return {
+            defaultProps: {
+                children: 'children',
+                label: 'title'
+            },
             newFileData: null,
             loading: false,
             expandedKeys: [],
@@ -135,6 +167,9 @@ export default {
         },
     },
     methods: {
+        treeNodeClick() {
+
+        },
         async startTakePoint() {
             const self = this
             this.app3D.takePoint.start()
@@ -180,13 +215,16 @@ export default {
             let res = await addHot(params)
             if (res.data) {
                 this.$message("上传成功")
-                let res1 = await getHotById(this.hotData.index)
-                if (res1.data && res1.data.id) {
-                    this.hotData.hotData = JSON.parse(res1.data.hotData)
-                    this.$forceUpdate()
-                }
+                await this._getHotById()
                 $hub.emit("clearFile", null)
                 this.newFileData = null
+            }
+        },
+        async _getHotById() {
+            let res1 = await getHotById(this.hotData.index)
+            if (res1.data && res1.data.id) {
+                this.hotData.hotData = JSON.parse(res1.data.hotData)
+                this.$forceUpdate()
             }
         },
         async updateHot() {
@@ -200,10 +238,7 @@ export default {
                 this.$message('上传成功');
             }
 
-            let res1 = await getHotById(this.hotData.index)
-            if (res1.data && res1.data.id) {
-                this.hotData.hotData = JSON.parse(res1.data.hotData)
-            }
+            await this._getHotById()
             this.loading = false
             this.newFileData = null
 
@@ -215,6 +250,7 @@ export default {
             let res = await deleteHot({d3ModelId: this.hotData.index})
             if (res.data) {
                 this.$message("删除成功!")
+                location.reload();
             } else {
                 this.$message("删除失败!")
             }
@@ -246,13 +282,10 @@ export default {
             this.checkedKeys = checkedKeys;
         },
         onSelect(selectedKeys, info) {
-            debugger
             this.app3D.getMeshByUUID(selectedKeys)
             this.selectedKeys = selectedKeys;
         },
-        updateTreeData() {
-            this.treeData = this.app3D.getSceneChildren()
-        },
+
         clickTree(e) {
             e.stopPropagation()
         },
@@ -297,9 +330,14 @@ export default {
     },
     mounted() {
         const self = this
-        setTimeout(function () {
-            self.treeData = self.app3D.getSceneChildren()
-            self.app3D.eventBus.addEventListener('updateLeftTreeData', self.updateTreeData.bind(self))
+        setInterval(function () {
+            if (self.app3D && self.app3D.getSceneChildren) {
+                let _treeData = self.app3D.getSceneChildren()
+                if (JSON.stringify(_treeData) != JSON.stringify(self.treeData)) {
+                    console.log("+++++++++++++++++++++")
+                    self.treeData = self.app3D.getSceneChildren()
+                }
+            }
         }, 1000)
 
         this.hub2 = $hub.on("getHotData", (item) => {
