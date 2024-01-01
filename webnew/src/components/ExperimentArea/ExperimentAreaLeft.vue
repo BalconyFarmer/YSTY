@@ -365,8 +365,7 @@ export default {
 </script>
 
 
-<style lang="less">
-@import '../0main.less';
+<style lang="scss">
 
 #leftContainer {
     position: absolute;

@@ -47,7 +47,7 @@ export default {
     }
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .uploadContainer {
     width: 27px;
     height: 27px;
