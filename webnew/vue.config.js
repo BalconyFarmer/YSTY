@@ -3,7 +3,7 @@ const fs = require("fs");
 const webpack = require("webpack");
 
 module.exports = {
-    publicPath: "/3DEditor/",
+    publicPath: "/YSTY/",
     lintOnSave: false,
     productionSourceMap: false,
     devServer: {
