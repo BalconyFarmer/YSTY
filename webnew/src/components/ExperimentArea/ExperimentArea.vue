@@ -3,7 +3,7 @@
         <canvas id="3dCanvas" height="800px" width="911px"></canvas>
         <ExperimentAreaLeft :app3D='app3D'></ExperimentAreaLeft>
         <ExperimentAreaCenter :app3D='app3D'></ExperimentAreaCenter>
-<!--        <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>-->
+        <!--        <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>-->
         <KeyFram v-if="animationEditor"></KeyFram>
         <DigitalCityLittleWindow v-if="showLittleWindow" :app3D='app3D'></DigitalCityLittleWindow>
         <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="模拟-3D资源列表"
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import App3D from "../../threeD/App3D";
+import App3D from "../../threeD/App3D.js";
 import axesSvg from '@/assets/axes.svg';
 import statsSvg from '@/assets/stats.svg';
 import grideLineSvg from '@/assets/网格.svg';
@@ -22,12 +22,12 @@ import bottomSee from '@/assets/俯视图.svg';
 import leftSee from '@/assets/左视图.svg';
 import transformMesh from '@/assets/移动.svg';
 import lightIcon from '@/assets/灯.svg';
-import ExperimentAreaLeft from './ExperimentAreaLeft'
-import ExperimentAreaRight from './ExperimentAreaRight'
+import ExperimentAreaLeft from './ExperimentAreaLeft.vue'
+import ExperimentAreaRight from './ExperimentAreaRight.vue'
 import KeyFram from './keyFram/KeyFram.vue'
-import ExperimentAreaCenter from './ExperimentAreaCenter'
-import DigitalCityLittleWindow from './DigitalCityLittleWindow'
-import ExperimentAreaRightStaticsModels from "./ExperimentAreaRightStaticsModels";
+import ExperimentAreaCenter from './ExperimentAreaCenter.vue'
+import DigitalCityLittleWindow from './DigitalCityLittleWindow.vue'
+import ExperimentAreaRightStaticsModels from "./ExperimentAreaRightStaticsModels.vue";
 import $hub from 'hub-js';
 
 export default {
@@ -220,11 +220,9 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 
 #experimentAreaAll {
-    #3dCanvas {
-    }
 
     #rightContainer {
         position: absolute;
