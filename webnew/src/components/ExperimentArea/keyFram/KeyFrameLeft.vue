@@ -1,6 +1,6 @@
 <template>
     <div id="KFLC">
-        <a-tree show-line :default-expanded-keys="['0-0-0']" @select="onSelect">
+        <a-tree :default-expanded-keys="['0-0-0']" show-line @select="onSelect">
             <a-icon slot="switcherIcon" type="down"/>
             <a-tree-node key="0-0" title="动画 1">
                 <a-tree-node key="0-0-0" title="对象 1-0">
@@ -31,13 +31,11 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import '../../0main.less';
+<style lang="scss">
 
 #KFLC {
     .ant-tree.ant-tree-show-line li span.ant-tree-switcher {
         color: rgb(200 200 200);
-        background: @center;
     }
 
     .ant-tree li .ant-tree-node-content-wrapper {

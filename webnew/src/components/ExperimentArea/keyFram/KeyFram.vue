@@ -80,11 +80,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-@import 'css/keyFrameStyle.less';
-@import '../../0main.less';
+<style lang="scss" scoped>
 
-@height: 220px;
 
 #keyFrame {
     z-index: 1001;
@@ -93,20 +90,16 @@ export default {
     left: 300px;
     background-color: #363062;;
     width: calc(100vw - 600px);
-    height: @height;
     border: solid #99A1A9 1px;
 
     #header {
-        background-color: @outer;
     }
 
     #animationTree {
         overflow: auto;
         position: relative;
-        background-color: @center;
         float: left;
         width: 150px;
-        height: @height;
     }
 
 
@@ -116,9 +109,7 @@ export default {
 
     #properEditor {
         float: right;
-        background-color: @center;
         width: 150px;
-        height: @height;
     }
 
     #buttons {
