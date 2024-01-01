@@ -22,23 +22,8 @@
 
         <div id="leftToolClassSub">
             <div v-if="activeIndex == 1">
-                <!--                <a-tree-->
-                <!--                    v-model="checkedKeys"-->
-                <!--                    :auto-expand-parent="autoExpandParent"-->
-                <!--                    :expanded-keys="expandedKeys"-->
-                <!--                    :selected-keys="selectedKeys"-->
-                <!--                    :tree-data="treeData"-->
-                <!--                    checkable-->
-                <!--                    show-line-->
-                <!--                    @click="clickTree"-->
-                <!--                    @expand="onExpand"-->
-                <!--                    @rightClick="onRightClick"-->
-                <!--                    @select="onSelect"-->
-                <!--                />-->
-
                 <el-tree :data="treeData" :props="defaultProps" @node-click="treeNodeClick"></el-tree>
             </div>
-
 
             <div v-if="activeIndex == 2">
                 <div>
@@ -286,9 +271,6 @@ export default {
             this.selectedKeys = selectedKeys;
         },
 
-        clickTree(e) {
-            e.stopPropagation()
-        },
         getMeshByUUIDDispose() {
             this.app3D.getMeshByUUIDDispose()
             this.selectedKeys = []
@@ -334,7 +316,6 @@ export default {
             if (self.app3D && self.app3D.getSceneChildren) {
                 let _treeData = self.app3D.getSceneChildren()
                 if (JSON.stringify(_treeData) != JSON.stringify(self.treeData)) {
-                    console.log("+++++++++++++++++++++")
                     self.treeData = self.app3D.getSceneChildren()
                 }
             }
@@ -406,25 +387,6 @@ export default {
             left: 100px;
             height: 100px;
         }
-
-        .anticon svg {
-            display: inline-block;
-            color: white;
-        }
-
-        .ant-tree.ant-tree-show-line li span.ant-tree-switcher {
-            color: rgba(0, 0, 0, 0.45);
-            background: @center;
-        }
-
-        .ant-tree li .ant-tree-node-content-wrapper {
-            color: #87e8de;
-        }
-
-        .ant-tree li .ant-tree-node-content-wrapper.ant-tree-node-selected {
-            background-color: #1890FF;
-        }
-
     }
 }
 </style>
