@@ -17,8 +17,6 @@
 
 <script>
 import * as THREE from "three";
-import {save3DModelApi} from '@/api/api'
-import {getOBJList} from '@/api/api'
 import {serverAdress} from '@/config';
 import {STLLoader} from 'three/examples/jsm/loaders/STLLoader.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -160,18 +158,6 @@ export default {
             } else {
                 $hub.emit("getHotData", item)
             }
-        },
-        getMyOBJResource() {
-            getOBJList().then(response => {
-                this.objResource = response.data
-                this.objResource.forEach(item => {
-                    this.listData.push({
-                        name: item.objname,
-                        index: item.objpath.replace('./static', serverAdress + ''),
-                        imgSrc: ''
-                    })
-                })
-            })
         },
         // 上传至页面
         beforeUpload(file) {

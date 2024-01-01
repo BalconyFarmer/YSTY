@@ -29,22 +29,6 @@
                 <a-switch default-checked:false size="small" @change="casterMeshChange"/>
             </div>
         </div>
-
-        <!--        <div id="file">-->
-        <!--            <a-dropdown>-->
-        <!--                <a class="ant-dropdown-link" @click="e => e.preventDefault()">-->
-        <!--                    文件管理-->
-        <!--                    <a-icon type="down"/>-->
-        <!--                </a>-->
-        <!--                <a-menu slot="overlay">-->
-        <!--                    <a-menu-item @click="exportScene">导出场景</a-menu-item>-->
-        <!--                    <a-menu-item @click="importScene">导入场景</a-menu-item>-->
-        <!--                    <a-menu-item @click="exportMesh">导出Mesh</a-menu-item>-->
-        <!--                    <a-menu-item @click="importMesh">导入Mesh</a-menu-item>-->
-        <!--                </a-menu>-->
-        <!--            </a-dropdown>-->
-        <!--        </div>-->
-
     </div>
 
 </template>
@@ -72,8 +56,6 @@ import icon9 from '@/assets/leftTools/油漆桶.svg';
 import icon10 from '@/assets/leftTools/圆形.svg';
 import icon11 from '@/assets/leftTools/正方形.svg';
 
-import {saveScene} from '@/api/api/'
-import {readScene} from '@/api/api/'
 import * as  THREE from 'three'
 import {serverAdress} from '@/config';
 
@@ -231,47 +213,7 @@ export default {
                 this.$parent.stopLittleWindow()
             }
         },
-        exportScene() {
-            const scene = this.app3D.scene
-            const data = scene.toJSON()
-            const content = JSON.stringify(data);
-            // const blob = new Blob([content], {type: "text/plain;charset=utf-8"});
-            // FileSaver.saveAs(blob, "Scene.json");
 
-            saveScene(content)
-        },
-        importScene() {
-
-            const self = this
-
-            readScene().then(function (response) {
-
-                var loader = new THREE.ObjectLoader();
-                const reg = './static/';
-                const url = response.data.replace(reg, serverAdress + '/')
-
-                loader.load(
-                    // 资源的URL
-                    url,
-                    // onLoad回调
-                    // Here the loaded data is assumed to be an object
-                    function (obj) {
-                        // Add the loaded object to the scene
-                        self.app3D.scene = obj;
-                    },
-
-                    // onProgress回调
-                    function (xhr) {
-                        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-                    },
-
-                    // onError回调
-                    function (err) {
-                        console.error('An error happened');
-                    }
-                );
-            })
-        }
     },
     mounted() {
         this.$nextTick(function () {
