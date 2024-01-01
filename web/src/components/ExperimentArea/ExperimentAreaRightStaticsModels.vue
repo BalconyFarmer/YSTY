@@ -156,9 +156,9 @@ export default {
                     break
             }
             if (item.hotData) {
-                $hub.emit("getHotData", item.hotData)
+                $hub.emit("getHotData", item)
             } else {
-                $hub.emit("getHotData", null)
+                $hub.emit("getHotData", item)
             }
         },
         getMyOBJResource() {
@@ -191,6 +191,7 @@ export default {
             for (let item of this.listData) {
                 let res = await getHotById(item.index);
                 if (res.data && res.data.id) {
+                    res.data.hotData = JSON.parse(res.data.hotData)
                     item.hotData = res.data
                 }
             }

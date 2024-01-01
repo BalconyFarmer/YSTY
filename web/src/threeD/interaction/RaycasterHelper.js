@@ -73,7 +73,7 @@ export class RaycasterHelper {
      * 关闭鼠标拾取
      */
     stopRaycast() {
-        document.removeEventListener('mousedown', this._getMesh, false);
+        document.removeEventListener('mouseup', this._getMesh, false);
         this.raycaster = null
         this.mouse = null
         this.app.scene.remove(this.mesh)

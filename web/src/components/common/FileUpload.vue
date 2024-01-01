@@ -40,6 +40,11 @@ export default {
             $hub.emit('updateUploadFiles', this.file)
         },
     },
+    mounted() {
+        $hub.on("clearFile",() => {
+            this.file = []
+        })
+    }
 }
 </script>
 <style lang="less" scoped>

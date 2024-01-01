@@ -40,7 +40,7 @@
 
             <div v-if="activeIndex == 2">
                 <div>
-                    热点编辑123
+                    热点编辑
                 </div>
                 <el-divider></el-divider>
                 <div>
@@ -52,12 +52,12 @@
                     <div>
                         {{ newFileData }}
                     </div>
-                    <el-button circle icon="el-icon-plus" size="mini"></el-button>
+                    <el-button circle icon="el-icon-plus" size="mini" @click="startTakePoint"></el-button>
+                    <el-divider></el-divider>
                 </div>
-                <el-divider></el-divider>
 
                 <div class="rowBetween">
-                    <el-select v-model="hotTypesIndex" placeholder="请选择" size="mini">
+                    <el-select v-model="hotTypesIndex" disabled placeholder="请选择" size="mini">
                         <el-option
                             v-for="item in hotTypes"
                             :key="item.value"
@@ -84,7 +84,7 @@
 
 <script>
 import $hub from 'hub-js';
-import {deleteHot, uploadHeadMinio} from "../../api/HotApi";
+import {addHot, deleteHot, getHotById, updateHot, uploadHeadMinio} from "../../api/HotApi";
 import FileUpload from "../common/FileUpload";
 
 export default {
@@ -135,13 +135,89 @@ export default {
         },
     },
     methods: {
+        async startTakePoint() {
+            const self = this
+            this.app3D.takePoint.start()
+            let hub1 = $hub.on("takePoint", (data) => {
+                self.$message('拾取成功,上传中...');
+                self.app3D.takePoint.stop()
+                if (self.hotData.hotData) {
+                    self.hotData.hotData.data.push({
+                        "type": self.hotTypesIndex,
+                        "position": [
+                            data.x,
+                            data.y,
+                            data.z
+                        ],
+                        "src": self.newFileData
+                    })
+                    self.updateHot()
+                } else {
+                    self.newHot(data)
+                }
+                hub1.off()
+            })
+        },
+        async newHot(po) {
+            let demo = {
+                "data": [
+                    {
+                        "type": this.hotTypesIndex,
+                        "position": [
+                            po.x,
+                            po.y,
+                            po.z
+                        ],
+                        "src": this.newFileData
+                    }
+                ]
+            }
+
+            let params = {
+                "d3ModelId": this.hotData.index,
+                "hotData": JSON.stringify(demo)
+            }
+            let res = await addHot(params)
+            if (res.data) {
+                this.$message("上传成功")
+                let res1 = await getHotById(this.hotData.index)
+                if (res1.data && res1.data.id) {
+                    this.hotData.hotData = JSON.parse(res1.data.hotData)
+                    this.$forceUpdate()
+                }
+                $hub.emit("clearFile", null)
+                this.newFileData = null
+            }
+        },
+        async updateHot() {
+            this.loading = true
+            let params = {
+                "d3ModelId": this.hotData.index,
+                "hotData": JSON.stringify(this.hotData.hotData)
+            }
+            let res = await updateHot(params)
+            if (res.data.length) {
+                this.$message('上传成功');
+            }
+
+            let res1 = await getHotById(this.hotData.index)
+            if (res1.data && res1.data.id) {
+                this.hotData.hotData = JSON.parse(res1.data.hotData)
+            }
+            this.loading = false
+            this.newFileData = null
+
+        },
         quit() {
-            $hub.emit("quit", "")
+            location.reload();
         },
         async deleteHot() {
-            let res = await deleteHot({d3ModelId: this.hotData.d3ModelId})
-            console.log(res, 6666)
-            debugger
+            let res = await deleteHot({d3ModelId: this.hotData.index})
+            if (res.data) {
+                this.$message("删除成功!")
+            } else {
+                this.$message("删除失败!")
+            }
         },
         addAnimationv() {
             this.leftSubMenu = false
@@ -163,9 +239,6 @@ export default {
             this.rightSelectMeshUUID = selectedKeys.node.eventKey
         },
         onExpand(expandedKeys) {
-            // console.log('onExpand', expandedKeys);
-            // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-            // or, you can remove all expanded children keys.
             this.expandedKeys = expandedKeys;
             this.autoExpandParent = false;
         },
@@ -192,7 +265,6 @@ export default {
             let formData = new FormData()
             formData.append('file', data[data.length - 1])
             let res = await uploadHeadMinio(formData)
-            console.log(res, 666666)
             if (res.data && res.data.filename) {
                 this.$message('上传成功');
                 this.newFileData = res.data.filename
@@ -200,6 +272,27 @@ export default {
                 this.$message('上传失败');
             }
             this.loading = false
+
+            // 定义一个函数，根据文件的 url 返回文件的类型
+            function getFileType(type) {
+                switch (type) {
+                    case 'image/jpeg':
+                    case 'image/png':
+                        return '图片';
+                    case 'video/mp4':
+                    case 'video/avi':
+                    case 'video/mov':
+                        return '视频';
+                    case 'mp4':
+                    case 'avi':
+                    case 'mov':
+                        return '视频';
+                }
+            }
+
+            // 测试一下函数
+            let type = getFileType(data[data.length - 1].type);
+            this.hotTypesIndex = type
         }
     },
     mounted() {
@@ -209,8 +302,12 @@ export default {
             self.app3D.eventBus.addEventListener('updateLeftTreeData', self.updateTreeData.bind(self))
         }, 1000)
 
-        $hub.on("getHotData", (hotData) => {
-            this.hotData = hotData
+        this.hub2 = $hub.on("getHotData", (item) => {
+            if (item.hotData) {
+                let hot = item.hotData.hotData
+                item.hotData = hot
+            }
+            this.hotData = item
         })
 
         this.hub1 = $hub.on("updateUploadFiles", (data) => {
@@ -221,6 +318,7 @@ export default {
     },
     beforeDestroy() {
         this.hub1.off()
+        this.hub2.off()
     }
 };
 </script>

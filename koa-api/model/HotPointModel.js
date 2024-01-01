@@ -4,12 +4,17 @@ class HotPointModel {
     constructor(sequelize) {
         // 定义用户模型
         this.HotModel = sequelize.define('a_hotPoint', {
-            id: {
-                type: DataTypes.INTEGER(), autoIncrement: true, primaryKey: true,
-            }, d3ModelId: DataTypes.STRING, hotData: DataTypes.TEXT, files: DataTypes.TEXT
-        }, {
-            timestamps: false // 开启/关闭事件戳
-        })
+                id: {
+                    type: DataTypes.INTEGER(), autoIncrement: true, primaryKey: true,
+                },
+                d3ModelId: DataTypes.STRING,
+                hotData: DataTypes.TEXT,
+                files: DataTypes.TEXT
+            },
+            {
+                timestamps: false // 开启/关闭事件戳
+            }
+        )
     }
 
     async getHotById(postData) {

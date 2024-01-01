@@ -1,4 +1,5 @@
 import {RaycasterHelper} from './RaycasterHelper'
+import $hub from 'hub-js';
 
 /**
  * 点击打印坐标
@@ -13,6 +14,7 @@ export class TakePoint extends RaycasterHelper {
         const self = this
         this.atSelectMesh(function (mesh) {
             console.warn('拾取点坐标:', parseInt(self.point.x), parseInt(self.point.y), parseInt(self.point.z))
+            $hub.emit("takePoint", self.point)
         })
     }
 
