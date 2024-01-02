@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import TWEEN from "@tweenjs/tween.js";
+import {serverAdress} from "@/config";
 
 export class HotPoint {
     constructor(app) {
@@ -16,7 +17,7 @@ export class HotPoint {
         const camera = this.app.camera
         const renderer = this.app.renderer
 
-        const map = new THREE.TextureLoader().load("http://47.108.186.214:8082/Files/热点.png");
+        const map = new THREE.TextureLoader().load(`${serverAdress}/3Dstatic/热点.png`);
         const material = new THREE.SpriteMaterial({
             map: map
         });

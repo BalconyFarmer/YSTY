@@ -1,32 +1,34 @@
 <template>
     <div id="centerContainer">
         <div id="centerTool">
-            <div id="toolList">
-                <span :class="axesFlag?'backDiv': ''">
+            <div id="toolList" class="row1">
+                <div :class="axesFlag?'backDiv': ''">
                     <img :src="axesSvg" class="icon0" @click="axesToggle">
-                </span>
-                <span :class="statsFlag?'backDiv': ''">
+                </div>
+                <div :class="statsFlag?'backDiv': ''">
                     <img :src="statsSvg" class="icon1" style="width: 20px" @click="statsToggle">
-                </span>
-                <span :class="grideLineFlag?'backDiv': ''">
+                </div>
+                <div :class="grideLineFlag?'backDiv': ''">
                     <img :src="grideLineSvg" class="icon1" @click="startGrideLine">
-                 </span>
-                <span :class="cameraLookBottomFlag?'backDiv': ''">
+                </div>
+                <div :class="cameraLookBottomFlag?'backDiv': ''">
                     <img :src="bottomSee" class="icon1" style="width: 17px" @click="cameraLookBottom">
-                </span>
-                <span :class="cameraLookRightFlag?'backDiv': ''">
+                </div>
+                <div :class="cameraLookRightFlag?'backDiv': ''">
                     <img :src="leftSee" class="icon1" style="width: 15px" @click="cameraLookRight">
-                </span>
-                <span :class="transformFlag?'backDiv': ''">
+                </div>
+                <div :class="transformFlag?'backDiv': ''">
                     <img :src="transformMesh" class="icon1" style="width: 15px" @click="startTransform">
-                </span>
-                <span :class="startLightHelperFlag?'backDiv': ''">
+                </div>
+                <div :class="startLightHelperFlag?'backDiv': ''">
                     <img :src="lightIcon" class="icon1" style="width: 15px" @click="startLightHelper">
-                </span>
-                <span :class="startTakePointFlag?'backDiv': ''">
+                </div>
+                <div :class="startTakePointFlag?'backDiv': ''">
                     <img :src="takePointIcon" class="icon1" style="width: 15px" @click="startTakePoint">
-                </span>
-                <a-switch default-checked:false size="small" @change="casterMeshChange"/>
+                </div>
+                <!--                <span>-->
+                <!--                    <el-switch v-model="flag" size="mini" @change="casterMeshChange"></el-switch>-->
+                <!--                </span>-->
             </div>
         </div>
     </div>
@@ -69,6 +71,7 @@ export default {
     },
     data() {
         return {
+            flag: false,
             axesSvg,
             statsSvg,
             grideLineSvg,
@@ -235,11 +238,9 @@ export default {
         left: calc(100vw / 2 - 150px);
 
         #toolList {
-
-            span {
-                margin-right: 5px;
+            div {
+                margin-left: 10px;
             }
-
             .backDiv {
                 background-color: #1890FF;
             }
