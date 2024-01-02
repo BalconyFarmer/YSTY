@@ -1,5 +1,6 @@
 import {OBJExporter} from 'three/addons/exporters/OBJExporter.js';
-import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
+import {STLExporter} from 'three/addons/exporters/STLExporter.js';
 
 export class ExportImport {
     constructor(app) {
@@ -10,6 +11,7 @@ export class ExportImport {
         const exporter = new OBJExporter();
         const data = exporter.parse(this.app.scene);
         downloadFile(data)
+
         function downloadFile(data) {
             const blob = new Blob([data], {type: 'text/plain'});
             const url = URL.createObjectURL(blob);
@@ -51,6 +53,41 @@ export class ExportImport {
             link.click();
         }
 
+    }
+
+    exportToSTL() {
+        let yourMesh = null
+
+        this.app.scene.children.forEach(item => {
+            if (item.type == "Mesh") {
+                yourMesh = item
+            }
+        })
+
+        if (!yourMesh) {
+            alert("未找到您要导出的Mesh")
+            return
+        }
+        const exporter = new STLExporter();
+        exportBinary()
+
+        function exportBinary() {
+            const result = exporter.parse(yourMesh, {binary: true});
+            saveArrayBuffer(result, 'model.stl');
+        }
+
+        function saveArrayBuffer(buffer, filename) {
+            save(new Blob([buffer], {type: 'application/octet-stream'}), filename);
+        }
+
+        function save(blob, filename) {
+            const link = document.createElement('a');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
     }
 
     /**

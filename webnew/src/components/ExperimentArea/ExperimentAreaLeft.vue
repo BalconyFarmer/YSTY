@@ -114,6 +114,8 @@
                 <div>
                     <el-button size="small" type="primary" @click="quit">退出</el-button>
                 </div>
+
+                <el-divider></el-divider>
                 <br>
 
                 <div>
@@ -124,6 +126,17 @@
                 <div>
                     <el-button size="mini" type="primary" @click="exportToGLB">导出glb</el-button>
                 </div>
+                <br>
+
+                <div>
+                    <el-button size="mini" type="primary" @click="exportToSTL">导出stl</el-button>
+                </div>
+                <br>
+
+                <div>
+                    <el-button size="mini" type="primary" @click="exportToSTL" disabled>不支持导出FBX</el-button>
+                </div>
+
             </div>
             <div v-if="leftSubMenu" id="leftSubMenu">
                 <a-button size="small" type="primary" @click="addAnimationv">
@@ -192,6 +205,9 @@ export default {
         },
     },
     methods: {
+        exportToSTL() {
+            this.app3D.exportImport.exportToSTL()
+        },
         exportToOBJ() {
             this.app3D.exportImport.exportToOBJ()
         },
@@ -292,19 +308,6 @@ export default {
             const see = this.rightSelectMeshUUID
             this.$parent.startAnimatioinEditor()
             this.rightSelectMeshUUID = null
-        },
-        onRightClick(selectedKeys) {
-            const eventKey = selectedKeys.node.eventKey
-            const event = selectedKeys.event
-            this.leftSubMenu = true
-            this.$nextTick(function () {
-                const dom = document.getElementById('leftSubMenu')
-                const father = document.getElementById('leftToolClassSub')
-                const res = father.getClientRects()
-                dom.style.left = event.clientX.toString() + 'px'
-                dom.style.top = event.clientY.toString() - res[0].top + 'px'
-            })
-            this.rightSelectMeshUUID = selectedKeys.node.eventKey
         },
         onCheck(checkedKeys) {
             this.checkedKeys = checkedKeys;
