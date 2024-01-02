@@ -22,7 +22,14 @@
 
         <div id="leftToolClassSub">
             <div v-if="activeIndex == 1">
-                <el-tree :data="treeData" :props="defaultProps" @node-click="treeNodeClick"></el-tree>
+                <el-tree
+                    :data="treeData"
+                    :default-expanded-keys="defaultExpandIds"
+                    :props="defaultProps"
+                    node-key="key"
+                    @node-expand="handleNodeExpand"
+                    @node-collapse="handleNodeCollapse"
+                    @node-click="onSelect"></el-tree>
             </div>
 
             <div v-if="activeIndex == 2">
@@ -127,6 +134,7 @@ export default {
     },
     data() {
         return {
+            defaultExpandIds: [],
             defaultProps: {
                 children: 'children',
                 label: 'title'
@@ -169,9 +177,6 @@ export default {
         },
     },
     methods: {
-        treeNodeClick() {
-
-        },
         async startTakePoint() {
             const self = this
             this.app3D.takePoint.start()
@@ -280,15 +285,11 @@ export default {
             })
             this.rightSelectMeshUUID = selectedKeys.node.eventKey
         },
-        onExpand(expandedKeys) {
-            this.expandedKeys = expandedKeys;
-            this.autoExpandParent = false;
-        },
         onCheck(checkedKeys) {
             this.checkedKeys = checkedKeys;
         },
         onSelect(selectedKeys, info) {
-            this.app3D.getMeshByUUID(selectedKeys)
+            this.app3D.getMeshByUUID(selectedKeys.key)
             this.selectedKeys = selectedKeys;
         },
 
@@ -327,11 +328,49 @@ export default {
             // 测试一下函数
             let type = getFileType(data[data.length - 1].type);
             this.hotTypesIndex = type
+        },
+        // 树节点展开
+        handleNodeExpand(data) {
+            // 保存当前展开的节点
+            let flag = false
+            this.defaultExpandIds.some(item => {
+                if (item === data.key) { // 判断当前节点是否存在， 存在不做处理
+                    flag = true
+                    return true
+                }
+            })
+            if (!flag) { // 不存在则存到数组里
+                this.defaultExpandIds.push(data.key)
+            }
+        },
+        // 树节点关闭
+        handleNodeCollapse(data) {
+            // 删除当前关闭的节点
+            this.defaultExpandIds.some((item, i) => {
+                if (item === data.key) {
+                    this.defaultExpandIds.splice(i, 1)
+                }
+            })
+            this.removeChildrenIds(data) // 这里主要针对多级树状结构，当关闭父节点时，递归删除父节点下的所有子节点
+        },
+        // 删除树子节点
+        removeChildrenIds(data) {
+            const ts = this
+            if (data.children) {
+                data.children.forEach(function (item) {
+                    const index = ts.defaultExpandIds.indexOf(item.key)
+                    if (index > 0) {
+                        ts.defaultExpandIds.splice(index, 1)
+                    }
+                    ts.removeChildrenIds(item)
+                })
+            }
         }
     },
     mounted() {
         const self = this
         setInterval(function () {
+
             if (self.app3D && self.app3D.getSceneChildren) {
                 let _treeData = self.app3D.getSceneChildren()
                 if (JSON.stringify(_treeData) != JSON.stringify(self.treeData)) {

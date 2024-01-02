@@ -204,13 +204,15 @@ export default class App3D {
         }
 
         recurrenceScene(result, this.scene.children)
+        // console.log(this.scene.children,66)
         return result
     }
 
     getMeshByUUID(uuid) {
+        let have = false
         this.scene.children.forEach(item => {
-            if (item.uuid === uuid[0]) {
-                console.log('根据UUID获取', item)
+            if (item.uuid === uuid) {
+                have = true
                 if (this.boxHelper) {
                     this.scene.remove(this.boxHelper);
                 }
@@ -220,6 +222,12 @@ export default class App3D {
                 return item
             }
         })
+
+        if(!have) {
+            if (this.boxHelper) {
+                this.scene.remove(this.boxHelper);
+            }
+        }
     }
 
     getMeshByUUIDDispose() {
@@ -248,7 +256,7 @@ export default class App3D {
      * 初始化光源
      */
     initLight(intensity) {
-        const distance = 500
+        const distance = 100
 
         //环境光 均匀 无方向 无阴影
         const ambient = new THREE.AmbientLight(0x444444, intensity);
@@ -287,7 +295,7 @@ export default class App3D {
         // 平面光光源（RectAreaLight）
 
         //点光源添加到场景中
-        this.scene.add(point0, point1, point2, point3, point4, point5);
+        this.scene.add(point0, point1, point2, point3, point4, point5, ambient);
     }
 
     /**
