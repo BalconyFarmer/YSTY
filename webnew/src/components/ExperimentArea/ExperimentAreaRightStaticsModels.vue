@@ -1,16 +1,13 @@
 <template>
     <div id='rightToolClassSub'>
-        <div id='models'>
-            <div v-for="item in listData" draggable="true" v-on:dragend="dragend(item,$event)"
-                 v-on:dragstart="dragstart(item,$event)">
-                <div>
-                    <img :src=item.imgSrc>
-                    <div class="titleContainer">{{ item.name }}</div>
-                </div>
-                <el-button v-if="item.hotData" size="mini" type="primary" @click="addTo000(item)">编辑热点</el-button>
-                <el-button v-else size="mini" type="warning" @click="addTo000(item)">添加热点</el-button>
-                <a-divider dashed type="horizontal"/>
+        <div v-for="item in listData">
+            <div>
+                <img :src=item.imgSrc>
+                <div class="titleContainer">{{ item.name }}</div>
             </div>
+            <el-button v-if="item.hotData" size="mini" type="primary" @click="addTo000(item)">编辑热点</el-button>
+            <el-button v-else size="mini" type="warning" @click="addTo000(item)">添加热点</el-button>
+            <a-divider dashed type="horizontal"/>
         </div>
     </div>
 </template>
@@ -95,37 +92,6 @@ export default {
         }
     },
     methods: {
-        dragstart(item, event) {
-
-        },
-        dragend(item, event) {
-
-            this.raycaster = new THREE.Raycaster();
-            this.mouse = new THREE.Vector2();
-
-            this.mouse.x = (event.clientX / this.app3D.dom.width) * 2 - 1;
-            this.mouse.y = -(event.clientY / this.app3D.dom.height) * 2 + 1;
-            this.raycaster.setFromCamera(this.mouse, this.app3D.camera);
-
-            let target = []
-            this.app3D.scene.children.forEach(item => {
-                target.push(item)
-                if (item.type === 'Group') {
-                    item.children.forEach(item => {
-                        target.push(item)
-                    })
-                }
-            })
-            const intersects = this.raycaster.intersectObjects(target);
-
-            if (intersects[0]) {
-                if (intersects[0].point) {
-                    const vec3 = intersects[0].point
-                    this.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
-                }
-            }
-
-        },
         addTo000(item) {
             const scene = this.app3D.scene
             const fileType = item.index.split('.').pop();
@@ -159,19 +125,6 @@ export default {
                 $hub.emit("getHotData", item)
             }
         },
-        // 上传至页面
-        beforeUpload(file) {
-            this.fileList = [...this.fileList, file];
-            return false;
-        },
-
-        // 页面删除
-        handleRemove(file) {
-            const index = this.fileList.indexOf(file);
-            const newFileList = this.fileList.slice();
-            newFileList.splice(index, 1);
-            this.fileList = newFileList;
-        },
 
         async getHotData() {
             for (let item of this.listData) {
@@ -186,7 +139,6 @@ export default {
     },
     mounted() {
         this.getHotData()
-
     }
 }
 </script>
@@ -199,34 +151,17 @@ export default {
     height: calc(100vh - 50px);
     border: solid #99A1A9 1px;
     color: #7DD3CA;
+    height: 100%;
+    overflow: auto;
 
-    #models {
-        height: 100%;
-        overflow: auto;
-
-        img {
-            width: 50px;
-            height: 50px;
-        }
-
-        .titleContainer {
-            display: inline-block;
-            height: 50px;
-        }
-
-        .ant-divider-horizontal {
-            display: block;
-            clear: both;
-            width: 100%;
-            min-width: 100%;
-            height: 1px;
-            margin: 1px 0;
-        }
+    img {
+        width: 50px;
+        height: 50px;
     }
 
-    #videoUploadContainer {
-        background-color: #3C3F41;
-        overflow: auto;
+    .titleContainer {
+        display: inline-block;
+        height: 50px;
     }
 
 }

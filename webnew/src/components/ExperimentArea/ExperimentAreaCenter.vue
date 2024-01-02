@@ -240,6 +240,8 @@ export default {
         #toolList {
             div {
                 margin-left: 10px;
+                width: 20px;
+                height: 20px;
             }
             .backDiv {
                 background-color: #1890FF;

@@ -106,9 +106,24 @@
                 </div>
 
             </div>
-            <div v-if="activeIndex == 3">
-                <el-button v-if="hotData" size="mini" @click="deleteHot">删除热点</el-button>
-                <el-button size="mini" @click="quit">退出</el-button>
+            <div v-if="activeIndex == 3" class="colum1">
+                <div>
+                    <el-button v-if="hotData" size="mini" type="primary" @click="deleteHot">删除热点</el-button>
+                </div>
+                <br>
+                <div>
+                    <el-button size="small" type="primary" @click="quit">退出</el-button>
+                </div>
+                <br>
+
+                <div>
+                    <el-button size="mini" type="primary" @click="exportToOBJ">导出obj</el-button>
+                </div>
+                <br>
+
+                <div>
+                    <el-button size="mini" type="primary" @click="exportToGLB">导出glb</el-button>
+                </div>
             </div>
             <div v-if="leftSubMenu" id="leftSubMenu">
                 <a-button size="small" type="primary" @click="addAnimationv">
@@ -177,6 +192,12 @@ export default {
         },
     },
     methods: {
+        exportToOBJ() {
+            this.app3D.exportImport.exportToOBJ()
+        },
+        exportToGLB() {
+            this.app3D.exportImport.exportToGLB()
+        },
         async startTakePoint() {
             const self = this
             this.app3D.takePoint.start()

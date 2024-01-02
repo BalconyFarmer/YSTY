@@ -1,6 +1,56 @@
+import {OBJExporter} from 'three/addons/exporters/OBJExporter.js';
+import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+
 export class ExportImport {
     constructor(app) {
         this.app = app
+    }
+
+    exportToOBJ() {
+        const exporter = new OBJExporter();
+        const data = exporter.parse(this.app.scene);
+        downloadFile(data)
+        function downloadFile(data) {
+            const blob = new Blob([data], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'model.obj';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+    exportToGLB() {
+        const scene = this.app.scene
+        const exporter = new GLTFExporter();
+        exporter.parse(scene, function (result) {
+            if (result instanceof ArrayBuffer) {
+                saveArrayBuffer(result, 'model.glb');
+            } else {
+                saveString(JSON.stringify(result), 'model.gltf');
+            }
+        });
+
+        function saveArrayBuffer(buffer, filename) {
+            const blob = new Blob([buffer], {type: 'application/octet-stream'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+        }
+
+        function saveString(text, filename) {
+            const blob = new Blob([text], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+        }
+
     }
 
     /**

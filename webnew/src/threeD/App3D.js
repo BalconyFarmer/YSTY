@@ -204,30 +204,50 @@ export default class App3D {
         }
 
         recurrenceScene(result, this.scene.children)
-        // console.log(this.scene.children,66)
         return result
     }
 
     getMeshByUUID(uuid) {
-        let have = false
-        this.scene.children.forEach(item => {
-            if (item.uuid === uuid) {
-                have = true
-                if (this.boxHelper) {
-                    this.scene.remove(this.boxHelper);
-                }
-                this.boxHelper = new THREE.BoxHelper(item, 0xffff00);
-                this.boxHelper.cname = '选择网格辅助'
-                this.scene.add(this.boxHelper);
-                return item
-            }
-        })
+        const self = this
+        if (this.boxHelper) {
+            this.scene.remove(this.boxHelper);
+        }
+        const result = []
 
-        if(!have) {
-            if (this.boxHelper) {
-                this.scene.remove(this.boxHelper);
+        function recurrenceScene(aim, origin) {
+            const count = origin.length
+            for (let i = 0; i < count; i++) {
+                const item = origin[i]
+                if (item.uuid == uuid) {
+                    self.boxHelper = new THREE.BoxHelper(item, 0xffff00);
+                    self.boxHelper.cname = '选择网格辅助'
+                    self.scene.add(self.boxHelper);
+                }
+                if (item.children.length === 0) {
+                    const data = {
+                        title: item.type,
+                        key: item.uuid
+                    }
+                    if (item.cname) {
+                        data.title = item.cname
+                    }
+                    aim.push(data)
+                } else {
+                    const data = {
+                        title: item.type,
+                        key: item.uuid,
+                        children: []
+                    }
+                    if (item.cname) {
+                        data.title = item.cname
+                    }
+                    aim.push(data)
+                    recurrenceScene(data.children, item.children)
+                }
             }
         }
+
+        recurrenceScene(result, this.scene.children)
     }
 
     getMeshByUUIDDispose() {
