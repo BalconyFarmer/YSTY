@@ -22,7 +22,6 @@ import $hub from 'hub-js';
 
 export default {
     props: {
-        app3D: Object,
         required: true
     },
     data() {
@@ -93,15 +92,15 @@ export default {
     },
     methods: {
         addTo000(item) {
-            const scene = this.app3D.scene
+            const scene = window.app3D.scene
             const fileType = item.index.split('.').pop();
             switch (fileType) {
                 case 'obj':
                     const vec3 = new THREE.Vector3(0, 0, 0)
-                    this.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
+                    window.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
                     break
                 case 'fbx':
-                    this.app3D.FBXLoader.loadFBX(item.index)
+                    window.app3D.FBXLoader.loadFBX(item.index)
                     break
                 case 'stl':
                     const loader1 = new STLLoader();
@@ -109,14 +108,14 @@ export default {
                         const material = new THREE.MeshStandardMaterial({color: 0x606060});
                         const mesh = new THREE.Mesh(geometry, material);
                         scene.add(mesh);
-                    }, this.app3D.progress);
+                    }, window.app3D.progress);
                     break
                 case 'glb':
                     const loader = new GLTFLoader();
                     loader.load(item.index, (gltf) => {
                         gltf.scene.position.set(0, 0, 0);
                         scene.add(gltf.scene);
-                    }, this.app3D.progress);
+                    }, window.app3D.progress);
                     break
             }
             if (item.hotData) {

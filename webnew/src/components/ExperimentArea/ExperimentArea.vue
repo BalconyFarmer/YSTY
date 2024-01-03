@@ -129,12 +129,12 @@ export default {
                 littleWindowDom.height = height - 30
                 littleWindowDom.width = width
 
-                this.app3D.littleWindow.addCasterEvent(littleWindowDom)
+                window.app3D.littleWindow.addCasterEvent(littleWindowDom)
             })
         },
 
         stopLittleWindow() {
-            this.app3D.littleWindow.destroy()
+            window.app3D.littleWindow.destroy()
             this.showLittleWindow = false
         },
 
@@ -191,11 +191,11 @@ export default {
         const dom = document.getElementById('3dCanvas')
         dom.width = window.innerWidth
         dom.height = window.innerHeight
-        this.app3D = new App3D(dom)
-        this.app3D.init()
-        this.app3D.eventBus.addEventListener('changeMesh', this.onChangeMesh.bind(this))
+        window.app3D = new App3D(dom)
+        window.app3D.init()
+        window.app3D.eventBus.addEventListener('changeMesh', this.onChangeMesh.bind(this))
 
-        window.addEventListener('resize', this.app3D.windowRelise.bind(this.app3D), false);
+        window.addEventListener('resize', window.app3D.windowRelise.bind(window.app3D), false);
 
         this.promiseTest()
         this.asyncAwaitTest()
@@ -205,8 +205,8 @@ export default {
         })
     },
     beforeDestroy() {
-        this.app3D.destroy()
-        this.app3D = null
+        window.app3D.destroy()
+        window.app3D = null
     }
 }
 </script>

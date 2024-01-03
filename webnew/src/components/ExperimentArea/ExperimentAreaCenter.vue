@@ -65,7 +65,6 @@ const FileSaver = require('file-saver');
 
 export default {
     props: {
-        app3D: Object,
         required: true,
 
     },
@@ -108,65 +107,65 @@ export default {
     methods: {
         axesToggle() {
             if (this.axesFlag) {
-                if (this.app3D && this.app3D.helper) {
-                    this.app3D.helper.removeAxes()
+                if (window.app3D && window.app3D.helper) {
+                    window.app3D.helper.removeAxes()
                 }
                 this.axesFlag = false
             } else {
-                if (this.app3D && this.app3D.helper) {
-                    this.app3D.helper.addAxes()
+                if (window.app3D && window.app3D.helper) {
+                    window.app3D.helper.addAxes()
                 }
                 this.axesFlag = true
             }
         },
         statsToggle() {
             if (this.statsFlag) {
-                this.app3D.helper.removeStats()
+                window.app3D.helper.removeStats()
                 this.statsFlag = false
             } else {
-                this.app3D.helper.addStats()
+                window.app3D.helper.addStats()
                 this.statsFlag = true
             }
         },
         startGrideLine() {
-            if (this.grideLineFlag && this.app3D) {
-                this.app3D.helper.removeGridhelper()
+            if (this.grideLineFlag && window.app3D) {
+                window.app3D.helper.removeGridhelper()
                 this.grideLineFlag = false
-            } else if (this.app3D) {
-                this.app3D.helper.addGridhelper()
+            } else if (window.app3D) {
+                window.app3D.helper.addGridhelper()
                 this.grideLineFlag = true
             }
         },
         startTransform() {
             if (this.transformFlag) {
-                this.app3D.transformMesh.removeEvent()
+                window.app3D.transformMesh.removeEvent()
                 this.transformFlag = false
             } else {
-                this.app3D.transformMesh.addEvent()
+                window.app3D.transformMesh.addEvent()
                 this.transformFlag = true
             }
         },
         cameraLookBottom() {
-            this.app3D.sceneCamera.cameraLookBottom()
+            window.app3D.sceneCamera.cameraLookBottom()
         },
         cameraLookRight() {
-            this.app3D.sceneCamera.cameraLookRight()
+            window.app3D.sceneCamera.cameraLookRight()
         },
         startLightHelper() {
             if (this.startLightHelperFlag) {
-                this.app3D.helper.removeLightHelper()
+                window.app3D.helper.removeLightHelper()
                 this.startLightHelperFlag = false
             } else {
-                this.app3D.helper.addLightHelper()
+                window.app3D.helper.addLightHelper()
                 this.startLightHelperFlag = true
             }
         },
         startTakePoint() {
             if (this.startTakePointFlag) {
-                this.app3D.takePoint.stop()
+                window.app3D.takePoint.stop()
                 this.startTakePointFlag = false
             } else {
-                this.app3D.takePoint.start()
+                window.app3D.takePoint.start()
                 this.startTakePointFlag = true
             }
         },
@@ -175,7 +174,7 @@ export default {
             const geometry = new THREE.BoxGeometry(1, 1, 1);
             const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
             const cube = new THREE.Mesh(geometry, material);
-            // this.app3D.scene.add(cube);
+            // window.app3D.scene.add(cube);
 
             const data = cube.toJSON()
             const content = JSON.stringify(data);
@@ -195,7 +194,7 @@ export default {
                 // Here the loaded data is assumed to be an object
                 function (obj) {
                     // Add the loaded object to the scene
-                    self.app3D.scene.add(obj);
+                    window.app3D.scene.add(obj);
                 },
 
                 // onProgress回调
@@ -243,6 +242,7 @@ export default {
                 width: 20px;
                 height: 20px;
             }
+
             .backDiv {
                 background-color: #1890FF;
             }

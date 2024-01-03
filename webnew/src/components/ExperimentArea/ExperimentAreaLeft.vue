@@ -162,7 +162,6 @@ import * as THREE from "three";
 
 export default {
     props: {
-        app3D: Object,
         required: true
     },
     components: {
@@ -220,7 +219,7 @@ export default {
             // debugger
             let meshes = []
             checkedNodes.forEach(item => {
-                let result = this.app3D.getMeshByUUID(item.key)
+                let result = window.app3D.getMeshByUUID(item.key)
                 if (result) {
                     meshes.push(result)
                 }
@@ -229,26 +228,26 @@ export default {
             meshes.forEach(item => {
                 group.add(item);
             })
-            this.app3D.scene.add(group);
+            window.app3D.scene.add(group);
         },
         handleCheckChange(data, checked, indeterminate) {
             this.checkNodes = this.$refs.tree.getCheckedNodes()
         },
         exportToSTL() {
-            this.app3D.exportImport.exportToSTL()
+            window.app3D.exportImport.exportToSTL()
         },
         exportToOBJ() {
-            this.app3D.exportImport.exportToOBJ()
+            window.app3D.exportImport.exportToOBJ()
         },
         exportToGLB() {
-            this.app3D.exportImport.exportToGLB()
+            window.app3D.exportImport.exportToGLB()
         },
         async startTakePoint() {
             const self = this
-            this.app3D.takePoint.start()
+            window.app3D.takePoint.start()
             let hub1 = $hub.on("takePoint", (data) => {
                 self.$message('拾取成功,上传中...');
-                self.app3D.takePoint.stop()
+                window.app3D.takePoint.stop()
                 if (self.hotData.hotData) {
                     self.hotData.hotData.data.push({
                         "type": self.hotTypesIndex,
@@ -298,9 +297,9 @@ export default {
             if (res1.data && res1.data.id) {
                 this.hotData.hotData = JSON.parse(res1.data.hotData)
                 this.$forceUpdate()
-                this.app3D.hotPoint.clearAll()
+                window.app3D.hotPoint.clearAll()
                 this.hotData.hotData.data.forEach(itemInner => {
-                    this.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
+                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
                 })
             }
         },
@@ -342,12 +341,12 @@ export default {
             this.checkedKeys = checkedKeys;
         },
         onSelect(selectedKeys, info) {
-            this.app3D.getMeshByUUID(selectedKeys.key)
+            window.app3D.getMeshByUUID(selectedKeys.key)
             this.selectedKeys = selectedKeys;
         },
 
         getMeshByUUIDDispose() {
-            this.app3D.getMeshByUUIDDispose()
+            window.app3D.getMeshByUUIDDispose()
             this.selectedKeys = []
         },
         async uploadFile(data) {
@@ -424,10 +423,10 @@ export default {
         const self = this
         setInterval(function () {
 
-            if (self.app3D && self.app3D.getSceneChildren) {
-                let _treeData = self.app3D.getSceneChildren()
+            if (window.app3D && window.app3D.getSceneChildren) {
+                let _treeData = window.app3D.getSceneChildren()
                 if (JSON.stringify(_treeData) != JSON.stringify(self.treeData)) {
-                    self.treeData = self.app3D.getSceneChildren()
+                    self.treeData = window.app3D.getSceneChildren()
                 }
             }
         }, 1000)
@@ -439,7 +438,7 @@ export default {
             }
             this.hotData = item
             this.hotData.hotData.data.forEach(itemInner => {
-                this.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
+                window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
             })
         })
 
