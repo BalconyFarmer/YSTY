@@ -182,7 +182,7 @@ export default class App3D {
                 if (item.children.length === 0) {
                     const data = {
                         title: item.type,
-                        key: item.uuid
+                        key: item.uuid,
                     }
                     if (item.cname) {
                         data.title = item.cname
@@ -213,6 +213,7 @@ export default class App3D {
             this.scene.remove(this.boxHelper);
         }
         const result = []
+        let returnResult = null
 
         function recurrenceScene(aim, origin) {
             const count = origin.length
@@ -222,6 +223,7 @@ export default class App3D {
                     self.boxHelper = new THREE.BoxHelper(item, 0xffff00);
                     self.boxHelper.cname = '选择网格辅助'
                     self.scene.add(self.boxHelper);
+                    returnResult = item
                 }
                 if (item.children.length === 0) {
                     const data = {
@@ -248,6 +250,8 @@ export default class App3D {
         }
 
         recurrenceScene(result, this.scene.children)
+
+        return returnResult
     }
 
     getMeshByUUIDDispose() {

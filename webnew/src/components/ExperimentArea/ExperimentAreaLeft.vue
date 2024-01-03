@@ -23,13 +23,20 @@
         <div id="leftToolClassSub">
             <div v-if="activeIndex == 1">
                 <el-tree
+                    ref="tree"
                     :data="treeData"
                     :default-expanded-keys="defaultExpandIds"
                     :props="defaultProps"
                     node-key="key"
+                    show-checkbox
+                    @check-change="handleCheckChange"
                     @node-expand="handleNodeExpand"
                     @node-collapse="handleNodeCollapse"
                     @node-click="onSelect"></el-tree>
+                <div class="mergeButton">
+                    <el-button v-if="checkNodes.length> 1" circle icon="el-icon-connection" size="mini"
+                               @click="mergeLayer"></el-button>
+                </div>
             </div>
 
             <div v-if="activeIndex == 2">
@@ -134,7 +141,7 @@
                 <br>
 
                 <div>
-                    <el-button size="mini" type="primary" @click="exportToSTL" disabled>不支持导出FBX</el-button>
+                    <el-button disabled size="mini" type="primary" @click="exportToSTL">不支持导出FBX</el-button>
                 </div>
 
             </div>
@@ -151,6 +158,7 @@
 import $hub from 'hub-js';
 import {addHot, deleteHot, getHotById, updateHot, uploadHeadMinio} from "../../api/HotApi";
 import FileUpload from "../common/FileUpload";
+import * as THREE from "three";
 
 export default {
     props: {
@@ -162,6 +170,7 @@ export default {
     },
     data() {
         return {
+            checkNodes: [],
             defaultExpandIds: [],
             defaultProps: {
                 children: 'children',
@@ -205,6 +214,26 @@ export default {
         },
     },
     methods: {
+        mergeLayer() {
+            let checkedNodes = this.$refs.tree.getCheckedNodes();
+            // console.log(checkedNodes)
+            // debugger
+            let meshes = []
+            checkedNodes.forEach(item => {
+                let result = this.app3D.getMeshByUUID(item.key)
+                if (result) {
+                    meshes.push(result)
+                }
+            })
+            let group = new THREE.Group();
+            meshes.forEach(item => {
+                group.add(item);
+            })
+            this.app3D.scene.add(group);
+        },
+        handleCheckChange(data, checked, indeterminate) {
+            this.checkNodes = this.$refs.tree.getCheckedNodes()
+        },
         exportToSTL() {
             this.app3D.exportImport.exportToSTL()
         },
@@ -466,6 +495,13 @@ export default {
         height: 860px;
         overflow-y: scroll;
         margin-left: 2px;
+        position: relative;
+
+        .mergeButton {
+            position: absolute;
+            right: 10px;
+            top: 10px
+        }
 
         #leftSubMenu {
             position: absolute;
