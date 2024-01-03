@@ -3,9 +3,6 @@
         <canvas id="3dCanvas" height="800px" width="911px"></canvas>
         <ExperimentAreaLeft :app3D='app3D'></ExperimentAreaLeft>
         <ExperimentAreaCenter :app3D='app3D'></ExperimentAreaCenter>
-        <!--        <ExperimentAreaRight :app3D='app3D'></ExperimentAreaRight>-->
-        <KeyFram v-if="animationEditor"></KeyFram>
-        <DigitalCityLittleWindow v-if="showLittleWindow" :app3D='app3D'></DigitalCityLittleWindow>
         <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="模拟-3D资源列表"
                    width="100%">
             <ExperimentAreaRightStaticsModels :app3D='app3D'></ExperimentAreaRightStaticsModels>
@@ -23,10 +20,7 @@ import leftSee from '@/assets/左视图.svg';
 import transformMesh from '@/assets/移动.svg';
 import lightIcon from '@/assets/灯.svg';
 import ExperimentAreaLeft from './ExperimentAreaLeft.vue'
-import ExperimentAreaRight from './ExperimentAreaRight.vue'
-import KeyFram from './keyFram/KeyFram.vue'
 import ExperimentAreaCenter from './ExperimentAreaCenter.vue'
-import DigitalCityLittleWindow from './DigitalCityLittleWindow.vue'
 import ExperimentAreaRightStaticsModels from "./ExperimentAreaRightStaticsModels.vue";
 import $hub from 'hub-js';
 
@@ -34,9 +28,6 @@ export default {
     components: {
         ExperimentAreaLeft,
         ExperimentAreaCenter,
-        ExperimentAreaRight,
-        KeyFram,
-        DigitalCityLittleWindow,
         ExperimentAreaRightStaticsModels
     },
     data() {
