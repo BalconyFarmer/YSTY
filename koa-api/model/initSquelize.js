@@ -1,7 +1,5 @@
 const {Sequelize, Model, DataTypes} = require('sequelize')
 const {config} = require('../common/config')
-const {NormalUsersM} = require("./NormalUsersM")
-const {VideoModelM} = require("./VideoModelM")
 const {HotPointModel} = require("./HotPointModel");
 
 /**
@@ -37,8 +35,6 @@ class initSquelize {
             await sequelize.authenticate();
         }
 
-        this.normalUsersM = new NormalUsersM(sequelize)
-        this.videoModelM = new VideoModelM(sequelize)
         this.hotPointModel = new HotPointModel(sequelize)
     }
 

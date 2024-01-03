@@ -24,15 +24,11 @@ const CORS = cors({
 // 通用POST接口解析body数据
 const _koaBody = koaBody()
 
-const _static = static(
-    path.join(__dirname, '../static')
-)
 
-const initJWT = jwt({secret: config.JWTSecret, passthrough: true,debug: true}).unless({path: ['/gettoken']})
+const initJWT = jwt({secret: config.JWTSecret, passthrough: true, debug: true}).unless({path: ['/gettoken']})
 
 module.exports = [
     CORS,
     _koaBody,
-    _static,
     initJWT,
 ];
