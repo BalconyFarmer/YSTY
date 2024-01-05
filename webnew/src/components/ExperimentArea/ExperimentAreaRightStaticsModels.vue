@@ -108,6 +108,7 @@ export default {
                         const material = new THREE.MeshStandardMaterial({color: 0x606060});
                         const mesh = new THREE.Mesh(geometry, material);
                         scene.add(mesh);
+                        window.app3D.sceneCamera.lookAtMesh(mesh)
                     }, window.app3D.progress);
                     break
                 case 'glb':

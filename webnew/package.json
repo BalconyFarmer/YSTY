@@ -31,8 +31,7 @@
     "vue-loading-template": "^1.3.2",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",
-    "vuex-persist": "^2.2.0",
-    "wangeditor": "^4.6.12"
+    "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-router": "~5.0.0",

@@ -47,9 +47,6 @@ export class ImportObj {
             if (this.func) {
                 this.func(object3d)
             }
-            if (this.position) {
-                object3d.position = this.position
-            }
             if (this.name) {
                 object3d.cname = this.name
             }

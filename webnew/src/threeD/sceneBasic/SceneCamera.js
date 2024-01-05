@@ -35,4 +35,28 @@ export class SceneCamera {
         this.camera.lookAt(this.app.scene.position);
     }
 
+    lookAtMesh(cube) {
+        // 创建相机
+        let camera = this.camera;
+
+        // 创建一个 mesh
+        let geometry = new THREE.BoxGeometry(1, 1, 1);
+        let material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+        let _cube = new THREE.Mesh(geometry, material);
+        _cube.position.set(100, 100, 100)
+        // 获取 mesh 的边界框
+        let boundingBox = new THREE.Box3().setFromObject(_cube);
+        console.log(boundingBox, 66)
+        debugger
+        // 设置相机的位置
+        camera.position.set(
+            boundingBox.getCenter().x,
+            boundingBox.getCenter().y,
+            boundingBox.getCenter().z + boundingBox.getSize().length());
+
+        // 设置相机的朝向
+        camera.lookAt(boundingBox.getCenter());
+
+    }
+
 }

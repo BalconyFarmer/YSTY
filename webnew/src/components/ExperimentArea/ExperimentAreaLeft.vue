@@ -435,11 +435,15 @@ export default {
             if (item.hotData) {
                 let hot = item.hotData.hotData
                 item.hotData = hot
+
+                this.hotData = item
+                this.hotData.hotData.data.forEach(itemInner => {
+                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
+                })
+            } else {
+                this.hotData = item
             }
-            this.hotData = item
-            this.hotData.hotData.data.forEach(itemInner => {
-                window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
-            })
+
         })
 
         this.hub1 = $hub.on("updateUploadFiles", (data) => {
