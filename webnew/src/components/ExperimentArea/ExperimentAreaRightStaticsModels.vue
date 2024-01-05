@@ -91,16 +91,18 @@ export default {
         }
     },
     methods: {
-        addTo000(item) {
+        async addTo000(item) {
             const scene = window.app3D.scene
             const fileType = item.index.split('.').pop();
             switch (fileType) {
                 case 'obj':
                     const vec3 = new THREE.Vector3(0, 0, 0)
-                    window.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
+                    let see1 = await window.app3D.objLoaders.loadOBJ(item.index, item.name, vec3)
+                    window.app3D.sceneCamera.lookAtMesh(see1)
                     break
                 case 'fbx':
-                    window.app3D.FBXLoader.loadFBX(item.index)
+                    let see = await window.app3D.FBXLoader._loadFBX(item.index)
+                    window.app3D.sceneCamera.lookAtMesh(see)
                     break
                 case 'stl':
                     const loader1 = new STLLoader();
@@ -116,6 +118,7 @@ export default {
                     loader.load(item.index, (gltf) => {
                         gltf.scene.position.set(0, 0, 0);
                         scene.add(gltf.scene);
+                        window.app3D.sceneCamera.lookAtMesh(gltf.scene)
                     }, window.app3D.progress);
                     break
             }
@@ -151,7 +154,6 @@ export default {
     height: calc(100vh - 50px);
     border: solid #99A1A9 1px;
     color: #7DD3CA;
-    height: 100%;
     overflow: auto;
 
     img {

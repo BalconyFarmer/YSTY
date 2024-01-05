@@ -1,31 +1,30 @@
-import {ImportObj} from './ImportObj'
-
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 export class ImportObjs {
     constructor(app) {
         this.app = app
-        this.objList = []
     }
 
-    loadOBJ(url, name, position) {
-        const objLoader = new ImportObj(this.app)
-        objLoader.loadOBJ(url, name,position)
-        const _objLoader = {
-            name: name,
-            objLoader: objLoader
-        }
-        this.objList.push(_objLoader)
-        return objLoader
+    loadOBJ(url) {
+        let scene = this.app.scene
+        return new Promise((resolve, reject) => {
+            // 创建一个 OBJLoader 实例
+            let loader = new OBJLoader();
+
+            // 加载模型
+            loader.load(
+                // 模型的 URL
+                url,
+                // 当模型加载完成时的回调函数
+                function (object) {
+                    // 将模型添加到场景中
+                    scene.add(object);
+                    resolve(object);
+                },
+                window.app3D.progress,
+            );
+        });
     }
 
-    getLoader(name) {
-        this.objList.forEach(item => {
-            if (item.name) {
-                if (item.name === name) {
-                    return item
-                }
-            }
-        })
-    }
 
 }
 
