@@ -6,7 +6,6 @@ import {RaycasterHelper} from "@/threeD/interaction/RaycasterHelper";
 import {ImportObjs} from "@/threeD/loaders/ImportObjs";
 import {ImportFBX} from '@/threeD/animation/ImportFBX'
 import {EventCube} from '@/threeD/interaction/EventCube'
-import {JudgeFace3} from '@/threeD/basicMath/JudgeFace3'
 import {FlowPipes} from '@/threeD/animation/FlowPipe/FlowPipes'
 import {Helper} from '@/threeD/helpers/Helper'
 import {Controls} from '@/threeD/sceneBasic/Controls'
@@ -38,7 +37,6 @@ import {MultipleElements} from './undefinedNow/MultipleElements'
 import {AdvancedMaterial} from './materials/AdvancedMaterial'
 import {SkyBox} from './sceneBasic/SkyBox'
 import {WaterPlane} from './materials/WaterPlane'
-// import {LightningStrike} from './LightningStrike'
 import {BloomOnly} from "./Bloom/BloomOnly";
 import {Grass} from "./Grass";
 import {Cloud} from "./Cloud";
@@ -56,26 +54,11 @@ export default class App3D {
         this.sceneCamera = null
         this.renderer = null
         this.controls = null
-
-        this._testMeshExport = null
         this.raycasterHelper = null
-        this.bspObject = null
-
         this.FBXLoader = null
         this.objLoaders = null
-
-        this.JudgeFace3 = null
-        this.flowPipes = null
-        this.eventCube = null
         this.helper = null
         this.exportImport = null
-        this.bSPCalculate = null
-        this.car = null
-        this.physiSimulate = null
-        this.makeBufferGeometryMesh = null
-        this.makeGeometryMesh = null
-        this.makeMeshPoint = null
-        this.makeMeshLine = null
         this.transformMesh = null
         this.takePoint = null
         this.animation = null
@@ -120,13 +103,6 @@ export default class App3D {
         this.objLoaders = new ImportObjs(this)
 
         this.FBXLoader = new ImportFBX(this)
-        this.JudgeFace3 = new JudgeFace3(this)
-        this.flowPipes = new FlowPipes(this)
-        this.eventCube = new EventCube(this)
-        this.car = new Car(this)
-        this.physiSimulate = new PhysiSimulate(this)
-        this.makeMeshPoint = new MakeMeshPoint(this)
-        this.makeMeshLine = new MakeMeshLine(this)
         this.transformMesh = new TransformMesh(this)
         this.takePoint = new TakePoint(this)
         this.animation = new Animation(this)
@@ -135,7 +111,6 @@ export default class App3D {
         this.canvasTexture = new TextureCanvasAnimation(this)
         this.basicMaterials = new BasicMaterials(this)
         this.GUI3D = new GUIApp(this)
-        this.shadowLight = new ShadowLight(this)
         this.littleWindow = new LittleWindow(this)
         this.multipleElements = new MultipleElements(this)
 
@@ -143,13 +118,10 @@ export default class App3D {
         this.eulerPractice = new EulerPractice(this)
         this.quaternionPractice = new QuaternionPractice(this)
         this.outlineShineEffect = new OutlineShineEffect(this)
-        this.makeBufferGeometryMesh = new MakeBufferGeometryMesh(this)
-        this.makeGeometryMesh = new MakeGeometryMesh(this)
         this.offLineRender = new OfflineRender(this)
         this.advancedMaterial = new AdvancedMaterial(this)
         this.skyBox = new SkyBox(this)
         this.waterPlane = new WaterPlane(this)
-        // this.lightningStrike = new LightningStrike(this)
         this.bloomOnly = new BloomOnly(this)
         this.cloud = new Cloud(this)
         this.grass = new Grass(this)

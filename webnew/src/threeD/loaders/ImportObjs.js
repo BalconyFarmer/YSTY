@@ -1,4 +1,5 @@
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import {OBJLoader} from 'three/addons/loaders/OBJLoader.js';
+
 export class ImportObjs {
     constructor(app) {
         this.app = app
@@ -24,7 +25,5 @@ export class ImportObjs {
             );
         });
     }
-
-
 }
 

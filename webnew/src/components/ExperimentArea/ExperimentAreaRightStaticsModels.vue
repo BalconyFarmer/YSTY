@@ -1,13 +1,18 @@
 <template>
     <div id='rightToolClassSub'>
-        <div v-for="item in listData">
+        <div v-for="item in listData" class="colum1">
+            <div><img :src=item.imgSrc>
+            </div>
+            <div v-if="item.hotData">
+                <el-button size="mini" type="primary" @click="addTo000(item)">编辑热点</el-button>
+            </div>
+            <div v-else>
+                <el-button size="mini" type="warning" @click="addTo000(item)">添加热点</el-button>
+            </div>
             <div>
-                <img :src=item.imgSrc>
                 <div class="titleContainer">{{ item.name }}</div>
             </div>
-            <el-button v-if="item.hotData" size="mini" type="primary" @click="addTo000(item)">编辑热点</el-button>
-            <el-button v-else size="mini" type="warning" @click="addTo000(item)">添加热点</el-button>
-            <a-divider dashed type="horizontal"/>
+            <el-divider></el-divider>
         </div>
     </div>
 </template>
@@ -148,23 +153,14 @@ export default {
 
 <style lang="scss">
 #rightToolClassSub {
-    display: inline;
-    float: left;
-    width: 275px;
-    height: calc(100vh - 50px);
-    border: solid #99A1A9 1px;
-    color: #7DD3CA;
-    overflow: auto;
+    width: auto;
+    height: auto;
 
     img {
         width: 50px;
         height: 50px;
     }
 
-    .titleContainer {
-        display: inline-block;
-        height: 50px;
-    }
 
 }
 </style>
