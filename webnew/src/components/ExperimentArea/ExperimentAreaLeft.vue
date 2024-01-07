@@ -529,68 +529,6 @@ export default {
 
         .inputContainer {
         }
-
     }
-
-
-}
-
-
-</style>
-
-<!--
-<style>
-.status {
-    width: 300px;
-    height: 300px;
-    position: relative;
-}
-
-.solid {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    background: #fff;
-    border-radius: 100%;
-}
-
-.status .animate1,
-.status .animate2 {
-    background: #fff;
-    width: 300px;
-    height: 300px;
-    border-radius: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-}
-
-@keyframes circle {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    100% {
-        -webkit-transform: scale(1.8);
-        transform: scale(1.8);
-        opacity: 0.1;
-    }
-}
-
-.status .animate1 {
-    -webkit-animation: circle 2s 0s ease-out infinite running;
-    animation: circle 2s 0s ease-out infinite running;
-}
-
-.status .animate2 {
-    -webkit-animation: circle 2s 1s ease-out infinite running;
-    animation: circle 2s 1s ease-out infinite running;
 }
 </style>
--->

@@ -22,7 +22,7 @@ export class HotPoint {
         });
 
         const sprite = new THREE.Sprite(material);
-        sprite.scale.set(0.1, 0.1, 0.1);
+        sprite.scale.set(200, 200, 1);
         sprite.position.set(po[0], po[1], po[2]);
         scene.add(sprite);
         this.spriteList.push(sprite)
