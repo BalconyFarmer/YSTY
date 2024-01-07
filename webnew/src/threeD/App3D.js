@@ -5,41 +5,14 @@ import {SceneCamera} from './sceneBasic/SceneCamera'
 import {RaycasterHelper} from "@/threeD/interaction/RaycasterHelper";
 import {ImportObjs} from "@/threeD/loaders/ImportObjs";
 import {ImportFBX} from '@/threeD/animation/ImportFBX'
-import {EventCube} from '@/threeD/interaction/EventCube'
-import {FlowPipes} from '@/threeD/animation/FlowPipe/FlowPipes'
 import {Helper} from '@/threeD/helpers/Helper'
 import {Controls} from '@/threeD/sceneBasic/Controls'
 import {ExportImport} from '@/threeD/loaders/ExportImport'
-import {Car} from '@/threeD/PROJECTS/game/Car'
-import {PhysiSimulate} from '@/threeD/PROJECTS/game/PhysiSimulate'
-import {MakeBufferGeometryMesh} from './basicMesh/MakeBufferGeometryMesh'
-import {MakeBufferGeometryCube} from './basicMesh/MakeBufferGeometryCube'
-import {MakeGeometryMesh} from './basicMesh/MakeGeometryMesh'
-import {MakeMeshPoint} from './basicMesh/MakeMeshPoint'
-import {MakeMeshLine} from './basicMesh/MakeMeshLine'
 import {TransformMesh} from './interaction/TransformMesh'
 import {TakePoint} from './interaction/TakePoint'
-import {Animation} from './animation/Animation'
-import {Sound} from './interaction/Sound'
 import {ArrowLine} from './helpers/representationalviewer/ArrowLine'
-import {Matrix4Practice} from './basicMath/Matrix4Practice'
-import {EulerPractice} from './basicMath/EulerPractice'
-import {QuaternionPractice} from './basicMath/QuaternionPractice'
-import {OutlineShineEffect} from './interaction/OutlineShineEffect'
-import {PlayVideo} from './materials/PlayVideo'
-import {TextureCanvasAnimation} from './materials/TextureCanvasAnimation'
 import {BasicMaterials} from '@/threeD/materials/BasicMaterials'
-import {OfflineRender} from './undefinedNow/OfflineRender'
-import {GUIApp} from './GUI/GUIApp'
-import {ShadowLight} from './undefinedNow/ShadowLight'
 import {LittleWindow} from './helpers/representationalviewer/LittleWindow'
-import {MultipleElements} from './undefinedNow/MultipleElements'
-import {AdvancedMaterial} from './materials/AdvancedMaterial'
-import {SkyBox} from './sceneBasic/SkyBox'
-import {WaterPlane} from './materials/WaterPlane'
-import {BloomOnly} from "./Bloom/BloomOnly";
-import {Grass} from "./Grass";
-import {Cloud} from "./Cloud";
 import {HotPoint} from "./HotPoint";
 
 export default class App3D {
@@ -61,27 +34,10 @@ export default class App3D {
         this.exportImport = null
         this.transformMesh = null
         this.takePoint = null
-        this.animation = null
-        this.sound = null
         this.arrowLine = new ArrowLine(this)
-        this.matrix4Practice = null
-        this.eulerPractice = null
-        this.quaternionPractice = null
-        this.makeBufferGeometryCube = null
-        this.outlineShineEffect = null
-        this.playVideo = null
-        this.canvasTexture = null
         this.basicMaterials = null
-        this.GUI3D = null
-
-        this.poitnLight = null
         this.littleWindow = null
-        this.multipleElements = null
-        this.advancedMaterial = null
-        this.skyBox = null
-        this.waterPlane = null
         this.hotPoint = null
-
         this.loopFlag = true
     }
 
@@ -99,39 +55,15 @@ export default class App3D {
         this.helper = new Helper(this)
         this.raycasterHelper = new RaycasterHelper(this)
         this.exportImport = new ExportImport(this)
-
         this.objLoaders = new ImportObjs(this)
-
         this.FBXLoader = new ImportFBX(this)
         this.transformMesh = new TransformMesh(this)
         this.takePoint = new TakePoint(this)
-        this.animation = new Animation(this)
-        this.sound = new Sound(this)
-        this.playVideo = new PlayVideo(this)
-        this.canvasTexture = new TextureCanvasAnimation(this)
         this.basicMaterials = new BasicMaterials(this)
-        this.GUI3D = new GUIApp(this)
         this.littleWindow = new LittleWindow(this)
-        this.multipleElements = new MultipleElements(this)
-
-        this.matrix4Practice = new Matrix4Practice(this)
-        this.eulerPractice = new EulerPractice(this)
-        this.quaternionPractice = new QuaternionPractice(this)
-        this.outlineShineEffect = new OutlineShineEffect(this)
-        this.offLineRender = new OfflineRender(this)
-        this.advancedMaterial = new AdvancedMaterial(this)
-        this.skyBox = new SkyBox(this)
-        this.waterPlane = new WaterPlane(this)
-        this.bloomOnly = new BloomOnly(this)
-        this.cloud = new Cloud(this)
-        this.grass = new Grass(this)
         this.hotPoint = new HotPoint(this)
         this.startLoop()
 
-    }
-
-    addCustomCube() {
-        this.makeBufferGeometryCube = new MakeBufferGeometryCube(this)
     }
 
     /**
@@ -341,10 +273,6 @@ export default class App3D {
      */
     onRender() {
         this.renderer.render(this.scene, this.camera); //执行渲染操作
-    }
-
-    onLoop() {
-
     }
 
     /**
