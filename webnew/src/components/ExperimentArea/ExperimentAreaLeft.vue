@@ -65,6 +65,10 @@
                                     <source :src="item.src" type="audio/mpeg">
                                     您的浏览器不支持 audio 标签。
                                 </audio>
+
+                                <div v-if="item.type == '文本'">
+                                    内容:&nbsp;{{ item.src }}
+                                </div>
                             </div>
                         </div>
                         <div class="row1">
@@ -92,7 +96,7 @@
                     <div class="nowrap" style="width: 100px">
                         {{ newFileData }}
                     </div>
-                    <el-button size="mini" @click="startTakePoint" type="primary">开始拾取坐标</el-button>
+                    <el-button size="mini" @click="startTakePoint" type="primary">点击开始拾取坐标</el-button>
                     <br>
                 </div>
 
@@ -146,7 +150,7 @@
                 v-model="textarea2">
             </el-input>
             <br>
-            <el-button size="mini" type="primary">提交</el-button>
+            <el-button size="mini" type="primary" @click="submitText">提交</el-button>
         </el-dialog>
     </div>
 </template>
@@ -218,10 +222,12 @@ export default {
         }
     },
     methods: {
+        submitText() {
+            this.newFileData = this.textarea2
+            this.dialogVisible = false
+        },
         mergeLayer() {
             let checkedNodes = this.$refs.tree.getCheckedNodes();
-            // console.log(checkedNodes)
-            // debugger
             let meshes = []
             checkedNodes.forEach(item => {
                 let result = window.app3D.getMeshByUUID(item.key)
