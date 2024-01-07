@@ -6,7 +6,6 @@ export class HotPoint {
     constructor(app) {
         this.app = app
         this.spriteList = []
-        // this.add()
     }
 
 
@@ -23,7 +22,7 @@ export class HotPoint {
         });
 
         const sprite = new THREE.Sprite(material);
-        sprite.scale.set(0.8, 0.8, 0.8);
+        sprite.scale.set(0.1, 0.1, 0.1);
         sprite.position.set(po[0], po[1], po[2]);
         scene.add(sprite);
         this.spriteList.push(sprite)
@@ -50,18 +49,28 @@ export class HotPoint {
 
     addText(po, text, type) {
         let canvas = document.createElement('canvas');
-        canvas.style.height = '20px'
+        canvas.width = 200
+        canvas.height = 200;
+
         let context = canvas.getContext('2d');
+
+        // // 设置线条的颜色
+        // context.strokeStyle = 'white';
+        // // 设置线条的宽度
+        // context.lineWidth = 10;
+        // // 画一个矩形作为边框
+        // context.strokeRect(0, 0, canvas.width, canvas.height);
+
         context.font = 'Bold 15px apple';
         context.fillStyle = 'white'
-        context.fillText(text, 0, 10);
-        context.fillText(type, 0, 20);
+        context.fillText(text, 0, 15);
+        context.fillText(type, 0, 45);
         let texture = new THREE.Texture(canvas);
         texture.needsUpdate = true;
         let material = new THREE.SpriteMaterial({map: texture});
         let sprite = new THREE.Sprite(material);
-        sprite.position.set(po[0], po[1], po[2]);
-        sprite.scale.set(0.8, 0.8, 0.8);
+        sprite.position.set(po[0], po[1]-0.2, po[2]-0.1);
+        sprite.scale.set(0.5, 0.5, 0.5);
         this.spriteList.push(sprite)
         this.app.scene.add(sprite);
     }

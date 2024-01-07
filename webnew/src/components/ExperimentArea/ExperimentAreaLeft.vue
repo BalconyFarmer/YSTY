@@ -538,6 +538,7 @@ export default {
 
 </style>
 
+<!--
 <style>
 .status {
     width: 300px;
@@ -592,3 +593,4 @@ export default {
     animation: circle 2s 1s ease-out infinite running;
 }
 </style>
+-->
