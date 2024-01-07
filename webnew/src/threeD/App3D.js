@@ -44,7 +44,6 @@ export default class App3D {
         this.initScene()
         this.changeSceneBackground(1)
         this.sceneCamera = new SceneCamera(this)
-        this.camera = this.sceneCamera.camera
         this.initLight(0.5)
         this.initRenderer()
         this.initController()
@@ -67,7 +66,6 @@ export default class App3D {
             this.controls = null
         }
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.update()
     }
 
     /**
@@ -245,13 +243,12 @@ export default class App3D {
         const self = this
 
         function run() {
-            if (self.controls) {
+            if (self.controls && self.camera) {
                 self.controls.update()
             }
-            if (self.loopFlag) {
+            if (self.loopFlag && self.camera) {
                 requestAnimationFrame(run);
                 self.renderer.render(self.scene, self.camera); //执行渲染操作
-
                 if (self.renderQueue.length > 0) {
                     self.renderQueue.forEach((item, index) => {
                         item()

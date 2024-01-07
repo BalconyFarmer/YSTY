@@ -26,7 +26,7 @@ export class RaycasterHelper {
      */
     startRaycast() {
         if (!this.startFalt) {
-            document.addEventListener('mouseup', this._getMesh, false);
+            document.addEventListener('mousedown', this._getMesh, false);
             this.raycaster = new THREE.Raycaster();
             this.mouse = new THREE.Vector2();
             this.startFalt = true

@@ -4,7 +4,7 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 export class SceneCamera {
     constructor(app) {
         this.app = app
-        this.camera = null
+        this.app.camera = null
         this.init()
     }
 
@@ -14,45 +14,46 @@ export class SceneCamera {
         const k = width / height; //窗口宽高比
         const s = 20; //三维场景显示范围控制系数，系数越大，显示的范围越大
 
-        this.camera = new THREE.PerspectiveCamera(30, k, 0.001, 1000000);
+        this.app.camera = new THREE.PerspectiveCamera(30, k, 0.001, 1000000);
+        this.app.scene.add(this.app.camera);
 
+        // this.app.camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 1000);
+        // this.app.scene.add(this.app.camera);
         //设置相机位置
-        this.camera.position.set(100, 100, 100);
-        //设置相机方向(指向的场景对象)
-        // this.camera.lookAt(this.app.scene.position);
-
-
+        this.app.camera.position.set(100, 100, 100);
     }
 
     getCameraJson() {
-        let json = this.camera.toJSON()
+        let json = this.app.camera.toJSON()
         return json
     }
 
     setCameraJson(jsonStr) {
-        console.log(jsonStr,"++++++++++++")
         let json = jsonStr
-        // 创建 ObjectLoader 对象
         let loader = new THREE.ObjectLoader();
-        // 使用 .parse 方法将 JSON 数据加载回 PerspectiveCamera
-        this.camera = loader.parse(json);
-        this.camera.updateProjectionMatrix()
-        console.log(this.camera, 6666)
+        this.app.scene.remove(this.app.camera);
+        this.app.camera = null
+        this.app.camera = loader.parse(json);
+        this.app.scene.add(this.app.camera);
+        this.app.camera.updateProjectionMatrix()
 
-        this.app.initController()
+        const self = this
+        setTimeout(function () {
+            self.app.initController()
+        }, 1000)
 
     }
 
     // 俯视图
     cameraLookBottom() {
-        this.camera.position.set(0, 100, 0);
-        this.camera.lookAt(this.app.scene.position);
+        this.app.camera.position.set(0, 100, 0);
+        this.app.camera.lookAt(this.app.scene.position);
     }
 
     // 左视图
     cameraLookRight() {
-        this.camera.position.set(-100, 0, 0);
-        this.camera.lookAt(this.app.scene.position);
+        this.app.camera.position.set(-100, 0, 0);
+        this.app.camera.lookAt(this.app.scene.position);
     }
 
     lookAtMesh(mesh) {

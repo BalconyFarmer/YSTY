@@ -468,7 +468,6 @@ export default {
             })
         }, 1000)
 
-
     },
     beforeDestroy() {
         this.hub1.off()
