@@ -267,7 +267,8 @@ export default {
                             data.y,
                             data.z
                         ],
-                        "src": self.newFileData
+                        "src": self.newFileData,
+                        "camera": window.app3D.sceneCamera.getCameraJson()
                     })
                     self.updateHot()
                 } else {
@@ -277,6 +278,8 @@ export default {
             })
         },
         async newHot(po) {
+            const self = this
+
             let demo = {
                 "data": [
                     {
@@ -286,7 +289,8 @@ export default {
                             po.y,
                             po.z
                         ],
-                        "src": this.newFileData
+                        "src": this.newFileData,
+                        "camera": window.app3D.sceneCamera.getCameraJson()
                     }
                 ]
             }

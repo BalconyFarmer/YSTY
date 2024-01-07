@@ -16,9 +16,24 @@ export class SceneCamera {
         this.camera = new THREE.PerspectiveCamera(30, k, 0.001, 1000000);
 
         //设置相机位置
-        this.camera.position.set(5, 5, 5);
+        this.camera.position.set(100, 100, 100);
         //设置相机方向(指向的场景对象)
         this.camera.lookAt(this.app.scene.position);
+
+
+    }
+
+    getCameraJson() {
+        let json = this.camera.toJSON()
+        return json
+    }
+
+    setCameraJson(jsonStr) {
+        let json = JSON.parse(jsonStr)
+        // 创建 ObjectLoader 对象
+        let loader = new THREE.ObjectLoader();
+        // 使用 .parse 方法将 JSON 数据加载回 PerspectiveCamera
+        let camera = loader.parse(json);
     }
 
     // 俯视图
