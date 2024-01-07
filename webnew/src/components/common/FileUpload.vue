@@ -1,16 +1,12 @@
 <template>
     <div class="btn-v1 uploadContainer finger">
-        <div class="upload ">
+        <div class="upload finger">
             <el-button circle icon="el-icon-plus" size="mini"></el-button>
-            <input ref="fileRef" accept="*" class="file-input " multiple name="file"
+            <input ref="fileRef" accept="*" class="file-input finger" multiple name="file"
                    size="mini" style="color:rgba(0,0,0,0)" title=""
                    type='file'
                    @change="change($event)"/>
         </div>
-<!--        <div v-for="item in file" class="upload-list">-->
-<!--            <div :title="item.name" class="upload-title" v-text="item.name"/>-->
-<!--            <i class="el-icon-close finger" @click="handleDeleteFileClickEvent(item)"/>-->
-<!--        </div>-->
     </div>
 </template>
 

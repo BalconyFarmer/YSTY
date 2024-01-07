@@ -46,13 +46,4 @@ export class ArrowLine {
         this.app.scene.add(this.arrow); // TODO 重复添加
     }
 
-    clearPrev() {
-        if (this.line && this.arrow) {
-            this.app.scene.remove(this.arrow)
-            this.app.scene.remove(this.line)
-            this.arrow.dispose()
-            this.line.dispose()
-        }
-    }
-
 }

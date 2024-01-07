@@ -48,6 +48,7 @@
     --el-input-bg-color: rgba(9, 38, 70, 0.0) !important;
 }
 
+
 //el-picker
 .el-input__inner {
     background: rgba(255, 255, 0, 0) !important;
@@ -55,7 +56,7 @@
     backdrop-filter: blur(8px) !important;
     border-radius: 4px !important;
     box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2) !important;
-    color: black !important;
+    color: #ffffff !important;
 }
 
 .el-picker-panel {
@@ -197,7 +198,7 @@
 
 // time Picker
 .el-textarea__inner {
-    background: rgba(9, 38, 70, 0) !important !important;
+    background: rgba(9, 38, 70, 0) !important;
     color: #ffffff !important;
 }
 
@@ -319,8 +320,8 @@
 }
 
 .el-divider {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
 }
 
 ///////////////////dialog

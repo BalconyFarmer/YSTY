@@ -11,7 +11,6 @@ import {ExportImport} from '@/threeD/loaders/ExportImport'
 import {TransformMesh} from './interaction/TransformMesh'
 import {TakePoint} from './interaction/TakePoint'
 import {ArrowLine} from './helpers/representationalviewer/ArrowLine'
-import {BasicMaterials} from '@/threeD/materials/BasicMaterials'
 import {LittleWindow} from './helpers/representationalviewer/LittleWindow'
 import {HotPoint} from "./HotPoint";
 
@@ -35,7 +34,6 @@ export default class App3D {
         this.transformMesh = null
         this.takePoint = null
         this.arrowLine = new ArrowLine(this)
-        this.basicMaterials = null
         this.littleWindow = null
         this.hotPoint = null
         this.loopFlag = true
@@ -46,6 +44,7 @@ export default class App3D {
      */
     init() {
         this.initScene()
+        this.changeSceneBackground(1)
         this.sceneCamera = new SceneCamera(this)
         this.camera = this.sceneCamera.camera
         this.initLight(0.5)
@@ -59,7 +58,6 @@ export default class App3D {
         this.FBXLoader = new ImportFBX(this)
         this.transformMesh = new TransformMesh(this)
         this.takePoint = new TakePoint(this)
-        this.basicMaterials = new BasicMaterials(this)
         this.littleWindow = new LittleWindow(this)
         this.hotPoint = new HotPoint(this)
         this.startLoop()
@@ -72,7 +70,6 @@ export default class App3D {
     initScene() {
         this.scene = new THREE.Scene();
         this.scene.autoUpdate = true
-        this.changeSceneBackground(1)
     }
 
     getSceneChildren() {
@@ -185,8 +182,7 @@ export default class App3D {
     initLight(intensity) {
         const distance = 100
 
-        //环境光 均匀 无方向 无阴影
-        const ambient = new THREE.AmbientLight(0x444444, intensity);
+        const ambient = new THREE.AmbientLight("#fff", 10);
 
         // 方向光及辅助器
         const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
@@ -217,9 +213,6 @@ export default class App3D {
         const point5 = new THREE.PointLight(0xffffff, intensity);
         point5.position.set(0, 0, -distance);
         point5.cname = '点光源'
-
-        // 半球光（HemisphereLight）
-        // 平面光光源（RectAreaLight）
 
         //点光源添加到场景中
         this.scene.add(point0, point1, point2, point3, point4, point5, ambient);
@@ -293,7 +286,7 @@ export default class App3D {
 
     // 加载进度回调
     progress(xhr) {
-        $hub.emit("loadSchedule", (xhr.loaded / xhr.total * 100) + '% loaded' + '加载!')
+        $hub.emit("loadSchedule", (xhr.loaded / xhr.total * 100))
     }
 
 }

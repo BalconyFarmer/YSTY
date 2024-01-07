@@ -244,7 +244,7 @@ export default {
             }
 
             .backDiv {
-                background-color: #1890FF;
+                background-color: rgba(24, 144, 255, 0.3);
             }
 
             img {

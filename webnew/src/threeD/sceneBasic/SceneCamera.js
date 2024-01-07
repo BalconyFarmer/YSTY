@@ -13,9 +13,7 @@ export class SceneCamera {
         const k = width / height; //窗口宽高比
         const s = 20; //三维场景显示范围控制系数，系数越大，显示的范围越大
 
-        //创建相机对象 PerspectiveCamera透视相机  OrthographicCamera 正交相机
-        // this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 10000);
-        this.camera = new THREE.PerspectiveCamera(30, k, 1, 10000);
+        this.camera = new THREE.PerspectiveCamera(30, k, 0.001, 1000000);
 
         //设置相机位置
         this.camera.position.set(5, 5, 5);

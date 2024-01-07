@@ -40,18 +40,14 @@
             </div>
 
             <div v-if="activeIndex == 2">
-                <div>
-                    热点编辑
+                <div style="margin-top: 10px" class="row1">
+                    <i class="el-icon-s-promotion"></i>
+                    <div>热点编辑</div>
                 </div>
-                <br/>
                 <el-divider></el-divider>
                 <div v-if="hotData.hotData" class="colum1">
-                    <div v-for="item in hotData.hotData.data">
+                    <div v-for="item in hotData.hotData.data" class="resourceBox">
                         <div>
-                            <div>
-                                资源预览:
-                            </div>
-                            <br/>
                             <div>
                                 <el-image
                                     v-if="item.type == '图片'"
@@ -71,7 +67,7 @@
                                 </audio>
                             </div>
                         </div>
-                        <div>
+                        <div class="row1">
                             <div>
                                 类型:
                             </div>
@@ -79,11 +75,11 @@
                                 {{ item.type }}
                             </div>
                         </div>
-                        <div>
+                        <div class="row1">
                             <div>
                                 位置:
                             </div>
-                            <div>
+                            <div class="nowrap">
                                 {{ item.position }}
                             </div>
                         </div>
@@ -92,16 +88,16 @@
                 </div>
                 <el-divider></el-divider>
 
-                <div v-if="newFileData">
-                    <div>
+                <div v-if="newFileData" style="width: 95%" class="row1">
+                    <div class="nowrap" style="width: 100px">
                         {{ newFileData }}
                     </div>
-                    <el-button circle icon="el-icon-plus" size="mini" @click="startTakePoint"></el-button>
-                    <el-divider></el-divider>
+                    <el-button size="mini" @click="startTakePoint" type="primary">开始拾取坐标</el-button>
+                    <br>
                 </div>
 
-                <div class="rowBetween">
-                    <el-select v-model="hotTypesIndex" disabled placeholder="请选择" size="mini">
+                <div class="rowAround" style="width: 95%">
+                    <el-select v-model="hotTypesIndex" placeholder="请选择" size="mini">
                         <el-option
                             v-for="item in hotTypes"
                             :key="item.value"
@@ -109,40 +105,31 @@
                             :value="item.value">
                         </el-option>
                     </el-select>
-                    <FileUpload></FileUpload>
+                    <FileUpload v-if="hotTypesIndex != '文本'"></FileUpload>
                 </div>
 
             </div>
+
             <div v-if="activeIndex == 3" class="colum1">
                 <div>
-                    <el-button v-if="hotData" size="mini" type="primary" @click="deleteHot">删除热点</el-button>
-                </div>
-                <br>
-                <div>
-                    <el-button size="small" type="primary" @click="quit">退出</el-button>
-                </div>
-
-                <el-divider></el-divider>
-                <br>
-
-                <div>
-                    <el-button size="mini" type="primary" @click="exportToOBJ">导出obj</el-button>
+                    <el-link v-if="hotData" size="mini" @click="deleteHot" type="info">删除热点</el-link>
                 </div>
                 <br>
 
                 <div>
-                    <el-button size="mini" type="primary" @click="exportToGLB">导出glb</el-button>
+                    <el-link type="info" @click="exportToOBJ">导出obj</el-link>
                 </div>
                 <br>
 
                 <div>
-                    <el-button size="mini" type="primary" @click="exportToSTL">导出stl</el-button>
+                    <el-link type="info" @click="exportToGLB">导出glb</el-link>
                 </div>
                 <br>
 
                 <div>
-                    <el-button disabled size="mini" type="primary" @click="exportToSTL">不支持导出FBX</el-button>
+                    <el-link type="info" @click="exportToSTL">导出stl</el-link>
                 </div>
+                <br>
 
             </div>
             <div v-if="leftSubMenu" id="leftSubMenu">
@@ -151,6 +138,16 @@
                 </a-button>
             </div>
         </div>
+
+        <el-dialog :visible.sync="dialogVisible" title="文本编辑">
+            <el-input
+                type="textarea"
+                placeholder="请输入内容"
+                v-model="textarea2">
+            </el-input>
+            <br>
+            <el-button size="mini" type="primary">提交</el-button>
+        </el-dialog>
     </div>
 </template>
 
@@ -169,6 +166,7 @@ export default {
     },
     data() {
         return {
+            dialogVisible: false,
             checkNodes: [],
             defaultExpandIds: [],
             defaultProps: {
@@ -204,13 +202,20 @@ export default {
                     value: '文本',
                     label: '文本'
                 },
-            ]
+            ],
+            textarea2: null
         }
     },
     watch: {
         checkedKeys(val) {
-            console.log('onCheck', val);
         },
+        hotTypesIndex(value) {
+            if (this.hotTypesIndex == '文本') {
+                this.dialogVisible = true
+            } else {
+                this.dialogVisible = false
+            }
+        }
     },
     methods: {
         mergeLayer() {
@@ -319,9 +324,7 @@ export default {
             this.newFileData = null
 
         },
-        quit() {
-            location.reload();
-        },
+
         async deleteHot() {
             let res = await deleteHot({d3ModelId: this.hotData.index})
             if (res.data) {
@@ -337,9 +340,7 @@ export default {
             this.$parent.startAnimatioinEditor()
             this.rightSelectMeshUUID = null
         },
-        onCheck(checkedKeys) {
-            this.checkedKeys = checkedKeys;
-        },
+
         onSelect(selectedKeys, info) {
             window.app3D.getMeshByUUID(selectedKeys.key)
             this.selectedKeys = selectedKeys;
@@ -468,7 +469,7 @@ export default {
     top: 46px;
     background-color: rgba(47, 49, 54, 0.9);
     overflow: hidden;
-    width: 300px;
+    width: 350px;
     height: calc(100vh);
     display: flex;
     flex-direction: row;
@@ -494,11 +495,25 @@ export default {
     }
 
     #leftToolClassSub {
-        width: 100%;
-        height: 860px;
+        width: 90%;
+        height: 95%;
         overflow-y: scroll;
+        overflow-x: hidden;
         margin-left: 2px;
-        position: relative;
+        font-size: 12px;
+
+        #leftSubMenu {
+            position: absolute;
+            left: 100px;
+            height: 100px;
+        }
+
+        .resourceBox {
+            background-color: rgba(32, 34, 38, .8);
+            width: 85%;
+            margin: 15px;
+            padding: 5px;
+        }
 
         .mergeButton {
             position: absolute;
@@ -506,12 +521,12 @@ export default {
             top: 10px
         }
 
-        #leftSubMenu {
-            position: absolute;
-            left: 100px;
-            height: 100px;
+        .inputContainer {
         }
+
     }
+
+
 }
 
 

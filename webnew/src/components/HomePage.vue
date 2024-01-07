@@ -4,12 +4,19 @@
             <div class="name">
                 3D编辑器
             </div>
-
+            &nbsp;
+            &nbsp;
             <div class="row1">
-                <div>{{ scheduleData }}</div>
-                <div v-if="scheduleData" @click="scheduleData = null">
-                    -- 点击清除
+                <div style="width: 400px" v-if="scheduleData">
+                    <el-progress :percentage="scheduleData"></el-progress>
                 </div>
+                <div v-if="scheduleData" @click="scheduleData = 0" class="finger">
+                    清除
+                </div>
+            </div>
+
+            <div class="quitButton">
+                <el-button size="mini" type="primary" @click="quit">退出</el-button>
             </div>
         </div>
         <router-view/>
@@ -36,6 +43,9 @@ export default {
     methods: {
         goExperimentArea() {
             this.$router.push({path: '/experimentArea'}).catch(error => error)
+        },
+        quit() {
+            location.reload();
         },
     },
     mounted() {
@@ -67,6 +77,11 @@ export default {
 
         .name {
             margin-left: 20px;
+        }
+
+        .quitButton {
+            position: absolute;
+            right: 20px;
         }
     }
 }
