@@ -46,7 +46,6 @@ export default class App3D {
         this.sceneCamera = new SceneCamera(this)
         this.initLight(0.5)
         this.initRenderer()
-        this.initController()
 
         this.helper = new Helper(this)
         this.raycasterHelper = new RaycasterHelper(this)
@@ -57,15 +56,8 @@ export default class App3D {
         this.littleWindow = new LittleWindow(this)
         this.hotPoint = new HotPoint(this)
         this.startLoop()
-
-    }
-
-    initController() {
-        if (this.controls) {
-            this.controls.dispose()
-            this.controls = null
-        }
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
     }
 
     /**
@@ -243,9 +235,6 @@ export default class App3D {
         const self = this
 
         function run() {
-            if (self.controls && self.camera) {
-                self.controls.update()
-            }
             if (self.loopFlag && self.camera) {
                 requestAnimationFrame(run);
                 self.renderer.render(self.scene, self.camera); //执行渲染操作

@@ -44,7 +44,7 @@ export class HotPoint {
 
         animate();
 
-        // this.addText(po, text, _type)
+        this.addText(po, text, _type, allData)
     }
 
     addText(po, text, type, allData) {
@@ -67,7 +67,7 @@ export class HotPoint {
         this.spriteList.push(sprite)
         this.app.scene.add(sprite);
 
-        // sprite.allDataHot = allData
+        sprite.allDataHot = allData
 
     }
 

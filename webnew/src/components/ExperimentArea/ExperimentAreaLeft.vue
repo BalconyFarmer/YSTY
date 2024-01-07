@@ -463,7 +463,7 @@ export default {
             window.app3D.raycasterHelper.startRaycast()
             $hub.on("getMesh", (data) => {
                 if (data.allDataHot) {
-                    window.app3D.sceneCamera.setCameraJson(data.allDataHot.camera)
+                    window.app3D.sceneCamera.lookAtMesh(data)
                 }
             })
         }, 1000)
