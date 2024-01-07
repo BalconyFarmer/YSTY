@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 export class SceneCamera {
     constructor(app) {
@@ -18,7 +19,7 @@ export class SceneCamera {
         //设置相机位置
         this.camera.position.set(100, 100, 100);
         //设置相机方向(指向的场景对象)
-        this.camera.lookAt(this.app.scene.position);
+        // this.camera.lookAt(this.app.scene.position);
 
 
     }
@@ -29,22 +30,28 @@ export class SceneCamera {
     }
 
     setCameraJson(jsonStr) {
-        let json = JSON.parse(jsonStr)
+        console.log(jsonStr,"++++++++++++")
+        let json = jsonStr
         // 创建 ObjectLoader 对象
         let loader = new THREE.ObjectLoader();
         // 使用 .parse 方法将 JSON 数据加载回 PerspectiveCamera
-        let camera = loader.parse(json);
+        this.camera = loader.parse(json);
+        this.camera.updateProjectionMatrix()
+        console.log(this.camera, 6666)
+
+        this.app.initController()
+
     }
 
     // 俯视图
     cameraLookBottom() {
-        this.camera.position.set(0, 1000, 0);
+        this.camera.position.set(0, 100, 0);
         this.camera.lookAt(this.app.scene.position);
     }
 
     // 左视图
     cameraLookRight() {
-        this.camera.position.set(-1000, 0, 0);
+        this.camera.position.set(-100, 0, 0);
         this.camera.lookAt(this.app.scene.position);
     }
 

@@ -9,7 +9,7 @@ export class HotPoint {
     }
 
 
-    add(po, text, _type) {
+    add(po, text, _type, allData) {
         po[1] = po[1] + 0.1
         const self = this
         const scene = this.app.scene
@@ -24,6 +24,7 @@ export class HotPoint {
         const sprite = new THREE.Sprite(material);
         sprite.scale.set(200, 200, 1);
         sprite.position.set(po[0], po[1], po[2]);
+        sprite.allDataHot = allData
         scene.add(sprite);
         this.spriteList.push(sprite)
         const spriteTween = new TWEEN.Tween({scale: 0.2}).to({
@@ -39,27 +40,19 @@ export class HotPoint {
         function animate() {
             requestAnimationFrame(animate);
             TWEEN.update();
-            renderer.render(scene, camera);
         }
 
         animate();
 
-        this.addText(po, text, _type)
+        // this.addText(po, text, _type)
     }
 
-    addText(po, text, type) {
+    addText(po, text, type, allData) {
         let canvas = document.createElement('canvas');
         canvas.width = 200
         canvas.height = 200;
 
         let context = canvas.getContext('2d');
-
-        // // 设置线条的颜色
-        // context.strokeStyle = 'white';
-        // // 设置线条的宽度
-        // context.lineWidth = 10;
-        // // 画一个矩形作为边框
-        // context.strokeRect(0, 0, canvas.width, canvas.height);
 
         context.font = 'Bold 15px apple';
         context.fillStyle = 'white'
@@ -69,10 +62,13 @@ export class HotPoint {
         texture.needsUpdate = true;
         let material = new THREE.SpriteMaterial({map: texture});
         let sprite = new THREE.Sprite(material);
-        sprite.position.set(po[0], po[1]-0.2, po[2]-0.1);
+        sprite.position.set(po[0], po[1] - 0.2, po[2] - 0.1);
         sprite.scale.set(0.5, 0.5, 0.5);
         this.spriteList.push(sprite)
         this.app.scene.add(sprite);
+
+        // sprite.allDataHot = allData
+
     }
 
     clearAll() {

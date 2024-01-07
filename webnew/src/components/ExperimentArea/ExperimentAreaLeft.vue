@@ -255,10 +255,8 @@ export default {
         },
         async startTakePoint() {
             const self = this
-            window.app3D.takePoint.start()
             let hub1 = $hub.on("takePoint", (data) => {
                 self.$message('拾取成功,上传中...');
-                window.app3D.takePoint.stop()
                 if (self.hotData.hotData) {
                     self.hotData.hotData.data.push({
                         "type": self.hotTypesIndex,
@@ -449,7 +447,7 @@ export default {
 
                 this.hotData = item
                 this.hotData.hotData.data.forEach(itemInner => {
-                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
+                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type,itemInner)
                 })
             } else {
                 this.hotData = item
@@ -460,6 +458,15 @@ export default {
         this.hub1 = $hub.on("updateUploadFiles", (data) => {
             this.uploadFile(data)
         })
+
+        setTimeout(function () {
+            window.app3D.raycasterHelper.startRaycast()
+            $hub.on("getMesh", (data) => {
+                if (data.allDataHot) {
+                    window.app3D.sceneCamera.setCameraJson(data.allDataHot.camera)
+                }
+            })
+        }, 1000)
 
 
     },

@@ -6,13 +6,12 @@ import {RaycasterHelper} from "@/threeD/interaction/RaycasterHelper";
 import {ImportObjs} from "@/threeD/loaders/ImportObjs";
 import {ImportFBX} from '@/threeD/animation/ImportFBX'
 import {Helper} from '@/threeD/helpers/Helper'
-import {Controls} from '@/threeD/sceneBasic/Controls'
 import {ExportImport} from '@/threeD/loaders/ExportImport'
 import {TransformMesh} from './interaction/TransformMesh'
-import {TakePoint} from './interaction/TakePoint'
 import {ArrowLine} from './helpers/representationalviewer/ArrowLine'
 import {LittleWindow} from './helpers/representationalviewer/LittleWindow'
 import {HotPoint} from "./HotPoint";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 export default class App3D {
 
@@ -25,7 +24,6 @@ export default class App3D {
         this.camera = null
         this.sceneCamera = null
         this.renderer = null
-        this.controls = null
         this.raycasterHelper = null
         this.FBXLoader = null
         this.objLoaders = null
@@ -49,19 +47,27 @@ export default class App3D {
         this.camera = this.sceneCamera.camera
         this.initLight(0.5)
         this.initRenderer()
+        this.initController()
 
-        this.controls = new Controls(this)
         this.helper = new Helper(this)
         this.raycasterHelper = new RaycasterHelper(this)
         this.exportImport = new ExportImport(this)
         this.objLoaders = new ImportObjs(this)
         this.FBXLoader = new ImportFBX(this)
         this.transformMesh = new TransformMesh(this)
-        this.takePoint = new TakePoint(this)
         this.littleWindow = new LittleWindow(this)
         this.hotPoint = new HotPoint(this)
         this.startLoop()
 
+    }
+
+    initController() {
+        if (this.controls) {
+            this.controls.dispose()
+            this.controls = null
+        }
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.update()
     }
 
     /**
@@ -239,9 +245,13 @@ export default class App3D {
         const self = this
 
         function run() {
+            if (self.controls) {
+                self.controls.update()
+            }
             if (self.loopFlag) {
                 requestAnimationFrame(run);
-                self.onRender();
+                self.renderer.render(self.scene, self.camera); //执行渲染操作
+
                 if (self.renderQueue.length > 0) {
                     self.renderQueue.forEach((item, index) => {
                         item()
@@ -251,21 +261,6 @@ export default class App3D {
         }
 
         run()
-    }
-
-    removeFromQueue(name) {
-        this.renderQueue.forEach((item, index) => {
-            if (item.name === name) {
-                this.renderQueue.splice(index, 1)
-            }
-        })
-    }
-
-    /**
-     * 更新相机
-     */
-    onRender() {
-        this.renderer.render(this.scene, this.camera); //执行渲染操作
     }
 
     /**
@@ -280,8 +275,8 @@ export default class App3D {
     }
 
     destroy() {
-        this.loopFlag = false
-        this.transformMesh.removeEvent()
+        // this.loopFlag = false
+        // this.transformMesh.removeEvent()
     }
 
     // 加载进度回调
