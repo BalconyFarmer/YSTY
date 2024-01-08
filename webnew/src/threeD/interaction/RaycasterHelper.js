@@ -44,11 +44,8 @@ export class RaycasterHelper {
         this.raycaster.setFromCamera(this.mouse, this.app.camera);
         let target = []
         this.app.scene.children.forEach(item => {
-            target.push(item)
-            if (item.type === 'Group') {
-                item.children.forEach(item => {
-                    target.push(item)
-                })
+            if (item.type === 'Group' && item.allDataHot) {
+                target.push(item)
             }
         })
         const intersects = this.raycaster.intersectObjects(target);
@@ -74,6 +71,53 @@ export class RaycasterHelper {
         this.mouse = null
         this.app.scene.remove(this.mesh)
         this.selectedObject = null
+    }
+
+    startHover() {
+        let self = this
+        document.addEventListener('pointermove', onPointerMove);
+        let selectedObject = null;
+        const pointer = new THREE.Vector2();
+        let camera = this.app.camera
+        const raycaster = new THREE.Raycaster();
+
+
+        function onPointerMove(event) {
+            let target = []
+            self.app.scene.children.forEach(item => {
+                if (item.type === 'Group' && item.allDataHot) {
+                    target.push(item)
+                }
+            })
+
+            if (selectedObject) {
+                selectedObject.material.color.set('#69f');
+                selectedObject = null;
+            }
+
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(pointer, camera);
+            console.log(target, 66)
+
+            if (!target.length) {
+                return
+            }
+            const intersects = raycaster.intersectObjects(target, true);
+
+            if (intersects.length > 0) {
+                const res = intersects.filter(function (res) {
+                    return res && res.object;
+                })[0];
+                if (res && res.object) {
+                    selectedObject = res.object;
+                    selectedObject.material.color.set('#f00');
+                }
+
+            }
+
+        }
     }
 
 }

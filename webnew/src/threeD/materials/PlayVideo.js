@@ -28,6 +28,7 @@ export class PlayVideo {
 
 
     addPictureMesh(data) {
+        const self = this
         const scene = this.app.scene
         const camera = this.app.camera
 
@@ -46,6 +47,7 @@ export class PlayVideo {
             mesh.position.x = data.position[0]
             mesh.position.y = data.position[1]
             mesh.position.z = data.position[2]
+            self.meshList.push(mesh)
         });
     }
 

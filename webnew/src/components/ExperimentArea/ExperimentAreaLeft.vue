@@ -462,6 +462,7 @@ export default {
 
         setTimeout(function () {
             window.app3D.raycasterHelper.startRaycast()
+            window.app3D.raycasterHelper.startHover()
             $hub.on("getMesh", (data) => {
                 if (data.allDataHot) {
                     window.app3D.sceneCamera.setCameraJson(data.allDataHot.camera)
