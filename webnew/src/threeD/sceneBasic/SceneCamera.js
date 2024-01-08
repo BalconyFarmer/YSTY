@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 export class SceneCamera {
     constructor(app) {
@@ -16,42 +15,28 @@ export class SceneCamera {
         this.app.camera = new THREE.PerspectiveCamera(30, k, 0.001, 1000000);
         this.app.scene.add(this.app.camera);
 
-        // this.app.camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 1000);
-        // this.app.scene.add(this.app.camera);
-
         //设置相机位置
         this.app.camera.position.set(100, 100, 100);
-
-
     }
 
     getCameraJson() {
-        let json = this.app.camera.toJSON()
+        // 获取相机的位置和目标
+        let cameraPosition = this.app.camera.position
+        let cameraTarget = this.app.controls.target
+        let json = {
+            cameraPosition: cameraPosition,
+            cameraTarget: cameraTarget
+        }
         return json
     }
 
     setCameraJson(jsonStr) {
-        this.app.controls.dispose()
-        this.app.controls = null
-
-        // 创建新相机
-        let json = jsonStr
-        let loader = new THREE.ObjectLoader();
-        let newCamera = loader.parse(json);
-
-        // 创建新的OrbitControls控制器并将其与新相机关联
-
-        // 删除旧相机和旧控制器
-        this.app.scene.remove(this.app.camera);
-
-        const newControls = new OrbitControls(newCamera, this.app.renderer.domElement);
-
-        // 将新相机和新控制器添加到场景中
-        this.app.scene.add(newCamera);
-        // newCamera.updateProjectionMatrix()
-        this.app.camera = newCamera
-        this.app.controls = newControls;
-
+        let cameraPosition = jsonStr.cameraPosition
+        let cameraTarget = jsonStr.cameraTarget
+        // 设置相机的位置和目标
+        this.app.camera.position.copy(cameraPosition);
+        this.app.controls.target.copy(cameraTarget);
+        this.app.controls.update(); // 更新相机的状态
     }
 
     // 俯视图

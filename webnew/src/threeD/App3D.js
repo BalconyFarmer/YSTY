@@ -57,7 +57,6 @@ export default class App3D {
         this.hotPoint = new HotPoint(this)
         this.startLoop()
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
     }
 
     /**
@@ -228,6 +227,7 @@ export default class App3D {
         this.renderer.shadowMap.enabled = true;
     }
 
+
     /**
      * loop
      */
@@ -244,6 +244,8 @@ export default class App3D {
                     })
                 }
             }
+
+
         }
 
         run()

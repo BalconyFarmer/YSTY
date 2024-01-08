@@ -40,7 +40,7 @@
             </div>
 
             <div v-if="activeIndex == 2">
-                <div style="margin-top: 10px" class="row1">
+                <div class="row1" style="margin-top: 10px">
                     <i class="el-icon-s-promotion"></i>
                     <div>热点编辑</div>
                 </div>
@@ -92,11 +92,11 @@
                 </div>
                 <el-divider></el-divider>
 
-                <div v-if="newFileData" style="width: 95%" class="row1">
+                <div v-if="newFileData" class="row1" style="width: 95%">
                     <div class="nowrap" style="width: 100px">
                         {{ newFileData }}
                     </div>
-                    <el-button size="mini" @click="startTakePoint" type="primary">点击开始拾取坐标</el-button>
+                    <el-button size="mini" type="primary" @click="startTakePoint">点击开始拾取坐标</el-button>
                     <br>
                 </div>
 
@@ -116,7 +116,7 @@
 
             <div v-if="activeIndex == 3" class="colum1">
                 <div>
-                    <el-link v-if="hotData" size="mini" @click="deleteHot" type="info">删除热点</el-link>
+                    <el-link v-if="hotData" size="mini" type="info" @click="deleteHot">删除热点</el-link>
                 </div>
                 <br>
 
@@ -145,9 +145,9 @@
 
         <el-dialog :visible.sync="dialogVisible" title="文本编辑">
             <el-input
-                type="textarea"
+                v-model="textarea2"
                 placeholder="请输入内容"
-                v-model="textarea2">
+                type="textarea">
             </el-input>
             <br>
             <el-button size="mini" type="primary" @click="submitText">提交</el-button>
@@ -447,7 +447,7 @@ export default {
 
                 this.hotData = item
                 this.hotData.hotData.data.forEach(itemInner => {
-                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type,itemInner)
+                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type, itemInner)
                 })
             } else {
                 this.hotData = item
@@ -463,7 +463,7 @@ export default {
             window.app3D.raycasterHelper.startRaycast()
             $hub.on("getMesh", (data) => {
                 if (data.allDataHot) {
-                    window.app3D.sceneCamera.lookAtMesh(data)
+                    window.app3D.sceneCamera.setCameraJson(data.allDataHot.camera)
                 }
             })
         }, 1000)
