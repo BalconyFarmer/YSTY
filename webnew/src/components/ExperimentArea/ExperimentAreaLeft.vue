@@ -474,12 +474,11 @@ export default {
                             window.app3D.playVideo.addPictureMesh(data.allDataHot)
                             break
                         case '声音':
+                            window.app3D.playVideo.addSound(data.allDataHot)
                             break
                         case '文字':
                             break
                     }
-
-
                 }
             })
         }, 1000)

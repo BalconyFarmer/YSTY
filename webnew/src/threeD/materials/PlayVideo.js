@@ -27,7 +27,6 @@ export class PlayVideo {
     }
 
 
-
     addPictureMesh(data) {
         const scene = this.app.scene
         const camera = this.app.camera
@@ -50,11 +49,25 @@ export class PlayVideo {
         });
     }
 
+    addSound(data) {
+        let audio = document.createElement('audio');
+        audio.src = data.src;
+        audio.autoplay = true;
+        document.body.appendChild(audio);
+        this.audio = audio
+    }
+
     clear() {
         if (this.meshList.length) {
             this.meshList.forEach(item => {
                 this.app.scene.remove(item);
             })
+        }
+
+        if (this.audio) {
+            this.audio.pause();
+            this.audio.src = '';
+            document.body.removeChild(this.audio);
         }
     }
 
