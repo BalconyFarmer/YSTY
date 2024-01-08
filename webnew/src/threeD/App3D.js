@@ -12,6 +12,7 @@ import {ArrowLine} from './helpers/representationalviewer/ArrowLine'
 import {LittleWindow} from './helpers/representationalviewer/LittleWindow'
 import {HotPoint} from "./HotPoint";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {PlayVideo} from "@/threeD/materials/PlayVideo";
 
 export default class App3D {
 
@@ -57,6 +58,7 @@ export default class App3D {
         this.hotPoint = new HotPoint(this)
         this.startLoop()
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.playVideo = new PlayVideo(this)
     }
 
     /**

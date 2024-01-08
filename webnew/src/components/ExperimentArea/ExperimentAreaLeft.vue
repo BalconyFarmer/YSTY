@@ -426,7 +426,8 @@ export default {
                     ts.removeChildrenIds(item)
                 })
             }
-        }
+        },
+
     },
     mounted() {
         const self = this
@@ -464,6 +465,21 @@ export default {
             $hub.on("getMesh", (data) => {
                 if (data.allDataHot) {
                     window.app3D.sceneCamera.setCameraJson(data.allDataHot.camera)
+                    window.app3D.playVideo.clear()
+                    switch (data.allDataHot.type) {
+                        case '视频':
+                            window.app3D.playVideo.mamkeVideoMesh(data.allDataHot)
+                            break
+                        case '图片':
+                            window.app3D.playVideo.addPictureMesh(data.allDataHot)
+                            break
+                        case '声音':
+                            break
+                        case '文字':
+                            break
+                    }
+
+
                 }
             })
         }, 1000)
