@@ -35,6 +35,7 @@ export class SceneCamera {
         let cameraTarget = jsonStr.cameraTarget
         // 设置相机的位置和目标
         this.app.camera.position.copy(cameraPosition);
+        this.app.camera.updateProjectionMatrix()
         this.app.controls.target.copy(cameraTarget);
         this.app.controls.update(); // 更新相机的状态
     }
