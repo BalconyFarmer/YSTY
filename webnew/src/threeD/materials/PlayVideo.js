@@ -68,6 +68,7 @@ export class PlayVideo {
             this.audio.pause();
             this.audio.src = '';
             document.body.removeChild(this.audio);
+            this.audio = null
         }
     }
 
