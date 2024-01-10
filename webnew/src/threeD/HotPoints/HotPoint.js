@@ -7,9 +7,7 @@ export class HotPoint {
         this.app = app
         this.spriteList = []
         // this.test()
-
     }
-
 
     add(po, text, _type, allData) {
         let scale = 0.01
