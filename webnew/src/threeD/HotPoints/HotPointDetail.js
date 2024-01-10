@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export class PlayVideo {
+export class HotPointDetail {
     constructor(app) {
         this.app = app
         this.meshList = []
