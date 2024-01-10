@@ -10,10 +10,10 @@ import {ExportImport} from '@/threeD/loaders/ExportImport'
 import {TransformMesh} from './interaction/TransformMesh'
 import {ArrowLine} from './helpers/representationalviewer/ArrowLine'
 import {LittleWindow} from './helpers/representationalviewer/LittleWindow'
-import {HotPoint} from "./HotPoint";
+import {HotPoint} from "@/threeD/HotPoints/HotPoint";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import {PlayVideo} from "@/threeD/materials/PlayVideo";
-import {App2D} from "@/threeD/App2D";
+import {PlayVideo} from "@/threeD/HotPoints/HotPointDetail";
+import {App2D} from "@/threeD/HotPoints/App2D";
 
 export default class App3D {
 

@@ -13,13 +13,13 @@ export class HotPoint {
 
     add(po, text, _type, allData) {
         let scale = 0.01
-        po[1] = po[1] + 0.01
         const scene = this.app.scene
         const map = new THREE.TextureLoader().load(`${serverAdress}/3Dstatic/热点.png`);
         const material = new THREE.SpriteMaterial({
             map: map
         });
         material.sizeAttenuation = false
+        material.depthTest = false
         const sprite = new THREE.Sprite(material);
         sprite.scale.set(scale, scale, scale);
         sprite.position.set(po[0], po[1], po[2]);
@@ -67,6 +67,7 @@ export class HotPoint {
         texture.needsUpdate = true;
         let material = new THREE.SpriteMaterial({map: texture});
         material.sizeAttenuation = false
+        material.depthTest = false
         let sprite = new THREE.Sprite(material);
         sprite.position.set(po[0], po[1] - 0.2, po[2] - 0.1);
         sprite.scale.set(0.1, 0.1, 0.1);
