@@ -1,11 +1,9 @@
 import * as THREE from "three";
-import {serverAdress} from "../../config";
 
 export class PlayVideo {
     constructor(app) {
         this.app = app
         this.meshList = []
-
     }
 
     mamkeVideoMesh(data) {
@@ -14,6 +12,7 @@ export class PlayVideo {
         video.crossOrigin = '*'
         video.autoplay = "autoplay"; //要设置播放
         const texture = new THREE.VideoTexture(video)
+
         const geometry = new THREE.PlaneGeometry(2, 1); //矩形平面
         const material = new THREE.MeshPhongMaterial({
             map: texture,

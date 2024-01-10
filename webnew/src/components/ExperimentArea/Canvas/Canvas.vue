@@ -1,10 +1,12 @@
 <template>
     <div id="canvasContainer">
-        <button @click="drawLine" class="save">绘制线段</button>
-        <button @click="addCircle" class="save">绘制圆</button>
-        <button @click="addRect" class="save">绘制矩形</button>
-        <button @click="addText" class="save">addText</button>
-        <button @click="saveHandler" class="save">保存</button>
+        <div class="btns">
+            <button class="save" @click="drawLine">绘制线段</button>
+            <button class="save" @click="addCircle">绘制圆</button>
+            <button class="save" @click="addRect">绘制矩形</button>
+            <button class="save" @click="addText">addText</button>
+            <button class="save" @click="app2D.addAnimation()">动画</button>
+        </div>
     </div>
 </template>
 
@@ -14,6 +16,11 @@ import {App2D} from './App2D'
 const FileSaver = require('file-saver');
 
 export default {
+    data() {
+        return {
+            app2D: null
+        }
+    },
     methods: {
         drawLine() {
             this.app2D.addLine()
@@ -51,7 +58,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
 .save {
     /*position: absolute;*/
     /*left: 800px;*/
@@ -61,5 +68,12 @@ export default {
 #canvasContainer {
     width: 100%;
     height: 100%;
+    border: 1px solid yellow;
+
+    .btns {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 }
 </style>

@@ -26,6 +26,7 @@ export class RaycasterHelper {
      */
     startRaycast() {
         if (!this.startFalt) {
+
             document.addEventListener('mousedown', this._getMesh, false);
             this.raycaster = new THREE.Raycaster();
             this.mouse = new THREE.Vector2();
@@ -38,15 +39,14 @@ export class RaycasterHelper {
      * @param event
      */
     getMesh(event) {
+
         this.mouse.x = (event.offsetX / this.app.dom.width) * 2 - 1;
         this.mouse.y = -(event.offsetY / this.app.dom.height) * 2 + 1;
         // 通过摄像机和鼠标位置更新射线
         this.raycaster.setFromCamera(this.mouse, this.app.camera);
         let target = []
         this.app.scene.children.forEach(item => {
-            if (item.type === 'Group' && item.allDataHot) {
-                target.push(item)
-            }
+            target.push(item)
         })
         const intersects = this.raycaster.intersectObjects(target);
         let point = null
@@ -99,13 +99,13 @@ export class RaycasterHelper {
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
             raycaster.setFromCamera(pointer, camera);
-            console.log(target, 66)
+            // console.log(target, 66)
 
             if (!target.length) {
                 return
             }
             const intersects = raycaster.intersectObjects(target, true);
-
+            // console.log(intersects,66)
             if (intersects.length > 0) {
                 const res = intersects.filter(function (res) {
                     return res && res.object;

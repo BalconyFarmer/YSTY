@@ -1,5 +1,8 @@
 <template>
     <div id="leftContainer" v-loading="loading" class="finger" @click="getMeshByUUIDDispose">
+        <div style="position: fixed;right: 0;top: 0;z-index: 9999">
+            <Canvas></Canvas>
+        </div>
         <div id='leftToolClass' class="colum1">
             <div :class="activeIndex == 1 ? 'active' : ''" class="rightToolClassSub columAround"
                  @click="activeIndex = 1">
@@ -160,13 +163,14 @@ import $hub from 'hub-js';
 import {addHot, deleteHot, getHotById, updateHot, uploadHeadMinio} from "../../api/HotApi";
 import FileUpload from "../common/FileUpload";
 import * as THREE from "three";
+import Canvas from "@/components/ExperimentArea/Canvas/Canvas";
 
 export default {
     props: {
         required: true
     },
     components: {
-        FileUpload
+        FileUpload, Canvas
     },
     data() {
         return {
