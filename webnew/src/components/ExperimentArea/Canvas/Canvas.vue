@@ -1,5 +1,5 @@
 <template>
-    <div id="canvasContainer">
+    <div v-show="false" id="canvasContainer">
         <div class="btns">
             <button class="save" @click="drawLine">绘制线段</button>
             <button class="save" @click="addCircle">绘制圆</button>
@@ -11,8 +11,6 @@
 </template>
 
 <script>
-
-const FileSaver = require('file-saver');
 
 export default {
     data() {

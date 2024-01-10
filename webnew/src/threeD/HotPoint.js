@@ -6,29 +6,33 @@ export class HotPoint {
     constructor(app) {
         this.app = app
         this.spriteList = []
-        this.test()
+        // this.test()
 
     }
 
 
     add(po, text, _type, allData) {
+        let scale = 0.01
         po[1] = po[1] + 0.01
         const scene = this.app.scene
         const map = new THREE.TextureLoader().load(`${serverAdress}/3Dstatic/热点.png`);
         const material = new THREE.SpriteMaterial({
             map: map
         });
-
+        material.sizeAttenuation = false
         const sprite = new THREE.Sprite(material);
-        sprite.scale.set(200, 200, 1);
+        sprite.scale.set(scale, scale, scale);
         sprite.position.set(po[0], po[1], po[2]);
         sprite.allDataHot = allData
-        const spriteTween = new TWEEN.Tween({scale: 0.2}).to({
-            scale: 0.13
+
+        const spriteTween = new TWEEN.Tween({scale: scale + 0.02}).to({
+            scale: scale - 0.02
         }, 500).easing(TWEEN.Easing.Quadratic.Out);
+
         spriteTween.onUpdate(function (that) {
             sprite.scale.set(that.scale, that.scale, that.scale);
         });
+
         spriteTween.yoyo(true);
         spriteTween.repeat(Infinity);
         spriteTween.start();
@@ -62,9 +66,10 @@ export class HotPoint {
         let texture = new THREE.Texture(canvas);
         texture.needsUpdate = true;
         let material = new THREE.SpriteMaterial({map: texture});
+        material.sizeAttenuation = false
         let sprite = new THREE.Sprite(material);
         sprite.position.set(po[0], po[1] - 0.2, po[2] - 0.1);
-        sprite.scale.set(0.5, 0.5, 0.5);
+        sprite.scale.set(0.1, 0.1, 0.1);
         return sprite
     }
 
@@ -80,22 +85,24 @@ export class HotPoint {
         const self = this
 
         setTimeout(function () {
-            window.app3D.app2D.addLine()
-            window.app3D.app2D.addCircle()
-            window.app3D.app2D.addRect()
             window.app3D.app2D.addText()
-            window.app3D.app2D.addAnimation()
             let texture = new THREE.Texture(canvas);
             let material = new THREE.SpriteMaterial({map: texture});
+            material.sizeAttenuation = false
             material.map.needsUpdate = true;
             let sprite = new THREE.Sprite(material);
             sprite.position.set(0, 0, 0);
             sprite.scale.set(1, 1, 1);
             self.app.scene.add(sprite)
 
-            setTimeout(function (){
+            setTimeout(function () {
+                window.app3D.app2D.addRect()
+                // texture.needsUpdate = true;
+            }, 2000)
+
+            setInterval(function () {
                 texture.needsUpdate = true;
-            },1000)
+            }, 1000)
         }, 2000)
 
 
