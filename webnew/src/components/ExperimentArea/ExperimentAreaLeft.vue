@@ -1,6 +1,6 @@
 <template>
     <div id="leftContainer" v-loading="loading" class="finger" @click="getMeshByUUIDDispose">
-        <div style="position: fixed;right: 0;top: 0;z-index: 9999">
+        <div style="position: fixed;left: 0;top: 0;z-index: 9999">
             <Canvas></Canvas>
         </div>
         <div id='leftToolClass' class="colum1">

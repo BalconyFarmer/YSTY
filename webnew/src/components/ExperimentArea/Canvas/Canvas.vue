@@ -5,13 +5,12 @@
             <button class="save" @click="addCircle">绘制圆</button>
             <button class="save" @click="addRect">绘制矩形</button>
             <button class="save" @click="addText">addText</button>
-            <button class="save" @click="app2D.addAnimation()">动画</button>
+            <button class="save" @click="addAnimation">动画</button>
         </div>
     </div>
 </template>
 
 <script>
-import {App2D} from './App2D'
 
 const FileSaver = require('file-saver');
 
@@ -23,36 +22,22 @@ export default {
     },
     methods: {
         drawLine() {
-            this.app2D.addLine()
+            window.app3D.app2D.addLine()
         },
         addCircle() {
-            this.app2D.addCircle()
+            window.app3D.app2D.addCircle()
         },
         addRect() {
-            this.app2D.addRect()
+            window.app3D.app2D.addRect()
         },
         addText() {
-            this.app2D.addText()
+            window.app3D.app2D.addText()
         },
-        saveHandler() {
-            let data = {
-                name: "hanmeimei",
-                age: 88,
-                say: function () {
-                    console.log(this.name)
-                }
-            }
-            const content = JSON.stringify(data);
-
-            // const content0 = {...this.easelApp};
-            // const content = JSON.stringify(content0) //Converting circular
-
-            const blob = new Blob([content], {type: "text/plain;charset=utf-8"});
-            FileSaver.saveAs(blob, "hello world.txt");
-        }
+        addAnimation() {
+            window.app3D.app2D.addAnimation()
+        },
     },
     mounted() {
-        this.app2D = new App2D("canvasContainer")
     }
 }
 

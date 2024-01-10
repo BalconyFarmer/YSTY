@@ -1,12 +1,11 @@
 import * as THREE from "three";
-import {App2D} from '../../components/ExperimentArea/Canvas/App2D'
 
 export class TextureCanvasAnimation {
     constructor(app) {
         this.app = app
         this.canvas = null
         this.makeCanvas()
-        this.app2D = new App2D()
+        // this.app2D = new App2D()
         this.canvasDom = document.getElementById('easelCanvasId')
     }
 

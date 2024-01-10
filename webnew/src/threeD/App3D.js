@@ -13,6 +13,7 @@ import {LittleWindow} from './helpers/representationalviewer/LittleWindow'
 import {HotPoint} from "./HotPoint";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {PlayVideo} from "@/threeD/materials/PlayVideo";
+import {App2D} from "@/threeD/App2D";
 
 export default class App3D {
 
@@ -47,6 +48,7 @@ export default class App3D {
         this.sceneCamera = new SceneCamera(this)
         this.initLight(0.5)
         this.initRenderer()
+        this.app2D = new App2D("canvasContainer")
 
         this.helper = new Helper(this)
         this.raycasterHelper = new RaycasterHelper(this)
