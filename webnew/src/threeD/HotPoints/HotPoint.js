@@ -15,6 +15,7 @@ export class HotPoint {
         let scale = 0.01
         const scene = this.app.scene
         const map = new THREE.TextureLoader().load(`${serverAdress}/3Dstatic/热点.png`);
+
         const material = new THREE.SpriteMaterial({
             map: map
         });

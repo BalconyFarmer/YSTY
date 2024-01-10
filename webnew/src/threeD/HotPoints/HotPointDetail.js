@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import {serverAdress} from "@/config";
 
 export class HotPointDetail {
     constructor(app) {
@@ -27,27 +28,18 @@ export class HotPointDetail {
 
 
     addPictureMesh(data) {
-        const self = this
         const scene = this.app.scene
-        const camera = this.app.camera
-
-        // 创建平面几何体
-        const geometry = new THREE.PlaneGeometry(4, 3);
-
-        // 创建网格基础材质
-        const material = new THREE.MeshBasicMaterial();
-
-        // 加载图片作为纹理贴图
-        const loader = new THREE.TextureLoader();
-        loader.load(data.src, function (texture) {
-            material.map = texture;
-            const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
-            mesh.position.x = data.position[0]
-            mesh.position.y = data.position[1]
-            mesh.position.z = data.position[2]
-            self.meshList.push(mesh)
+        let scale = 0.1
+        const map = new THREE.TextureLoader().load(data.src);
+        const material = new THREE.SpriteMaterial({
+            map: map
         });
+        material.sizeAttenuation = false
+        material.depthTest = false
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(scale, scale, scale);
+        sprite.position.set(data.position[0], data.position[0], data.position[0]);
+        scene.add(sprite)
     }
 
     addSound(data) {

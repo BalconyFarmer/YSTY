@@ -26,7 +26,6 @@ export class RaycasterHelper {
      */
     startRaycast() {
         if (!this.startFalt) {
-
             document.addEventListener('mousedown', this._getMesh, false);
             this.raycaster = new THREE.Raycaster();
             this.mouse = new THREE.Vector2();
@@ -59,6 +58,8 @@ export class RaycasterHelper {
         if (defined(intersects[0]) && defined(point)) {
             this.selectedObject = intersects[0].object
             $hub.emit('getMesh', this.selectedObject)
+            console.log(11)
+            debugger
         }
     }
 
@@ -99,7 +100,6 @@ export class RaycasterHelper {
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
             raycaster.setFromCamera(pointer, camera);
-            // console.log(target, 66)
 
             if (!target.length) {
                 return
