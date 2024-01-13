@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import {serverAdress} from "@/config";
 
 export class HotPointDetail {
     constructor(app) {
@@ -28,6 +27,15 @@ export class HotPointDetail {
 
 
     addPictureMesh(data) {
+        const originPositon = data.position
+        const offsetValue = 0.4
+
+        const offsetPositon = [
+            data.position[0] + offsetValue,
+            data.position[1] + offsetValue,
+            data.position[2] + offsetValue
+        ]
+
         const scene = this.app.scene
         let scale = 0.1
         const map = new THREE.TextureLoader().load(data.src);
@@ -38,8 +46,34 @@ export class HotPointDetail {
         material.depthTest = false
         const sprite = new THREE.Sprite(material);
         sprite.scale.set(scale, scale, scale);
-        sprite.position.set(data.position[0], data.position[0], data.position[0]);
-        scene.add(sprite)
+        sprite.position.set(offsetPositon[0], offsetPositon[1], offsetPositon[2]);
+
+        let group = new THREE.Group();
+        let line = this.addLine(originPositon, offsetPositon)
+        group.add(sprite)
+        group.add(line)
+        scene.add(group)
+        group.clickFun = function () {
+            scene.remove(group);
+        }
+        sprite.clickFun = function () {
+            scene.remove(group);
+        }
+        sprite.clickFun = function () {
+            scene.remove(group);
+        }
+    }
+
+    addLine(point1, point2) {
+        let geometry = new THREE.BufferGeometry();
+        let vertices = new Float32Array([
+            point1[0], point1[1], point1[2],
+            point2[0], point2[1], point2[2]
+        ]);
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        let material = new THREE.LineBasicMaterial({color: 0xE0EFF0});
+        let line = new THREE.Line(geometry, material);
+        return line
     }
 
     addSound(data) {

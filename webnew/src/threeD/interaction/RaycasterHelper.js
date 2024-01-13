@@ -58,7 +58,7 @@ export class RaycasterHelper {
         if (defined(intersects[0]) && defined(point)) {
             this.selectedObject = intersects[0].object
             $hub.emit('getMesh', this.selectedObject)
-            console.log(11)
+            console.log(11, this.selectedObject)
             debugger
         }
     }

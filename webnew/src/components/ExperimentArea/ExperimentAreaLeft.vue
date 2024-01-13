@@ -485,6 +485,10 @@ export default {
                             break
                     }
                 }
+
+                if (data.clickFun) {
+                    data.clickFun()
+                }
             })
         }, 1000)
 
