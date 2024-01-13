@@ -32,7 +32,6 @@ export default class App3D {
         this.helper = null
         this.exportImport = null
         this.transformMesh = null
-        this.takePoint = null
         this.arrowLine = new ArrowLine(this)
         this.littleWindow = null
         this.hotPoint = null

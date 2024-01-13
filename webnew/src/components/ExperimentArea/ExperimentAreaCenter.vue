@@ -23,12 +23,6 @@
                 <div :class="startLightHelperFlag?'backDiv': ''">
                     <img :src="lightIcon" class="icon1" style="width: 15px" @click="startLightHelper">
                 </div>
-                <div :class="startTakePointFlag?'backDiv': ''">
-                    <img :src="takePointIcon" class="icon1" style="width: 15px" @click="startTakePoint">
-                </div>
-                <!--                <span>-->
-                <!--                    <el-switch v-model="flag" size="mini" @change="casterMeshChange"></el-switch>-->
-                <!--                </span>-->
             </div>
         </div>
     </div>
@@ -58,10 +52,6 @@ import icon9 from '@/assets/leftTools/油漆桶.svg';
 import icon10 from '@/assets/leftTools/圆形.svg';
 import icon11 from '@/assets/leftTools/正方形.svg';
 
-import * as  THREE from 'three'
-import {serverAdress} from '@/config';
-
-const FileSaver = require('file-saver');
 
 export default {
     props: {
@@ -160,67 +150,11 @@ export default {
                 this.startLightHelperFlag = true
             }
         },
-        startTakePoint() {
-            if (this.startTakePointFlag) {
-                window.app3D.takePoint.stop()
-                this.startTakePointFlag = false
-            } else {
-                window.app3D.takePoint.start()
-                this.startTakePointFlag = true
-            }
-        },
 
-        exportMesh() {
-            const geometry = new THREE.BoxGeometry(1, 1, 1);
-            const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-            const cube = new THREE.Mesh(geometry, material);
-            // window.app3D.scene.add(cube);
-
-            const data = cube.toJSON()
-            const content = JSON.stringify(data);
-
-            const blob = new Blob([content], {type: "text/plain;charset=utf-8"});
-            FileSaver.saveAs(blob, "Mesh.json");
-        },
-        importMesh() {
-            var loader = new THREE.ObjectLoader();
-            const self = this
-
-            loader.load(
-                // 资源的URL
-                `${serverAdress}/3Dstatic/JsonExportImport/helloworld.json`,
-
-                // onLoad回调
-                // Here the loaded data is assumed to be an object
-                function (obj) {
-                    // Add the loaded object to the scene
-                    window.app3D.scene.add(obj);
-                },
-
-                // onProgress回调
-                function (xhr) {
-                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-                },
-
-                // onError回调
-                function (err) {
-                    console.error('An error happened');
-                }
-            );
-        },
-        casterMeshChange(event) {
-            if (event) {
-                this.$parent.startLittleWindow()
-            } else {
-                this.$parent.stopLittleWindow()
-            }
-        },
 
     },
     mounted() {
-        this.$nextTick(function () {
-            // this.axesToggle()
-        })
+
     }
 }
 </script>
