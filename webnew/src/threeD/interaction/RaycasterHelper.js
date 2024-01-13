@@ -38,7 +38,9 @@ export class RaycasterHelper {
      * @param event
      */
     getMesh(event) {
-
+        if (event.button != 0) {
+            return
+        }
         this.mouse.x = (event.offsetX / this.app.dom.width) * 2 - 1;
         this.mouse.y = -(event.offsetY / this.app.dom.height) * 2 + 1;
         // 通过摄像机和鼠标位置更新射线
@@ -56,10 +58,7 @@ export class RaycasterHelper {
         }
 
         if (defined(intersects[0]) && defined(point)) {
-            this.selectedObject = intersects[0].object
-            $hub.emit('getMesh', this.selectedObject)
-            console.log(11, this.selectedObject)
-            debugger
+            $hub.emit('getMesh', intersects)
         }
     }
 
@@ -81,7 +80,6 @@ export class RaycasterHelper {
         const pointer = new THREE.Vector2();
         let camera = this.app.camera
         const raycaster = new THREE.Raycaster();
-
 
         function onPointerMove(event) {
             let target = []

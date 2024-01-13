@@ -467,28 +467,30 @@ export default {
         setTimeout(function () {
             window.app3D.raycasterHelper.startRaycast()
             window.app3D.raycasterHelper.startHover()
-            $hub.on("getMesh", (data) => {
-                if (data.allDataHot) {
-                    window.app3D.sceneCamera.setCameraJson(data.allDataHot.camera)
-                    window.app3D.hotPointDetail.clear()
-                    switch (data.allDataHot.type) {
-                        case '视频':
-                            window.app3D.hotPointDetail.mamkeVideoMesh(data.allDataHot)
-                            break
-                        case '图片':
-                            window.app3D.hotPointDetail.addPictureMesh(data.allDataHot)
-                            break
-                        case '声音':
-                            window.app3D.hotPointDetail.addSound(data.allDataHot)
-                            break
-                        case '文字':
-                            break
+            $hub.on("getMesh", (_data) => {
+                _data.forEach(_dataItem => {
+                    let data = _dataItem.object
+                    if (data.allDataHot) {
+                        window.app3D.sceneCamera.setCameraJson(data.allDataHot.camera)
+                        window.app3D.hotPointDetail.clear()
+                        switch (data.allDataHot.type) {
+                            case '视频':
+                                window.app3D.hotPointDetail.mamkeVideoMesh(data.allDataHot)
+                                break
+                            case '图片':
+                                window.app3D.hotPointDetail.addPictureMesh(data.allDataHot)
+                                break
+                            case '声音':
+                                window.app3D.hotPointDetail.addSound(data.allDataHot)
+                                break
+                            case '文字':
+                                break
+                        }
                     }
-                }
-
-                if (data.clickFun) {
-                    data.clickFun()
-                }
+                    if (data.clickFun) {
+                        data.clickFun()
+                    }
+                })
             })
         }, 1000)
 

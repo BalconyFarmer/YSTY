@@ -6,7 +6,7 @@ export class HotPoint {
     constructor(app) {
         this.app = app
         this.spriteList = []
-        // this.test()
+        this.test()
     }
 
     add(po, text, _type, allData) {
@@ -44,11 +44,13 @@ export class HotPoint {
         animate();
 
         let group = new THREE.Group();
-        group.add(sprite);
-
         let spritText = this.addText(po, text, _type, allData)
         group.add(spritText);
+        group.add(sprite);
+
         group.allDataHot = allData
+        spritText.allDataHot = allData
+        sprite.allDataHot = allData
         scene.add(group)
 
     }

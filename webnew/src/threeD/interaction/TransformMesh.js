@@ -165,6 +165,6 @@ export class TransformMesh {
             this.control.removeEventListener('objectChange', this._onChangeMesh);
             this.control.dispose();
         }
-        this.app.raycasterHelper.stopRaycast()
+        // this.app.raycasterHelper.stopRaycast()
     }
 }

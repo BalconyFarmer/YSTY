@@ -3,26 +3,42 @@ import * as THREE from "three";
 export class HotPointDetail {
     constructor(app) {
         this.app = app
-        this.meshList = []
     }
 
     mamkeVideoMesh(data) {
+        const originPositon = data.position
+        const offsetValue = 0.4
+
+        const offsetPositon = [
+            data.position[0] + offsetValue,
+            data.position[1] + offsetValue,
+            data.position[2] + offsetValue
+        ]
+
         let video = document.createElement('video');
         video.src = data.src; // 设置视频地址
         video.crossOrigin = '*'
         video.autoplay = "autoplay"; //要设置播放
         const texture = new THREE.VideoTexture(video)
 
-        const geometry = new THREE.PlaneGeometry(2, 1); //矩形平面
-        const material = new THREE.MeshPhongMaterial({
+        const geometry = new THREE.PlaneGeometry(0.2, 0.1); //矩形平面
+        const material = new THREE.MeshBasicMaterial({
             map: texture,
+            side: THREE.DoubleSide
         });
         const mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
-        mesh.position.x = data.position[0]
-        mesh.position.y = data.position[1]
-        mesh.position.z = data.position[2]
-        this.app.scene.add(mesh); //网格模型添加到场景中
-        this.meshList.push(mesh)
+        mesh.position.x = offsetPositon[0]
+        mesh.position.y = offsetPositon[1]
+        mesh.position.z = offsetPositon[2]
+        let group = new THREE.Group();
+        let line = this.addLine(originPositon, offsetPositon)
+        group.add(line)
+        group.add(mesh)
+        this.app.scene.add(group); //网格模型添加到场景中
+        mesh.clickFun = function () {
+            window.app3D.scene.remove(group);
+        }
+
     }
 
 
@@ -85,12 +101,6 @@ export class HotPointDetail {
     }
 
     clear() {
-        if (this.meshList.length) {
-            this.meshList.forEach(item => {
-                this.app.scene.remove(item);
-            })
-        }
-
         if (this.audio) {
             this.audio.pause();
             this.audio.src = '';
