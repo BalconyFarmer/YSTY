@@ -1,12 +1,10 @@
 <template>
-    <div v-show="false" id="canvasContainer">
-        <div class="btns">
-            <button class="save" @click="drawLine">绘制线段</button>
-            <button class="save" @click="addCircle">绘制圆</button>
-            <button class="save" @click="addRect">绘制矩形</button>
-            <button class="save" @click="addText">addText</button>
-            <button class="save" @click="addAnimation">动画</button>
-        </div>
+    <div id="canvasContainer" class="btns">
+        <button class="save" @click="drawLine">绘制线段</button>
+        <button class="save" @click="addCircle">绘制圆</button>
+        <button class="save" @click="addRect">绘制矩形</button>
+        <button class="save" @click="addText">addText</button>
+        <button class="save" @click="addAnimation">动画</button>
     </div>
 </template>
 
@@ -42,16 +40,12 @@ export default {
 </script>
 
 <style lang="scss">
-.save {
-    /*position: absolute;*/
-    /*left: 800px;*/
-    /*top: 800px;*/
-}
 
 #canvasContainer {
-    width: 100%;
-    height: 100%;
+    width: 500px;
+    height: 500px;
     border: 1px solid yellow;
+    z-index: 9999;
 
     .btns {
         position: absolute;

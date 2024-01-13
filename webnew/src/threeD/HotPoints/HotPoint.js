@@ -6,7 +6,6 @@ export class HotPoint {
     constructor(app) {
         this.app = app
         this.spriteList = []
-        this.test()
     }
 
     add(po, text, _type, allData) {
@@ -81,33 +80,6 @@ export class HotPoint {
         })
     }
 
-    test() {
-        let canvas = window.app3D.app2D.canvasDom
 
-        const self = this
-
-        setTimeout(function () {
-            window.app3D.app2D.addText()
-            let texture = new THREE.Texture(canvas);
-            let material = new THREE.SpriteMaterial({map: texture});
-            material.sizeAttenuation = false
-            material.map.needsUpdate = true;
-            let sprite = new THREE.Sprite(material);
-            sprite.position.set(0, 0, 0);
-            sprite.scale.set(1, 1, 1);
-            self.app.scene.add(sprite)
-
-            setTimeout(function () {
-                window.app3D.app2D.addRect()
-                // texture.needsUpdate = true;
-            }, 2000)
-
-            setInterval(function () {
-                texture.needsUpdate = true;
-            }, 1000)
-        }, 2000)
-
-
-    }
 
 }

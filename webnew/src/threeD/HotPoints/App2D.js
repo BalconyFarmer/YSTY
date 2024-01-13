@@ -13,16 +13,6 @@ export class App2D {
         this.canvasContainer = canvasContainer
 
         this.initStage()
-        // this.addLine()       // 线段
-        // this.addCircle()     // 圆形
-        // this.addCircle0()    // 圆形
-        // this.addRect()       // 矩形
-        // this.addText()       // 添加文本
-        // this.addImg()        // 图片
-        // this.addEvent()      // 添加事件
-        // this.addLoopEvent()  // 循环事件
-        // this.addAnimation()  // 动画
-
     }
 
     get canvasDom() {
@@ -30,7 +20,6 @@ export class App2D {
     }
 
     initStage() {
-        console.log(66)
         const self = this
         self._canvasDom = document.createElement('canvas')
         self._canvasDom.id = "easelCanvasIdVirtual"
@@ -43,13 +32,9 @@ export class App2D {
         } else {
             const containerDiv = document.createElement('div')
             containerDiv.appendChild(self._canvasDom)
-            // document.body.appendChild(containerDiv)
+            document.body.appendChild(containerDiv)
         }
         self.stage = new easeljs.Stage('easelCanvasIdVirtual')
-        setTimeout(function () {
-            self.addRect()
-            console.log(66)
-        }, 1000)
     }
 
     addLine() {
@@ -99,32 +84,12 @@ export class App2D {
         return c2
     }
 
-    addText() {
-        let text1 = new easeljs.Text("Text 1 !", "bold 26px Arial", "#ff7700");
-        text1.regX = -50;     // 沿X轴负方向的偏移量
-        text1.regY = -50;     // 沿Y轴负方向的偏移量
-        text1.x = 100;        // 绘制源点 X坐标
-        text1.y = 50;         // 绘制源点 Y坐标
+    addText(allDataHot) {
+        let text1 = new easeljs.Text(allDataHot.src, "bold 26px Arial", "#ff7700");
+        text1.x = 1;        // 绘制源点 X坐标
+        text1.y = 1;         // 绘制源点 Y坐标
 
-        let text2 = new easeljs.Text("旋转+XY拉伸！", "bold 18px Arial", "#ff7700");
-        text2.x = 50;
-        text2.y = 50;
-        text2.rotation = 50;      // 旋转角度 DEG
-        text2.scaleX = 3;         // X轴放大(拉伸)
-        text2.scaleY = 2;         // X轴放大(拉伸)
-
-        let text3 = new easeljs.Text("XY轴倾斜", "bold 50px Arial", "#ff7700");
-        text3.x = 300;
-        text3.y = 200;
-        text3.skewX = 45;         // X轴倾斜角度 DEG
-        text3.skewY = 20;         // Y周倾斜角度 DEG
-
-        let text4 = new easeljs.Text("文字shadow", "bold 30px Arial", "#ff7700");
-        text4.x = 400;
-        text4.y = 100;
-        text4.shadow = new easeljs.Shadow("#000000", 5, 5, 10);      // 创建一个shadow实例Object
-
-        this.stage.addChild(text1, text2, text3, text4);
+        this.stage.addChild(text1);
         this.stage.update();    // 更新舞台，每次修改操作后需要更新真个舞台才有效果
     }
 

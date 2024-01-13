@@ -1,6 +1,6 @@
 <template>
     <div id="leftContainer" v-loading="loading" class="finger" @click="getMeshByUUIDDispose">
-        <div style="position: fixed;left: 0;top: 0;z-index: 9999">
+        <div v-show="false" style="position: fixed;right: 10px;top: 50px" id="canvasContainerOut">
             <Canvas></Canvas>
         </div>
         <div id='leftToolClass' class="colum1">
@@ -483,7 +483,8 @@ export default {
                             case '声音':
                                 window.app3D.hotPointDetail.addSound(data.allDataHot)
                                 break
-                            case '文字':
+                            case '文本':
+                                window.app3D.hotPointDetail.addCanvas2D(data.allDataHot)
                                 break
                         }
                     }

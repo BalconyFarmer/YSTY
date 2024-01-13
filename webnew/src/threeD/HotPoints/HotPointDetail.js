@@ -3,6 +3,7 @@ import * as THREE from "three";
 export class HotPointDetail {
     constructor(app) {
         this.app = app
+        // this.addCanvas2D()
     }
 
     mamkeVideoMesh(data) {
@@ -100,12 +101,44 @@ export class HotPointDetail {
         this.audio = audio
     }
 
+
     clear() {
         if (this.audio) {
             this.audio.pause();
             this.audio.src = '';
             document.body.removeChild(this.audio);
             this.audio = null
+        }
+    }
+
+    addCanvas2D(data) {
+        const originPositon = data.position
+        const offsetValue = 0.4
+
+        const offsetPositon = [
+            data.position[0] + offsetValue,
+            data.position[1] + offsetValue,
+            data.position[2] + offsetValue
+        ]
+
+        let canvas = window.app3D.app2D.canvasDom
+        window.app3D.app2D.addText(data)
+        let texture = new THREE.Texture(canvas);
+        let material = new THREE.SpriteMaterial({map: texture});
+        material.sizeAttenuation = false
+        material.map.needsUpdate = true;
+        let sprite = new THREE.Sprite(material);
+        sprite.position.set(offsetPositon[0], offsetPositon[1], offsetPositon[2]);
+        sprite.scale.set(0.2, 0.2, 0.2);
+
+        let group = new THREE.Group();
+        let line = this.addLine(originPositon, offsetPositon)
+        group.add(line)
+        group.add(sprite)
+        this.app.scene.add(group)
+        let scene = this.app.scene
+        sprite.clickFun = function () {
+            scene.remove(group);
         }
     }
 
