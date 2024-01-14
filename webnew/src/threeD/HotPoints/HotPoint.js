@@ -43,12 +43,12 @@ export class HotPoint {
         animate();
 
         let group = new THREE.Group();
-        let spritText = this.addText(po, text, _type, allData)
-        group.add(spritText);
+        // let spritText = this.addText(po, text, _type, allData)
+        // group.add(spritText);
         group.add(sprite);
 
         group.allDataHot = allData
-        spritText.allDataHot = allData
+        // spritText.allDataHot = allData
         sprite.allDataHot = allData
         scene.add(group)
 

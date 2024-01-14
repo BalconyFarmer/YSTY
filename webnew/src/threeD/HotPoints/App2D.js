@@ -12,85 +12,43 @@ export class App2D {
         this.stage = null
         this.canvasContainer = canvasContainer
 
-        this.initStage()
-    }
-
-    get canvasDom() {
-        return this._canvasDom
     }
 
     initStage() {
-        const self = this
-        self._canvasDom = document.createElement('canvas')
-        self._canvasDom.id = "easelCanvasIdVirtual"
-        self._canvasDom.width = 500
-        self._canvasDom.height = 500
-        // self._canvasDom.style.display = 'none'
-        const containerDiv = document.getElementById(self.canvasContainer)
-        if (containerDiv) {
-            containerDiv.appendChild(self._canvasDom)
-        } else {
-            const containerDiv = document.createElement('div')
-            containerDiv.appendChild(self._canvasDom)
-            document.body.appendChild(containerDiv)
-        }
-        self.stage = new easeljs.Stage('easelCanvasIdVirtual')
+        let id = "easelCanvasId" + Math.random().toString();
+
+        this._canvasDom = document.createElement('canvas')
+        this._canvasDom.id = id
+        this._canvasDom.width = 500
+        this._canvasDom.height = 500
+        this._canvasDom.style.border = "9px solid yellow";
+        this._canvasDom.style.zIndex = "10";
+
+        document.body.appendChild(this._canvasDom)
+
+        this.stage = new easeljs.Stage(id)
     }
 
-    addLine() {
-        // 画线
-        let g = new easeljs.Graphics();
-        /* 同一个 Graphics 实例， 可以多次绘制，以下线段、折线都是用 g 实例绘制的*/
-        g.setStrokeStyle(10).beginStroke("#d23c4f").moveTo(400, 10).lineTo(600, 100)
-        // 简写形式
-        g.ss(20).s('#fafa35').mt(400, 100).lt(400, 260)
-        // 多点折线的简写形式
-        g.ss(1).s('#000').mt(600, 400).lt(600, 200).lt(400, 300).lt(500, 550)
 
-        // Graphics 实例不能直接 addChild() 到舞台 stage 中，实例化为 Shape 实例后才可以
-        let line = new easeljs.Shape(g)
-        this.stage.addChild(line);
-        this.stage.update()
-    }
+    addText(allDataHot) {
+        this.initStage()
+        let text1 = new easeljs.Text(allDataHot.src, "bold 26px Arial", "rgba(255,123,6,0.37)");
+        text1.x = 0;        // 绘制源点 X坐标
+        text1.y = 0;         // 绘制源点 Y坐标
+        this.addRect()
+        this.stage.addChild(text1);
+        this.stage.update();    // 更新舞台，每次修改操作后需要更新真个舞台才有效果
 
-    addCircle() {
-        let g1 = new easeljs.Graphics();
-        g1.setStrokeStyle(1);         // 描边
-        g1.beginStroke("#000000");    // 描边颜色
-        g1.beginFill("red");          // 图形填充
-        g1.drawCircle(0, 0, 100);        // 绘制 (X, X, R)
-        let c1 = new easeljs.Shape(g1)     // 实例化Shape对象
-        this.stage.addChild(c1);
-        this.stage.update()
-    }
-
-    addCircle0() {
-        // 命令对象
-        let g3 = new easeljs.Graphics();
-        // 每个图形接口调用后会生成一个命令对象，可以使用.command访问，它保存对已创建或附加的最后一个命令的引用
-        let fillCommand = g3.beginFill("green").command;
-        g3.drawCircle(200, 200, 50);        // 绘制 (X, X, R)
-        let c3 = new easeljs.Shape(g3);
-        this.stage.addChild(c3);
-        this.stage.update()
+        return this._canvasDom
     }
 
     addRect() {
         // 矩形
-        let g2 = new easeljs.Graphics().beginStroke("red").drawRect(0, 0, 200, 100);     // X, Y, W, H
+        let g2 = new easeljs.Graphics().beginStroke("red").drawRect(0, 0, 500, 500);     // X, Y, W, H
         let c2 = new easeljs.Shape(g2)
         this.stage.addChild(c2);
         this.stage.update()
         return c2
-    }
-
-    addText(allDataHot) {
-        let text1 = new easeljs.Text(allDataHot.src, "bold 26px Arial", "#ff7700");
-        text1.x = 1;        // 绘制源点 X坐标
-        text1.y = 1;         // 绘制源点 Y坐标
-
-        this.stage.addChild(text1);
-        this.stage.update();    // 更新舞台，每次修改操作后需要更新真个舞台才有效果
     }
 
     addImg() {
@@ -167,5 +125,43 @@ export class App2D {
 
             this.stage.update()
         });
+    }
+
+    addLine() {
+        // 画线
+        let g = new easeljs.Graphics();
+        /* 同一个 Graphics 实例， 可以多次绘制，以下线段、折线都是用 g 实例绘制的*/
+        g.setStrokeStyle(10).beginStroke("#d23c4f").moveTo(400, 10).lineTo(600, 100)
+        // 简写形式
+        g.ss(20).s('#fafa35').mt(400, 100).lt(400, 260)
+        // 多点折线的简写形式
+        g.ss(1).s('#000').mt(600, 400).lt(600, 200).lt(400, 300).lt(500, 550)
+
+        // Graphics 实例不能直接 addChild() 到舞台 stage 中，实例化为 Shape 实例后才可以
+        let line = new easeljs.Shape(g)
+        this.stage.addChild(line);
+        this.stage.update()
+    }
+
+    addCircle() {
+        let g1 = new easeljs.Graphics();
+        g1.setStrokeStyle(1);         // 描边
+        g1.beginStroke("#000000");    // 描边颜色
+        g1.beginFill("red");          // 图形填充
+        g1.drawCircle(0, 0, 100);        // 绘制 (X, X, R)
+        let c1 = new easeljs.Shape(g1)     // 实例化Shape对象
+        this.stage.addChild(c1);
+        this.stage.update()
+    }
+
+    addCircle0() {
+        // 命令对象
+        let g3 = new easeljs.Graphics();
+        // 每个图形接口调用后会生成一个命令对象，可以使用.command访问，它保存对已创建或附加的最后一个命令的引用
+        let fillCommand = g3.beginFill("green").command;
+        g3.drawCircle(200, 200, 50);        // 绘制 (X, X, R)
+        let c3 = new easeljs.Shape(g3);
+        this.stage.addChild(c3);
+        this.stage.update()
     }
 }

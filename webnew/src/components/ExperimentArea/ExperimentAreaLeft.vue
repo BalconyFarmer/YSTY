@@ -1,8 +1,5 @@
 <template>
     <div id="leftContainer" v-loading="loading" class="finger" @click="getMeshByUUIDDispose">
-        <div v-show="false" style="position: fixed;right: 10px;top: 50px" id="canvasContainerOut">
-            <Canvas></Canvas>
-        </div>
         <div id='leftToolClass' class="colum1">
             <div :class="activeIndex == 1 ? 'active' : ''" class="rightToolClassSub columAround"
                  @click="activeIndex = 1">
@@ -69,7 +66,7 @@
                                     您的浏览器不支持 audio 标签。
                                 </audio>
 
-                                <div v-if="item.type == '文本'">
+                                <div v-if="item.type == '文本'" class="overlongHinding">
                                     内容:&nbsp;{{ item.src }}
                                 </div>
                             </div>
@@ -163,14 +160,13 @@ import $hub from 'hub-js';
 import {addHot, deleteHot, getHotById, updateHot, uploadHeadMinio} from "../../api/HotApi";
 import FileUpload from "../common/FileUpload";
 import * as THREE from "three";
-import Canvas from "@/components/ExperimentArea/Canvas/Canvas";
 
 export default {
     props: {
         required: true
     },
     components: {
-        FileUpload, Canvas
+        FileUpload
     },
     data() {
         return {

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import {App2D} from "@/threeD/HotPoints/App2D";
 
 export class HotPointDetail {
     constructor(app) {
@@ -121,8 +122,8 @@ export class HotPointDetail {
             data.position[2] + offsetValue
         ]
 
-        let canvas = window.app3D.app2D.canvasDom
-        window.app3D.app2D.addText(data)
+        let app2D = new App2D()
+        let canvas = app2D.addText(data)
         let texture = new THREE.Texture(canvas);
         let material = new THREE.SpriteMaterial({map: texture});
         material.sizeAttenuation = false
