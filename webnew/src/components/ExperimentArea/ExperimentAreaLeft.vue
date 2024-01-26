@@ -46,7 +46,7 @@
                 </div>
                 <el-divider></el-divider>
                 <div v-if="hotData.hotData" class="colum1">
-                    <div v-for="item in hotData.hotData.data" class="resourceBox">
+                    <div v-for="item in hotData.hotData.data" class="resourceBox" @click="tableClickHandler(item)">
                         <div>
                             <div>
                                 <el-image
@@ -312,7 +312,7 @@ export default {
                 this.$forceUpdate()
                 window.app3D.hotPoint.clearAll()
                 this.hotData.hotData.data.forEach(itemInner => {
-                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type,itemInner)
+                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type, itemInner)
                 })
             }
         },
@@ -427,6 +427,24 @@ export default {
                 })
             }
         },
+        tableClickHandler(data) {
+            window.app3D.sceneCamera.setCameraJson(data.camera)
+            window.app3D.hotPointDetail.clear()
+            switch (data.type) {
+                case '视频':
+                    window.app3D.hotPointDetail.mamkeVideoMesh(data)
+                    break
+                case '图片':
+                    window.app3D.hotPointDetail.addPictureMesh(data)
+                    break
+                case '声音':
+                    window.app3D.hotPointDetail.addSound(data)
+                    break
+                case '文本':
+                    window.app3D.hotPointDetail.addCanvas2D(data)
+                    break
+            }
+        }
 
     },
     mounted() {
