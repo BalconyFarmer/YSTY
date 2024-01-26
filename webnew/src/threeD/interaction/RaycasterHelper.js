@@ -88,8 +88,6 @@ export class RaycasterHelper {
                     target.push(item)
                 }
             })
-            console.log(self.app.scene.children,66)
-            console.log(target,66)
 
             if (selectedObject) {
                 selectedObject.material.color.set('#69f');

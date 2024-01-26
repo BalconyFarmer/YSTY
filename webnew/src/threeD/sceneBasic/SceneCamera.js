@@ -82,11 +82,28 @@ export class SceneCamera {
         this.app.camera.lookAt(this.app.scene.position);
     }
 
+    scaleMesh(mesh) {
+        // 获取模型的边界框
+        let boundingBox = new THREE.Box3().expandByObject(mesh);
+        // 获取模型的原始大小
+        let size = boundingBox.getSize(new THREE.Vector3());
+        // 计算模型的最大边长
+        let maxLength = Math.max(size.x, size.y, size.z);
+        // 计算缩放比例
+        let scaleRatio = 10 / maxLength;
+        // 设置缩放属性
+        mesh.scale.set(scaleRatio, scaleRatio, scaleRatio);
+    }
+
     lookAtMesh(mesh) {
+        this.scaleMesh(mesh)
 
         let camera = window.app3D.camera
         // 获取模型的边界框
         let boundingBox = new THREE.Box3().expandByObject(mesh);
+
+        // console.log(boundingBox)
+        // debugger
 
         // 计算相机的位置
         let center = boundingBox.getCenter(new THREE.Vector3());

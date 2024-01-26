@@ -9,7 +9,7 @@ export class HotPointDetail {
 
     mamkeVideoMesh(data) {
         const originPositon = data.position
-        const offsetValue = 0.4
+        const offsetValue = 1
 
         const offsetPositon = [
             data.position[0] + offsetValue,
@@ -23,7 +23,7 @@ export class HotPointDetail {
         video.autoplay = "autoplay"; //要设置播放
         const texture = new THREE.VideoTexture(video)
 
-        const geometry = new THREE.PlaneGeometry(0.2, 0.1); //矩形平面
+        const geometry = new THREE.PlaneGeometry(2, 1); //矩形平面
         const material = new THREE.MeshBasicMaterial({
             map: texture,
             side: THREE.DoubleSide
@@ -46,7 +46,7 @@ export class HotPointDetail {
 
     addPictureMesh(data) {
         const originPositon = data.position
-        const offsetValue = 0.4
+        const offsetValue = 1
 
         const offsetPositon = [
             data.position[0] + offsetValue,
@@ -128,9 +128,10 @@ export class HotPointDetail {
         let material = new THREE.SpriteMaterial({map: texture});
         material.sizeAttenuation = false
         material.map.needsUpdate = true;
+        material.depthTest = false
         let sprite = new THREE.Sprite(material);
         sprite.position.set(offsetPositon[0], offsetPositon[1], offsetPositon[2]);
-        sprite.scale.set(0.2, 0.2, 0.2);
+        sprite.scale.set(0.2, 0.1, 0);
 
         let group = new THREE.Group();
         let line = this.addLine(originPositon, offsetPositon)

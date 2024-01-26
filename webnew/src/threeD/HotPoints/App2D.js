@@ -20,7 +20,7 @@ export class App2D {
         this._canvasDom = document.createElement('canvas')
         this._canvasDom.id = id
         this._canvasDom.width = 500
-        this._canvasDom.height = 500
+        this._canvasDom.height = 250
 
         // this._canvasDom.style.border = "9px solid yellow";
         // this._canvasDom.style.position = "fixed";
@@ -35,7 +35,7 @@ export class App2D {
 
     addText(allDataHot) {
         this.initStage()
-        let text1 = new easeljs.Text(allDataHot.src, "bold 26px Arial", "rgba(255,123,6,0.37)");
+        let text1 = new easeljs.Text(allDataHot.src, "bold 26px Arial", "rgb(255,255,255)");
         text1.x = 0;        // 绘制源点 X坐标
         text1.y = 0;         // 绘制源点 Y坐标
         this.addRect()
@@ -47,7 +47,7 @@ export class App2D {
 
     addRect() {
         // 矩形
-        let g2 = new easeljs.Graphics().beginStroke("red").drawRect(0, 0, 500, 500);     // X, Y, W, H
+        let g2 = new easeljs.Graphics().beginStroke("red").drawRect(0, 0, 500, 250);     // X, Y, W, H
         let c2 = new easeljs.Shape(g2)
         this.stage.addChild(c2);
         this.stage.update()
