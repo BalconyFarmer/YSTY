@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import TWEEN from "@tweenjs/tween.js";
 
 export class SceneCamera {
     constructor(app) {
@@ -31,13 +32,42 @@ export class SceneCamera {
     }
 
     setCameraJson(jsonStr) {
-        let cameraPosition = jsonStr.cameraPosition
-        let cameraTarget = jsonStr.cameraTarget
-        // 设置相机的位置和目标
-        this.app.camera.position.copy(cameraPosition);
-        this.app.camera.updateProjectionMatrix()
-        this.app.controls.target.copy(cameraTarget);
-        this.app.controls.update(); // 更新相机的状态
+        const self = this
+
+        let oldP = this.app.camera.position
+        let oldT = this.app.controls.target
+        let newP = jsonStr.cameraPosition
+        let newT = jsonStr.cameraTarget
+
+        var tween = new TWEEN.Tween({
+            x1: oldP.x, // 相机x
+            y1: oldP.y, // 相机y
+            z1: oldP.z, // 相机z
+            x2: oldT.x, // 控制点的中心点x
+            y2: oldT.y, // 控制点的中心点y
+            z2: oldT.z  // 控制点的中心点z
+        });
+        tween.to({
+            x1: newP.x,
+            y1: newP.y,
+            z1: newP.z,
+            x2: newT.x,
+            y2: newT.y,
+            z2: newT.z
+        }, 1000);
+        tween.onUpdate(function (object) {
+            self.app.camera.position.x = object.x1;
+            self.app.camera.position.y = object.y1;
+            self.app.camera.position.z = object.z1;
+            self.app.controls.target.x = object.x2;
+            self.app.controls.target.y = object.y2;
+            self.app.controls.target.z = object.z2;
+            self.app.controls.update();
+        })
+
+        tween.easing(TWEEN.Easing.Cubic.InOut);
+        tween.start();
+
     }
 
     // 俯视图

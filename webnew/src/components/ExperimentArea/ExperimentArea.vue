@@ -119,31 +119,8 @@ export default {
 
         },
 
-        startLittleWindow() {
-            this.showLittleWindow = true
-            this.$nextTick(function () {
-                const littleWindowDom = document.getElementById('littleWindowCanvas0')
-                const littleWindowContainer = document.getElementById('littleWindowContainer')
-                const height = littleWindowContainer.clientHeight
-                const width = littleWindowContainer.clientWidth
-                littleWindowDom.height = height - 30
-                littleWindowDom.width = width
-
-                window.app3D.littleWindow.addCasterEvent(littleWindowDom)
-            })
-        },
-
-        stopLittleWindow() {
-            window.app3D.littleWindow.destroy()
-            this.showLittleWindow = false
-        },
-
         startAnimatioinEditor() {
             this.animationEditor = true
-        },
-
-        stopAnimationEditor() {
-            this.animationEditor = false
         },
 
         asyncAwaitTest() {

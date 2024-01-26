@@ -21,8 +21,11 @@ export class App2D {
         this._canvasDom.id = id
         this._canvasDom.width = 500
         this._canvasDom.height = 500
-        this._canvasDom.style.border = "9px solid yellow";
-        this._canvasDom.style.zIndex = "10";
+
+        // this._canvasDom.style.border = "9px solid yellow";
+        // this._canvasDom.style.position = "fixed";
+        // this._canvasDom.style.right = "0px";
+        // this._canvasDom.style.bottom = "0px";
 
         document.body.appendChild(this._canvasDom)
 
