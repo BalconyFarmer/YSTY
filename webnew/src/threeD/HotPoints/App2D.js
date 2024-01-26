@@ -47,7 +47,7 @@ export class App2D {
 
     addRect() {
         // 矩形
-        let g2 = new easeljs.Graphics().beginStroke("red").drawRect(0, 0, 500, 250);     // X, Y, W, H
+        let g2 = new easeljs.Graphics().beginStroke("gray").drawRect(0, 0, 500, 250);     // X, Y, W, H
         let c2 = new easeljs.Shape(g2)
         this.stage.addChild(c2);
         this.stage.update()
