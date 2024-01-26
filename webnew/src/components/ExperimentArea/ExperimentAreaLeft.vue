@@ -312,7 +312,7 @@ export default {
                 this.$forceUpdate()
                 window.app3D.hotPoint.clearAll()
                 this.hotData.hotData.data.forEach(itemInner => {
-                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type)
+                    window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type,itemInner)
                 })
             }
         },

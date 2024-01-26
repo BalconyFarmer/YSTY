@@ -51,6 +51,7 @@ export class HotPoint {
         // spritText.allDataHot = allData
         sprite.allDataHot = allData
         scene.add(group)
+        this.spriteList.push(group)
 
     }
 

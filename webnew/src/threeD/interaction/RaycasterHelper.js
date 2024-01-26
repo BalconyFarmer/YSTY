@@ -88,6 +88,8 @@ export class RaycasterHelper {
                     target.push(item)
                 }
             })
+            console.log(self.app.scene.children,66)
+            console.log(target,66)
 
             if (selectedObject) {
                 selectedObject.material.color.set('#69f');
@@ -103,7 +105,6 @@ export class RaycasterHelper {
                 return
             }
             const intersects = raycaster.intersectObjects(target, true);
-            // console.log(intersects,66)
             if (intersects.length > 0) {
                 const res = intersects.filter(function (res) {
                     return res && res.object;
