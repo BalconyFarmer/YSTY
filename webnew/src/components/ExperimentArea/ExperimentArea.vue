@@ -1,7 +1,7 @@
 <template>
     <div id="experimentAreaAll">
         <canvas id="3dCanvas" height="800px" width="911px"></canvas>
-        <ExperimentAreaLeft :app3D='app3D'></ExperimentAreaLeft>
+        <ExperimentAreaLeft></ExperimentAreaLeft>
         <ExperimentAreaCenter :app3D='app3D'></ExperimentAreaCenter>
         <el-dialog :close-on-click-modal="false" :visible.sync="dialogVisible" height="90%" title="模拟-3D资源列表"
                    width="100%">
@@ -28,7 +28,7 @@ export default {
     components: {
         ExperimentAreaLeft,
         ExperimentAreaCenter,
-        ExperimentAreaRightStaticsModels
+        ExperimentAreaRightStaticsModels,
     },
     data() {
         return {

@@ -8,7 +8,7 @@
             </div>
             <div :class="activeIndex == 2 ? 'active' : ''" class="rightToolClassSub columAround"
                  @click="activeIndex = 2">
-                <i class="el-icon-share" style="font-size: 20px;"></i>
+                <i class="el-icon-sort" style="font-size: 20px;"></i>
                 <div>热点编辑</div>
 
             </div>
@@ -21,137 +21,195 @@
         </div>
 
         <div id="leftToolClassSub">
-            <div v-if="activeIndex == 1">
-                <el-tree
-                    ref="tree"
-                    :data="treeData"
-                    :default-expanded-keys="defaultExpandIds"
-                    :props="defaultProps"
-                    node-key="key"
-                    show-checkbox
-                    @check-change="handleCheckChange"
-                    @node-expand="handleNodeExpand"
-                    @node-collapse="handleNodeCollapse"
-                    @node-click="onSelect"></el-tree>
-                <div class="mergeButton">
-                    <el-button v-if="checkNodes.length> 1" circle icon="el-icon-connection" size="mini"
-                               @click="mergeLayer"></el-button>
+            <el-collapse-transition>
+                <div v-if="activeIndex == 1">
+                    <el-tree
+                        ref="tree"
+                        :data="treeData"
+                        :default-expanded-keys="defaultExpandIds"
+                        :props="defaultProps"
+                        node-key="key"
+                        show-checkbox
+                        @check-change="handleCheckChange"
+                        @node-expand="handleNodeExpand"
+                        @node-collapse="handleNodeCollapse"
+                        @node-click="onSelect"></el-tree>
+                    <div class="mergeButton">
+                        <el-button v-if="checkNodes.length> 1" circle icon="el-icon-connection" size="mini"
+                                   @click="mergeLayer"></el-button>
+                    </div>
                 </div>
-            </div>
+            </el-collapse-transition>
+            <el-collapse-transition>
+                <div v-if="activeIndex == 2">
+                    <div class="row1" style="margin-top: 10px">
+                        <i class="el-icon-s-promotion"></i>
+                        <div class="row1">
+                            <div>添加</div>
+                            &nbsp;
+                            &nbsp;
+                            <el-button circle icon="el-icon-magic-stick" size="mini"
+                                       @click="addOrList = !addOrList"></el-button>
+                        </div>
+                    </div>
+                    <el-collapse-transition>
+                        <div v-if="addOrList">
+                            <br>
+                            <div class="rowSC" style="width: 95%;padding: 10px">
+                                <el-select v-model="hotTypesIndex" placeholder="请选择" size="mini">
+                                    <el-option
+                                        v-for="item in hotTypes"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </el-option>
+                                </el-select>
+                                <FileUpload v-if="hotTypesIndex != '文本'"></FileUpload>
+                            </div>
+                            <div class="colum1" style="width: 95%; padding: 10px">
+                                <div v-if="dialogVisible">
+                                    <el-input
+                                        v-model="newFileData"
+                                        placeholder="请输入内容"
+                                        type="textarea">
+                                    </el-input>
+                                    <br>
+                                </div>
+                                <div>资源地址:</div>
+                                <div class="nowrap" style="width: 95%">
+                                    {{ newFileData }}
+                                </div>
+                                <br>
 
-            <div v-if="activeIndex == 2">
-                <div class="row1" style="margin-top: 10px">
-                    <i class="el-icon-s-promotion"></i>
-                    <div>热点编辑</div>
-                </div>
-                <el-divider></el-divider>
-                <div v-if="hotData.hotData" class="colum1">
-                    <div v-for="item in hotData.hotData.data" class="resourceBox" @click="tableClickHandler(item)">
-                        <div>
-                            <div>
-                                <el-image
-                                    v-if="item.type == '图片'"
-                                    :src="item.src"
-                                    fit="contain"
-                                    style="width: 100px; height: 100px"></el-image>
+                                <el-button size="mini" type="primary" @click="startTakePoint">点击开始拾取坐标
+                                </el-button>
+                                <div v-if="pointData" class="row1">
+                                    <div>{{ pointData.x.toFixed(2) }}</div>
+                                    <div>,</div>
+                                    <div>{{ pointData.y.toFixed(2) }}</div>
+                                    <div>,</div>
+                                    <div>{{ pointData.z.toFixed(2) }}</div>
+                                </div>
+                                <br>
 
-                                <video v-if="item.type == '视频'" controls height="150" width="200">
-                                    <source :src="item.src" type="video/mp4">
-                                    <source :src="item.src" type="video/ogg">
-                                    您的浏览器不支持 video 标签。
-                                </video>
+                                <div>名称</div>
+                                <el-input v-model="hotName" size="mini"></el-input>
+                                <br>
+                                <div>描述</div>
+                                <el-input v-model="hotDescription" size="mini"></el-input>
+                                <br>
+                                <el-button size="mini" type="primary" @click="add">上传</el-button>
+                            </div>
+                        </div>
 
-                                <audio v-if="item.type == '声音'" controls style="width: 210px;height: 20px">
-                                    <source :src="item.src" type="audio/mpeg">
-                                    您的浏览器不支持 audio 标签。
-                                </audio>
+                    </el-collapse-transition>
+                    <el-collapse-transition>
 
-                                <div v-if="item.type == '文本'" class="overlongHinding">
-                                    内容:&nbsp;{{ item.src }}
+                        <div v-if="hotData.hotData && !addOrList" class="colum1">
+                            <div v-for="item in hotData.hotData.data" class="resourceBox"
+                                 @click="tableClickHandler(item)">
+                                <div>
+                                    <div>
+                                        <el-image
+                                            v-if="item.type == '图片'"
+                                            :src="item.src"
+                                            fit="contain"
+                                            style="width: 100px; height: 100px"></el-image>
+
+                                        <video v-if="item.type == '视频'" controls height="150" width="200">
+                                            <source :src="item.src" type="video/mp4">
+                                            <source :src="item.src" type="video/ogg">
+                                            您的浏览器不支持 video 标签。
+                                        </video>
+
+                                        <audio v-if="item.type == '声音'" controls style="width: 210px;height: 20px">
+                                            <source :src="item.src" type="audio/mpeg">
+                                            您的浏览器不支持 audio 标签。
+                                        </audio>
+
+                                        <div v-if="item.type == '文本'" class="overlongHinding">
+                                            内容:&nbsp;{{ item.src }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div>
+                                        名称:&nbsp;
+                                    </div>
+                                    <div v-if="editMode" style="width: 150px">
+                                        <el-input v-model="item.hotName" size="mini"></el-input>
+                                    </div>
+                                    <div v-else>
+                                        {{ item.hotName }}
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div>
+                                        描述:&nbsp;
+                                    </div>
+                                    <div v-if="editMode" style="width: 150px">
+                                        <el-input v-if="editMode" v-model="item.hotDescription" size="mini"></el-input>
+                                    </div>
+                                    <div v-else>
+                                        {{ item.hotDescription }}
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div>
+                                        类型:
+                                    </div>
+                                    <div>
+                                        {{ item.type }}
+                                    </div>
+                                </div>
+                                <div class="row1">
+                                    <div>
+                                        位置:
+                                    </div>
+                                    <div class="nowrap">
+                                        {{ item.position }}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <el-button size="mini" type="text" @click.stop="deleteOne(item)">删除</el-button>
+                                    <el-button size="mini" type="text" @click="editMode = !editMode">编辑</el-button>
+                                    <el-button v-if="editMode" size="mini" type="text" @click="updateHot">提交
+                                    </el-button>
                                 </div>
                             </div>
                         </div>
-                        <div class="row1">
-                            <div>
-                                类型:
-                            </div>
-                            <div>
-                                {{ item.type }}
-                            </div>
-                        </div>
-                        <div class="row1">
-                            <div>
-                                位置:
-                            </div>
-                            <div class="nowrap">
-                                {{ item.position }}
-                            </div>
-                        </div>
 
-                    </div>
+                    </el-collapse-transition>
+
                 </div>
-                <el-divider></el-divider>
 
-                <div v-if="newFileData" class="row1" style="width: 95%">
-                    <div class="nowrap" style="width: 100px">
-                        {{ newFileData }}
+            </el-collapse-transition>
+            <el-collapse-transition>
+                <div v-if="activeIndex == 3" class="colum1">
+                    <div>
+                        <el-link v-if="hotData" size="mini" type="info" @click="deleteHot">删除热点</el-link>
                     </div>
-                    <el-button size="mini" type="primary" @click="startTakePoint">点击开始拾取坐标</el-button>
+                    <br>
+
+                    <div>
+                        <el-link type="info" @click="exportToOBJ">导出obj</el-link>
+                    </div>
+                    <br>
+
+                    <div>
+                        <el-link type="info" @click="exportToGLB">导出glb</el-link>
+                    </div>
+                    <br>
+
+                    <div>
+                        <el-link type="info" @click="exportToSTL">导出stl</el-link>
+                    </div>
                     <br>
                 </div>
+            </el-collapse-transition>
 
-                <div class="rowAround" style="width: 95%">
-                    <el-select v-model="hotTypesIndex" placeholder="请选择" size="mini">
-                        <el-option
-                            v-for="item in hotTypes"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                    <FileUpload v-if="hotTypesIndex != '文本'"></FileUpload>
-                </div>
-
-            </div>
-
-            <div v-if="activeIndex == 3" class="colum1">
-                <div>
-                    <el-link v-if="hotData" size="mini" type="info" @click="deleteHot">删除热点</el-link>
-                </div>
-                <br>
-
-                <div>
-                    <el-link type="info" @click="exportToOBJ">导出obj</el-link>
-                </div>
-                <br>
-
-                <div>
-                    <el-link type="info" @click="exportToGLB">导出glb</el-link>
-                </div>
-                <br>
-
-                <div>
-                    <el-link type="info" @click="exportToSTL">导出stl</el-link>
-                </div>
-                <br>
-
-            </div>
-            <div v-if="leftSubMenu" id="leftSubMenu">
-                <a-button size="small" type="primary" @click="addAnimationv">
-                    添加动画
-                </a-button>
-            </div>
         </div>
-
-        <el-dialog :visible.sync="dialogVisible" title="文本编辑">
-            <el-input
-                v-model="textarea2"
-                placeholder="请输入内容"
-                type="textarea">
-            </el-input>
-            <br>
-            <el-button size="mini" type="primary" @click="submitText">提交</el-button>
-        </el-dialog>
     </div>
 </template>
 
@@ -162,14 +220,12 @@ import FileUpload from "../common/FileUpload";
 import * as THREE from "three";
 
 export default {
-    props: {
-        required: true
-    },
     components: {
         FileUpload
     },
     data() {
         return {
+            pointData: null,
             dialogVisible: false,
             checkNodes: [],
             defaultExpandIds: [],
@@ -179,13 +235,9 @@ export default {
             },
             newFileData: null,
             loading: false,
-            expandedKeys: [],
-            autoExpandParent: true,
             checkedKeys: [],
             selectedKeys: [],
             treeData: [],
-            leftSubMenu: false,
-            rightSelectMeshUUID: null,
             activeIndex: 1,
             hotData: null,
             hotTypesIndex: "视频",
@@ -207,12 +259,15 @@ export default {
                     label: '文本'
                 },
             ],
-            textarea2: null
+            textarea2: null,
+            addOrList: false,
+            hotName: null,
+            hotDescription: null,
+            editMode: false,
+
         }
     },
     watch: {
-        checkedKeys(val) {
-        },
         hotTypesIndex(value) {
             if (this.hotTypesIndex == '文本') {
                 this.dialogVisible = true
@@ -222,10 +277,15 @@ export default {
         }
     },
     methods: {
-        submitText() {
-            this.newFileData = this.textarea2
-            this.dialogVisible = false
+        deleteOne(item) {
+            this.hotData.hotData.data.forEach((item1, index) => {
+                if (item1.src == item.src) {
+                    this.hotData.hotData.data.splice(index, 1);
+                }
+            })
+            this.updateHot()
         },
+
         mergeLayer() {
             let checkedNodes = this.$refs.tree.getCheckedNodes();
             let meshes = []
@@ -254,26 +314,70 @@ export default {
             window.app3D.exportImport.exportToGLB()
         },
         async startTakePoint() {
+            document.body.style.cursor = "crosshair";
             const self = this
             let hub1 = $hub.on("takePoint", (data) => {
-                self.$message('拾取成功,上传中...');
-                if (self.hotData.hotData) {
-                    self.hotData.hotData.data.push({
-                        "type": self.hotTypesIndex,
-                        "position": [
-                            data.x,
-                            data.y,
-                            data.z
-                        ],
-                        "src": self.newFileData,
-                        "camera": window.app3D.sceneCamera.getCameraJson()
-                    })
-                    self.updateHot()
-                } else {
-                    self.newHot(data)
-                }
+                document.body.style.cursor = "default";
+                self.pointData = data
                 hub1.off()
             })
+        },
+        checkParamNotNull(param) {
+            if (!param) {
+                return false
+            }
+            for (let key in param) {
+                if (!param[key]) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        async add() {
+            const self = this
+            self.$message('上传中...');
+            console.log(!this.checkParamNotNull(self.pointData), "+_")
+            if (!this.checkParamNotNull(self.pointData)) {
+                console.log("111111111111111111")
+                self.$message('缺少参数');
+                return
+            } else {
+                console.log("2222222222222222")
+            }
+            if (self.hotData.hotData) {
+                let params = {
+                    "type": self.hotTypesIndex,
+                    "position": [
+                        self.pointData.x,
+                        self.pointData.y,
+                        self.pointData.z
+                    ],
+                    "src": self.newFileData,
+                    "camera": window.app3D.sceneCamera.getCameraJson(),
+                    "hotName": self.hotName,
+                    "hotDescription": self.hotDescription
+                }
+                if (!this.checkParamNotNull(params)) {
+                    self.$message('缺少参数');
+                    return
+                }
+
+                self.hotData.hotData.data.push(params)
+                self.updateHot()
+            } else {
+                self.newHot(self.pointData)
+            }
+
+            this.addOrList = false
+            this.clearAddParams()
+        },
+        clearAddParams() {
+            this.hotTypesIndex = "视频"
+            this.pointData = null
+            this.newFileData = null
+            this.hotName = null
+            this.hotDescription = null
         },
         async newHot(po) {
             const self = this
@@ -288,7 +392,9 @@ export default {
                             po.z
                         ],
                         "src": this.newFileData,
-                        "camera": window.app3D.sceneCamera.getCameraJson()
+                        "camera": window.app3D.sceneCamera.getCameraJson(),
+                        "hotName": self.hotName,
+                        "hotDescription": self.hotDescription
                     }
                 ]
             }
@@ -330,6 +436,7 @@ export default {
             await this._getHotById()
             this.loading = false
             this.newFileData = null
+            this.editMode = false
 
         },
 
@@ -341,12 +448,6 @@ export default {
             } else {
                 this.$message("删除失败!")
             }
-        },
-        addAnimationv() {
-            this.leftSubMenu = false
-            const see = this.rightSelectMeshUUID
-            this.$parent.startAnimatioinEditor()
-            this.rightSelectMeshUUID = null
         },
 
         onSelect(selectedKeys, info) {
@@ -448,6 +549,7 @@ export default {
 
     },
     mounted() {
+
         const self = this
         setInterval(function () {
 
@@ -463,13 +565,13 @@ export default {
             if (item.hotData) {
                 let hot = item.hotData.hotData
                 item.hotData = hot
+                this.hotData = {...item}
 
-                this.hotData = item
                 this.hotData.hotData.data.forEach(itemInner => {
                     window.app3D.hotPoint.add(itemInner.position, itemInner.src, itemInner.type, itemInner)
                 })
             } else {
-                this.hotData = item
+                this.hotData = {...item}
             }
 
         })
@@ -509,6 +611,7 @@ export default {
             })
         }, 1000)
 
+
     },
     beforeDestroy() {
         this.hub1.off()
@@ -533,6 +636,11 @@ export default {
     justify-content: flex-start;
     align-items: flex-start;
     color: white;
+
+    .el-button {
+        color: #0653A4;
+    }
+
 
     #leftToolClass {
         background-color: rgba(32, 34, 38, 0.9);
