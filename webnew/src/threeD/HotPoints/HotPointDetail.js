@@ -5,6 +5,7 @@ export class HotPointDetail {
     constructor(app) {
         this.app = app
         // this.addCanvas2D()
+        this.allDetail = []
     }
 
     mamkeVideoMesh(data) {
@@ -40,9 +41,8 @@ export class HotPointDetail {
         mesh.clickFun = function () {
             window.app3D.scene.remove(group);
         }
-
+        this.allDetail.push(group)
     }
-
 
     addPictureMesh(data) {
         const originPositon = data.position
@@ -80,6 +80,8 @@ export class HotPointDetail {
         sprite.clickFun = function () {
             scene.remove(group);
         }
+        this.allDetail.push(group)
+
     }
 
     addLine(point1, point2) {
@@ -91,6 +93,7 @@ export class HotPointDetail {
         geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         let material = new THREE.LineBasicMaterial({color: 0xE0EFF0});
         let line = new THREE.Line(geometry, material);
+        this.allDetail.push(line)
         return line
     }
 
@@ -100,16 +103,6 @@ export class HotPointDetail {
         audio.autoplay = true;
         document.body.appendChild(audio);
         this.audio = audio
-    }
-
-
-    clear() {
-        if (this.audio) {
-            this.audio.pause();
-            this.audio.src = '';
-            document.body.removeChild(this.audio);
-            this.audio = null
-        }
     }
 
     addCanvas2D(data) {
@@ -142,6 +135,19 @@ export class HotPointDetail {
         sprite.clickFun = function () {
             scene.remove(group);
         }
-    }
+        this.allDetail.push(group)
 
+    }
+    clear() {
+        if (this.audio) {
+            this.audio.pause();
+            this.audio.src = '';
+            document.body.removeChild(this.audio);
+            this.audio = null
+        }
+        this.allDetail.forEach(item => {
+            window.app3D.scene.remove(item);
+        })
+
+    }
 }

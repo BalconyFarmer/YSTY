@@ -637,11 +637,6 @@ export default {
     align-items: flex-start;
     color: white;
 
-    .el-button {
-        color: #0653A4;
-    }
-
-
     #leftToolClass {
         background-color: rgba(32, 34, 38, 0.9);
         width: 90px;
