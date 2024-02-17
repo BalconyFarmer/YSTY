@@ -47,8 +47,9 @@ export class HotPointDetail {
         group.add(text)
 
         this.app.scene.add(group); //网格模型添加到场景中
+        const self = this
         mesh.clickFun = function () {
-            window.app3D.scene.remove(group);
+            self.clear()
         }
         this.allDetail.push(group)
     }
@@ -83,14 +84,9 @@ export class HotPointDetail {
         group.add(sprite)
         group.add(line)
         scene.add(group)
-        group.clickFun = function () {
-            scene.remove(group);
-        }
+        const self = this
         sprite.clickFun = function () {
-            scene.remove(group);
-        }
-        sprite.clickFun = function () {
-            scene.remove(group);
+            self.clear()
         }
         this.allDetail.push(group)
 
@@ -144,8 +140,9 @@ export class HotPointDetail {
         group.add(sprite)
         this.app.scene.add(group)
         let scene = this.app.scene
+        const self = this
         sprite.clickFun = function () {
-            scene.remove(group);
+            self.clear();
         }
         this.allDetail.push(group)
 
