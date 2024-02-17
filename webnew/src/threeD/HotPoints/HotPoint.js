@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import TWEEN from "@tweenjs/tween.js";
 import {serverAdress} from "@/config";
+import {CSS2DRenderer, CSS2DObject} from 'three/addons/renderers/CSS2DRenderer.js';
 
 export class HotPoint {
     constructor(app) {
@@ -43,8 +44,7 @@ export class HotPoint {
         animate();
 
         let group = new THREE.Group();
-        // let spritText = this.addText(po, text, _type, allData)
-        // group.add(spritText);
+
         group.add(sprite);
 
         group.allDataHot = allData
@@ -55,23 +55,22 @@ export class HotPoint {
 
     }
 
-    addText(po, text, type, allData) {
+    addText(po, allData) {
         let canvas = document.createElement('canvas');
         canvas.width = 200
         canvas.height = 200;
         let context = canvas.getContext('2d');
         context.font = 'Bold 15px apple';
         context.fillStyle = 'white'
-        context.fillText(text, 0, 15);
-        context.fillText(type, 0, 45);
+        context.fillText(allData.hotName, 0, 15);
         let texture = new THREE.Texture(canvas);
         texture.needsUpdate = true;
         let material = new THREE.SpriteMaterial({map: texture});
-        material.sizeAttenuation = false
+        material.sizeAttenuation = true
         material.depthTest = false
         let sprite = new THREE.Sprite(material);
-        sprite.position.set(po[0], po[1] - 0.2, po[2] - 0.1);
-        sprite.scale.set(0.1, 0.1, 0.1);
+        sprite.position.set(po[0] + 1.5, po[1] - 0.5, po[2]);
+        sprite.scale.set(2, 2, 2);
         return sprite
     }
 
@@ -80,7 +79,6 @@ export class HotPoint {
             this.app.scene.remove(item);
         })
     }
-
 
 
 }

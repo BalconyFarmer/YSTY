@@ -14,6 +14,7 @@ import {HotPoint} from "@/threeD/HotPoints/HotPoint";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {HotPointDetail} from "@/threeD/HotPoints/HotPointDetail";
 import {App2D} from "@/threeD/HotPoints/App2D";
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 export default class App3D {
 
@@ -228,6 +229,14 @@ export default class App3D {
         //设置背景颜色
         this.renderer.setClearColor(0x000000, 0.1);
         this.renderer.shadowMap.enabled = true;
+
+        let labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize( window.innerWidth, window.innerHeight );
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        document.getElementById("experimentAreaAll").appendChild( labelRenderer.domElement );
+        this.labelRenderer = labelRenderer
     }
 
 
@@ -241,14 +250,8 @@ export default class App3D {
             if (self.loopFlag && self.camera) {
                 requestAnimationFrame(run);
                 self.renderer.render(self.scene, self.camera); //执行渲染操作
-                if (self.renderQueue.length > 0) {
-                    self.renderQueue.forEach((item, index) => {
-                        item()
-                    })
-                }
+                self.labelRenderer.render(self.scene, self.camera);
             }
-
-
         }
 
         run()

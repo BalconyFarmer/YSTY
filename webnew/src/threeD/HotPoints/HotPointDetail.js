@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import {App2D} from "@/threeD/HotPoints/App2D";
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 
 export class HotPointDetail {
     constructor(app) {
@@ -33,10 +34,18 @@ export class HotPointDetail {
         mesh.position.x = offsetPositon[0]
         mesh.position.y = offsetPositon[1]
         mesh.position.z = offsetPositon[2]
+
+
         let group = new THREE.Group();
         let line = this.addLine(originPositon, offsetPositon)
+
+        data.offsetPositon = offsetPositon
+        let text = this.addTextCss(data)
+
         group.add(line)
         group.add(mesh)
+        group.add(text)
+
         this.app.scene.add(group); //网格模型添加到场景中
         mesh.clickFun = function () {
             window.app3D.scene.remove(group);
@@ -68,6 +77,9 @@ export class HotPointDetail {
 
         let group = new THREE.Group();
         let line = this.addLine(originPositon, offsetPositon)
+        data.offsetPositon = offsetPositon
+        let text = this.addTextCss(data)
+        group.add(text)
         group.add(sprite)
         group.add(line)
         scene.add(group)
@@ -138,6 +150,28 @@ export class HotPointDetail {
         this.allDetail.push(group)
 
     }
+
+    addTextCss(allData) {
+        const text = document.createElement('div');
+        text.id = 'myUniqueID';
+        const text1 = document.createElement('div');
+        text1.className = 'label';
+        text1.textContent = "名称:"+allData.hotName;
+        text1.style.color = "white";
+        text.appendChild(text1)
+
+        const text2 = document.createElement('div');
+        text2.className = 'label';
+        text2.textContent = "详情:"+allData.hotDescription;
+        text2.style.color = "white";
+        text.appendChild(text2)
+
+        const label = new CSS2DObject(text);
+        label.position.set(allData.offsetPositon[0], allData.offsetPositon[1]-1, allData.offsetPositon[2]);
+        return label
+    }
+
+
     clear() {
         if (this.audio) {
             this.audio.pause();
@@ -148,6 +182,11 @@ export class HotPointDetail {
         this.allDetail.forEach(item => {
             window.app3D.scene.remove(item);
         })
+
+        let element = document.getElementById('myUniqueID');
+        if (element) {
+            element.parentNode.removeChild(element);
+        }
 
     }
 }

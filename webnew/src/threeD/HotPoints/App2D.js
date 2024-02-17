@@ -35,10 +35,17 @@ export class App2D {
 
     addText(allDataHot) {
         this.initStage()
-        let text1 = new easeljs.Text(allDataHot.src, "bold 26px Arial", "rgb(255,255,255)");
-        text1.x = 0;        // 绘制源点 X坐标
-        text1.y = 0;         // 绘制源点 Y坐标
         this.addRect()
+
+        let text0 = new easeljs.Text(("名称:" + allDataHot.hotName), "bold 26px Arial", "rgb(255,255,255)");
+        text0.x = 0;        // 绘制源点 X坐标
+        text0.y = 3;         // 绘制源点 Y坐标
+        this.stage.addChild(text0);
+        this.stage.update();    // 更新舞台，每次修改操作后需要更新真个舞台才有效果
+
+        let text1 = new easeljs.Text(("详情:" + allDataHot.hotDescription), "bold 26px Arial", "rgb(255,255,255)");
+        text1.x = 0;        // 绘制源点 X坐标
+        text1.y = 33;         // 绘制源点 Y坐标
         this.stage.addChild(text1);
         this.stage.update();    // 更新舞台，每次修改操作后需要更新真个舞台才有效果
 
